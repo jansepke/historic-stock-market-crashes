@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "dependencies": {
+    "csvtojson": "^2.0.10",
+    "table": "^5.4.6"
+  }
+}
