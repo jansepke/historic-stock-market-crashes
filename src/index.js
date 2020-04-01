@@ -1,11 +1,18 @@
-import { Container, Slider, Typography } from "@material-ui/core";
+import Container from "@material-ui/core/Container";
+import FormControl from "@material-ui/core/FormControl";
+import Grid from "@material-ui/core/Grid";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
 import Paper from "@material-ui/core/Paper";
+import Select from "@material-ui/core/Select";
+import Slider from "@material-ui/core/Slider";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import Typography from "@material-ui/core/Typography";
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import "regenerator-runtime/runtime";
@@ -62,58 +69,91 @@ const calculateTableData = (data, minDrawdown) => {
 const App = () => {
   const [tableData, setTableData] = useState([]);
   const [minDrawdown, setMinDrawdown] = useState(30);
+  const [index, setIndex] = useState("world");
 
-  const handleSliderChange = (event, newValue) => {
+  const handleMinDrawdownChange = (event, newValue) => {
     setMinDrawdown(newValue);
+  };
+
+  const handleIndexChange = event => {
+    setIndex(event.target.value);
+  };
+
+  const loadIndexData = async index => {
+    if (index === "world") {
+      return import(`../data/world.json`);
+    }
+    if (index === "acwi") {
+      return import(`../data/acwi.json`);
+    }
+    if (index === "acwi-imi") {
+      return import(`../data/acwi-imi.json`);
+    }
   };
 
   useEffect(() => {
     (async () => {
-      let data = await import("../data/world.json");
+      let data = await loadIndexData(index);
 
       const newTableData = calculateTableData(data, minDrawdown);
 
       setTableData(newTableData);
     })();
-  }, [minDrawdown]);
+  }, [minDrawdown, index]);
 
   return (
     <Container maxWidth="md">
-      <Typography gutterBottom>Minimum drawdown</Typography>
-      <Slider
-        value={minDrawdown}
-        onChange={handleSliderChange}
-        valueLabelDisplay="auto"
-        step={5}
-        marks
-        valueLabelDisplay="on"
-        min={10}
-        max={50}
-      />
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>StartDate</TableCell>
-              <TableCell>EndDate</TableCell>
-              <TableCell>DaysDown</TableCell>
-              <TableCell>Percent</TableCell>
-              <TableCell>DaysDone</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {tableData.map(row => (
-              <TableRow key={row.startDate}>
-                <TableCell>{row.startDate}</TableCell>
-                <TableCell>{row.endDate}</TableCell>
-                <TableCell>{row.daysDown}</TableCell>
-                <TableCell>{row.percent}</TableCell>
-                <TableCell>{row.daysDone}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={6}>
+          <FormControl>
+            <InputLabel>Index</InputLabel>
+            <Select value={index} onChange={handleIndexChange}>
+              <MenuItem value={"world"}>MSCI World</MenuItem>
+              <MenuItem value={"acwi"}>MSCI ACWI</MenuItem>
+              <MenuItem value={"acwi-imi"}>MSCI ACWI IMI</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Typography gutterBottom>Minimum drawdown</Typography>
+          <Slider
+            value={minDrawdown}
+            onChange={handleMinDrawdownChange}
+            valueLabelDisplay="auto"
+            step={5}
+            marks
+            valueLabelDisplay="on"
+            min={10}
+            max={50}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>StartDate</TableCell>
+                  <TableCell>EndDate</TableCell>
+                  <TableCell>DaysDown</TableCell>
+                  <TableCell>Percent</TableCell>
+                  <TableCell>DaysDone</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {tableData.map(row => (
+                  <TableRow key={row.startDate}>
+                    <TableCell>{row.startDate}</TableCell>
+                    <TableCell>{row.endDate}</TableCell>
+                    <TableCell>{row.daysDown}</TableCell>
+                    <TableCell>{row.percent}</TableCell>
+                    <TableCell>{row.daysDone}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Grid>
+      </Grid>
     </Container>
   );
 };
