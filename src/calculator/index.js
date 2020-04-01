@@ -5,11 +5,6 @@ export const calculateTableData = (data, minDrawdown) => {
   let lastPeak = { price: 0 },
     lastTrough = { price: 0 };
 
-  data = data.map(({ date, price }) => ({
-    date: new Date(date),
-    price: parseFloat(price)
-  }));
-
   const checkDrawdown = (newPeak = {}) => {
     const percent = (1 - lastTrough.price / lastPeak.price) * 100;
     if (percent > minDrawdown) {

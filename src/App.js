@@ -2,18 +2,36 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import React, { useState } from "react";
 import { calculateTableData } from "./calculator";
+import Chart from "./chart";
 import Form from "./form";
 import Table from "./table";
 
 export default () => {
   const [tableData, setTableData] = useState([]);
+  const [chartData, setChartData] = useState([]);
 
   const onFormChange = async ({ index, minDrawdown }) => {
     let data = await loadIndexData(index);
 
+    data = data.map(({ date, price }) => ({
+      date: new Date(date),
+      price: parseFloat(price)
+    }));
+
+    console.log(`Index contains ${data.length} days of data`);
+
     const newTableData = calculateTableData(data, minDrawdown);
 
     setTableData(newTableData);
+    setChartData([
+      {
+        id: "1",
+        data: data.map(({ price, date }) => ({
+          x: date.getTime(),
+          y: parseInt(price)
+        }))
+      }
+    ]);
   };
 
   const loadIndexData = async index => {
@@ -35,7 +53,10 @@ export default () => {
           <Form onChange={onFormChange}></Form>
         </Grid>
         <Grid item xs={12}>
-          <Table tableData={tableData}></Table>{" "}
+          <Table tableData={tableData}></Table>
+        </Grid>
+        <Grid item xs={12} style={{ height: 500 }}>
+          <Chart data={chartData} />
         </Grid>
       </Grid>
     </Container>
