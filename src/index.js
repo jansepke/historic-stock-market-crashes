@@ -17,7 +17,9 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import "regenerator-runtime/runtime";
 
-const dtf = new Intl.DateTimeFormat("en", {
+const browserLanguage =
+  window.navigator.language || window.navigator.userLanguage;
+const dtf = new Intl.DateTimeFormat(browserLanguage, {
   year: "numeric",
   month: "short",
   day: "2-digit"
@@ -42,11 +44,11 @@ const calculateTableData = (data, minDrawdown) => {
       const daysDone = (newPeak.date - lastPeak.date) * msToDays;
 
       newTableData.push({
-        startDate: dtf.format(lastPeak.date),
-        endDate: dtf.format(lastTrough.date),
-        daysDown: daysDown.toFixed(),
-        percent: -percent.toFixed(),
-        daysDone: daysDone.toFixed()
+        startDate: lastPeak.date,
+        endDate: lastTrough.date,
+        daysDown: daysDown,
+        percent: percent,
+        daysDone: daysDone
       });
     }
   };
@@ -64,6 +66,13 @@ const calculateTableData = (data, minDrawdown) => {
   checkDrawdown();
 
   return newTableData;
+};
+
+const formatDays = days => {
+  if (isNaN(days)) {
+    return "-";
+  }
+  return days >= 365 ? `${(days / 365).toFixed(1)}y` : `${days.toFixed()}d`;
 };
 
 const App = () => {
@@ -115,7 +124,7 @@ const App = () => {
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Typography gutterBottom>Minimum drawdown</Typography>
+          <Typography gutterBottom>Minimum accumulated loss</Typography>
           <Slider
             value={minDrawdown}
             onChange={handleMinDrawdownChange}
@@ -132,21 +141,43 @@ const App = () => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>StartDate</TableCell>
-                  <TableCell>EndDate</TableCell>
-                  <TableCell>DaysDown</TableCell>
-                  <TableCell>Percent</TableCell>
-                  <TableCell>DaysDone</TableCell>
+                  <TableCell align="center">Start of crash</TableCell>
+                  <TableCell align="center">End of crash</TableCell>
+                  <TableCell align="center">
+                    Time until
+                    <br />
+                    lowest point
+                  </TableCell>
+                  <TableCell align="center">
+                    Accumulated loss
+                    <br />
+                    (maximum drawdown)
+                  </TableCell>
+                  <TableCell align="center">
+                    Time until last
+                    <br />
+                    highest point
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {tableData.map(row => (
                   <TableRow key={row.startDate}>
-                    <TableCell>{row.startDate}</TableCell>
-                    <TableCell>{row.endDate}</TableCell>
-                    <TableCell>{row.daysDown}</TableCell>
-                    <TableCell>{row.percent}</TableCell>
-                    <TableCell>{row.daysDone}</TableCell>
+                    <TableCell align="center">
+                      {dtf.format(row.startDate)}
+                    </TableCell>
+                    <TableCell align="center">
+                      {dtf.format(row.endDate)}
+                    </TableCell>
+                    <TableCell align="center">
+                      {formatDays(row.daysDown)}
+                    </TableCell>
+                    <TableCell align="center">
+                      {-row.percent.toFixed()}%
+                    </TableCell>
+                    <TableCell align="center">
+                      {formatDays(row.daysDone)}
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
