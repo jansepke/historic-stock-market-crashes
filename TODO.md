@@ -7,3 +7,4 @@
 - https://github.com/parcel-bundler/parcel/issues/1762
 - loop to functional programming
 - more indices
+- data update

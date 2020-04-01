@@ -1,6 +1,7 @@
 import Container from "@material-ui/core/Container";
 import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
+import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Paper from "@material-ui/core/Paper";
@@ -13,6 +14,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
+import TrendingDownIcon from "@material-ui/icons/TrendingDown";
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import "regenerator-runtime/runtime";
@@ -125,16 +127,28 @@ const App = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <Typography gutterBottom>Minimum accumulated loss</Typography>
-          <Slider
-            value={minDrawdown}
-            onChange={handleMinDrawdownChange}
-            valueLabelDisplay="auto"
-            step={5}
-            marks
-            valueLabelDisplay="on"
-            min={10}
-            max={50}
-          />
+          <Grid container spacing={2} alignItems="center">
+            <Grid item>
+              <TrendingDownIcon />
+            </Grid>
+            <Grid item xs>
+              <Slider
+                value={minDrawdown}
+                onChange={handleMinDrawdownChange}
+                step={5}
+                min={10}
+                max={50}
+              />
+            </Grid>
+            <Grid item>
+              <Input
+                value={minDrawdown}
+                margin="dense"
+                readOnly={true}
+                style={{ width: 20 }}
+              />
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item xs={12}>
           <TableContainer component={Paper}>
