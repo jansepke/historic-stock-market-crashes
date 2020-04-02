@@ -57,13 +57,25 @@ export default ({ tableData, onRowHoverStart, onRowHoverEnd }) => {
               onMouseOver={() => onRowHoverStart(row)}
               onMouseOut={() => onRowHoverEnd(row)}
             >
-              <TableCell align="center">{formatDate(row.startDate)}</TableCell>
-              <TableCell align="center">{formatDate(row.endDate)}</TableCell>
+              <TableCell align="center">
+                <Tooltip title={formatNumber(row.startPrice, "p")}>
+                  <span>{formatDate(row.startDate)}</span>
+                </Tooltip>
+              </TableCell>
+              <TableCell align="center">
+                <Tooltip title={formatNumber(row.endPrice, "p")}>
+                  <span>{formatDate(row.endDate)}</span>
+                </Tooltip>
+              </TableCell>
               <TableCell align="center">{formatDays(row.daysDown)}</TableCell>
               <TableCell align="center">
                 <Box color="error.main">{-row.percent.toFixed()}%</Box>
               </TableCell>
-              <TableCell align="center">{formatDays(row.daysDone)}</TableCell>
+              <TableCell align="center">
+                <Tooltip title={formatDate(row.doneDate)}>
+                  <span>{formatDays(row.daysDone)}</span>
+                </Tooltip>
+              </TableCell>
               <TableCell align="center">
                 {formatNumber(row.percentUp2, "%")}
               </TableCell>

@@ -33,7 +33,8 @@ export const calculateTableData = (data, minDrawdown) => {
         endPrice: lastTrough.price,
         daysDown: daysDown,
         percent: percent,
-        daysDone: daysDone
+        daysDone: daysDone,
+        doneDate: newPeak.date
       });
     }
   };
