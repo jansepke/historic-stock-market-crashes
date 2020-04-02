@@ -1,6 +1,5 @@
 # TODO
 
-- loading indicator
 - text
 - help texts
 - https://github.com/parcel-bundler/parcel/issues/1762

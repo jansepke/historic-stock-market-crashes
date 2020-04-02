@@ -1,3 +1,4 @@
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -9,6 +10,7 @@ import { getIndexData } from "./services/Data";
 import Table from "./table";
 
 export default () => {
+  const [loading, setLoading] = useState({ chart: true, table: true });
   const [state, setState] = useState({
     data: [],
     minDrawdown: 30,
@@ -39,6 +41,8 @@ export default () => {
   };
 
   const onIndexChange = async index => {
+    setLoading({ chart: true, table: true });
+
     const data = await getIndexData(index);
 
     setState(prevState => ({
@@ -55,21 +59,31 @@ export default () => {
   };
 
   useEffect(() => {
-    const tableData = calculateTableData(state.data, state.minDrawdown);
+    setLoading(prevState => ({ ...prevState, table: true }));
 
-    setState(prevState => ({
-      ...prevState,
-      tableData
-    }));
+    setTimeout(() => {
+      const tableData = calculateTableData(state.data, state.minDrawdown);
+
+      setState(prevState => ({
+        ...prevState,
+        tableData
+      }));
+      setLoading(prevState => ({ ...prevState, table: false }));
+    });
   }, [state.minDrawdown, state.data]);
 
   useEffect(() => {
-    const chartData = calculateChartData(state.data, 5000);
+    setLoading(prevState => ({ ...prevState, chart: true }));
 
-    setState(prevState => ({
-      ...prevState,
-      chartData
-    }));
+    setTimeout(() => {
+      const chartData = calculateChartData(state.data, 5000);
+
+      setState(prevState => ({
+        ...prevState,
+        chartData
+      }));
+      setLoading(prevState => ({ ...prevState, chart: false }));
+    });
   }, [state.data]);
 
   useEffect(() => {
@@ -95,34 +109,42 @@ export default () => {
             onVisibilityChange={onVisibilityChange}
           />
         </Grid>
-        {state.visibility.table && state.data.length > 0 && (
-          <Grid item xs={12}>
-            <Grid container spacing={1}>
+        {loading.chart || loading.table ? (
+          <Grid item xs={12} align="center">
+            <CircularProgress />
+          </Grid>
+        ) : (
+          <>
+            {state.visibility.table && (
               <Grid item xs={12}>
-                <Table
-                  tableData={state.tableData}
-                  onRowHoverStart={addMarker}
-                  onRowHoverEnd={removeMarkers}
+                <Grid container spacing={1}>
+                  <Grid item xs={12}>
+                    <Table
+                      tableData={state.tableData}
+                      onRowHoverStart={addMarker}
+                      onRowHoverEnd={removeMarkers}
+                    />
+                  </Grid>
+                  {state.visibility.chart && (
+                    <Grid item xs={12}>
+                      <Typography variant="body2" align="right">
+                        Tip: Hover over a row to mark crash on graph.
+                      </Typography>
+                    </Grid>
+                  )}
+                </Grid>
+              </Grid>
+            )}
+            {state.visibility.chart && (
+              <Grid item xs={12}>
+                <Chart
+                  data={state.chartData}
+                  markers={state.markers}
+                  dataCount={state.data.length}
                 />
               </Grid>
-              {state.visibility.chart && (
-                <Grid item xs={12}>
-                  <Typography variant="body2" align="right">
-                    Tip: Hover over a row to mark crash on graph.
-                  </Typography>
-                </Grid>
-              )}
-            </Grid>
-          </Grid>
-        )}
-        {state.visibility.chart && state.data.length > 0 && (
-          <Grid item xs={12}>
-            <Chart
-              data={state.chartData}
-              markers={state.markers}
-              dataCount={state.data.length}
-            />
-          </Grid>
+            )}
+          </>
         )}
       </Grid>
     </Container>
