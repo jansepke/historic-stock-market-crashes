@@ -6,7 +6,6 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormLabel from "@material-ui/core/FormLabel";
 import Grid from "@material-ui/core/Grid";
-import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
@@ -66,18 +65,14 @@ export default ({
                 <Slider
                   value={minDrawdown}
                   onChange={handleMinDrawdownChange}
+                  marks={true}
                   step={5}
                   min={10}
                   max={50}
                 />
               </Grid>
               <Grid item>
-                <Input
-                  value={minDrawdown}
-                  margin="dense"
-                  readOnly={true}
-                  style={{ width: 20 }}
-                />
+                <Typography>{minDrawdown}%</Typography>
               </Grid>
             </Grid>
           </Grid>

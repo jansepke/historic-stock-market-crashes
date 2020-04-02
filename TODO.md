@@ -9,3 +9,4 @@
 - https://reactjs.org/docs/error-boundaries.html
 - chart: zoom in
 - data sources
+- query params
