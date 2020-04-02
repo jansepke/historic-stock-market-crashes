@@ -6,8 +6,9 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import Tooltip from "@material-ui/core/Tooltip";
 import React from "react";
-import { formatDate, formatDays } from "../services/Format";
+import { formatDate, formatDays, formatNumber } from "../services/Format";
 
 export default ({ tableData, onRowHoverStart, onRowHoverEnd }) => {
   return (
@@ -15,7 +16,7 @@ export default ({ tableData, onRowHoverStart, onRowHoverEnd }) => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell align="center">Start of crash</TableCell>
+            <TableCell align="center">Begin of crash</TableCell>
             <TableCell align="center">End of crash</TableCell>
             <TableCell align="center">
               Time until
@@ -28,9 +29,23 @@ export default ({ tableData, onRowHoverStart, onRowHoverEnd }) => {
               (maximum drawdown)
             </TableCell>
             <TableCell align="center">
-              Time until last
+              <Tooltip title="Time from begin of crash until new highest point">
+                <span>
+                  Time until new
+                  <br />
+                  highest point
+                </span>
+              </Tooltip>
+            </TableCell>
+            <TableCell align="center">
+              Accumulated return
               <br />
-              highest point
+              after 24m
+            </TableCell>
+            <TableCell align="center">
+              Accumulated return
+              <br />
+              after 60m
             </TableCell>
           </TableRow>
         </TableHead>
@@ -49,6 +64,12 @@ export default ({ tableData, onRowHoverStart, onRowHoverEnd }) => {
                 <Box color="error.main">{-row.percent.toFixed()}%</Box>
               </TableCell>
               <TableCell align="center">{formatDays(row.daysDone)}</TableCell>
+              <TableCell align="center">
+                {formatNumber(row.percentUp24, "%")}
+              </TableCell>
+              <TableCell align="center">
+                {formatNumber(row.percentUp60, "%")}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

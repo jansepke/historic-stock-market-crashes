@@ -37,6 +37,22 @@ export const calculateTableData = (data, minDrawdown) => {
 
   checkDrawdown();
 
+  for (const entry of data) {
+    const lastCrash = newTableData.find(crash => !crash.percentUp24);
+    if (lastCrash && (entry.date - lastCrash.endDate) * msToDays >= 365 * 2) {
+      lastCrash.percentUp24 =
+        (1 / lastCrash.endPrice) * entry.price * 100 - 100;
+    }
+  }
+
+  for (const entry of data) {
+    const lastCrash = newTableData.find(crash => !crash.percentUp60);
+    if (lastCrash && (entry.date - lastCrash.endDate) * msToDays >= 365 * 5) {
+      lastCrash.percentUp60 =
+        (1 / lastCrash.endPrice) * entry.price * 100 - 100;
+    }
+  }
+
   console.log("done with max drawdown calculation");
 
   return newTableData;

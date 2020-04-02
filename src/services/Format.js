@@ -14,3 +14,10 @@ export const formatDays = days => {
   }
   return days >= 365 ? `${(days / 365).toFixed(1)}y` : `${days.toFixed()}d`;
 };
+
+export const formatNumber = (number, suffix = "") => {
+  if (isNaN(number)) {
+    return "-";
+  }
+  return `${number.toFixed()}${suffix}`;
+};
