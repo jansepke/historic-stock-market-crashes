@@ -15,17 +15,15 @@ export default ({ onChange }) => {
 
   const handleMinDrawdownChange = (event, newValue) => {
     setMinDrawdown(newValue);
-    onChange({ minDrawdown, index });
   };
 
   const handleIndexChange = event => {
     setIndex(event.target.value);
-    onChange({ minDrawdown, index });
   };
 
   useEffect(() => {
     onChange({ minDrawdown, index });
-  }, []);
+  }, [minDrawdown, index]);
 
   return (
     <Grid container spacing={3}>
