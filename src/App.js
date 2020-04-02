@@ -59,6 +59,10 @@ export default () => {
   };
 
   useEffect(() => {
+    if (state.data.length === 0) {
+      return;
+    }
+
     setLoading(prevState => ({ ...prevState, table: true }));
 
     setTimeout(() => {
@@ -73,6 +77,10 @@ export default () => {
   }, [state.minDrawdown, state.data]);
 
   useEffect(() => {
+    if (state.data.length === 0) {
+      return;
+    }
+
     setLoading(prevState => ({ ...prevState, chart: true }));
 
     setTimeout(() => {
@@ -103,6 +111,9 @@ export default () => {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Form
+            lastDataUpdate={
+              state.data.length > 0 && state.data[state.data.length - 1].date
+            }
             minDrawdown={state.minDrawdown}
             onMinDrawdownChange={onMinDrawdownChange}
             onIndexChange={onIndexChange}

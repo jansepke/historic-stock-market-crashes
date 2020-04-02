@@ -11,10 +11,13 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import Slider from "@material-ui/core/Slider";
+import Typography from "@material-ui/core/Typography";
 import TrendingDownIcon from "@material-ui/icons/TrendingDown";
 import React from "react";
+import { formatDate } from "../services/Format";
 
 export default ({
+  lastDataUpdate,
   minDrawdown,
   onMinDrawdownChange,
   onVisibilityChange,
@@ -36,7 +39,7 @@ export default ({
     <Card>
       <CardContent>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={4} md={2}>
             <FormControl>
               <InputLabel>Index</InputLabel>
               <Select defaultValue={"world"} onChange={handleIndexChange}>
@@ -46,7 +49,14 @@ export default ({
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={8} md={4}>
+            {lastDataUpdate && (
+              <Typography variant="body2" color="textSecondary">
+                Last data from: {formatDate(lastDataUpdate)}
+              </Typography>
+            )}
+          </Grid>
+          <Grid item xs={12} md={6}>
             <FormLabel>Minimum accumulated loss</FormLabel>
             <Grid container spacing={2} alignItems="center">
               <Grid item>
@@ -71,7 +81,7 @@ export default ({
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} md={6}>
             <FormControl component="fieldset">
               <FormLabel>Customizations</FormLabel>
               <FormGroup row>
