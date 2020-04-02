@@ -65,10 +65,10 @@ export default ({ tableData, onRowHoverStart, onRowHoverEnd }) => {
               </TableCell>
               <TableCell align="center">{formatDays(row.daysDone)}</TableCell>
               <TableCell align="center">
-                {formatNumber(row.percentUp24, "%")}
+                {formatNumber(row.percentUp2, "%")}
               </TableCell>
               <TableCell align="center">
-                {formatNumber(row.percentUp60, "%")}
+                {formatNumber(row.percentUp5, "%")}
               </TableCell>
             </TableRow>
           ))}

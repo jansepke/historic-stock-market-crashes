@@ -2,6 +2,19 @@ import { LTD } from "downsample";
 
 const msToDays = 1 / 60 / 60 / 24 / 1000;
 
+const addPercentUp = (data, newTableData, years) => {
+  for (const entry of data) {
+    const lastCrash = newTableData.find(crash => !crash[`percentUp${years}`]);
+    if (
+      lastCrash &&
+      (entry.date - lastCrash.endDate) * msToDays >= 365 * years
+    ) {
+      lastCrash[`percentUp${years}`] =
+        (1 / lastCrash.endPrice) * entry.price * 100 - 100;
+    }
+  }
+};
+
 export const calculateTableData = (data, minDrawdown) => {
   const newTableData = [];
   let lastPeak = { price: 0 },
@@ -37,21 +50,8 @@ export const calculateTableData = (data, minDrawdown) => {
 
   checkDrawdown();
 
-  for (const entry of data) {
-    const lastCrash = newTableData.find(crash => !crash.percentUp24);
-    if (lastCrash && (entry.date - lastCrash.endDate) * msToDays >= 365 * 2) {
-      lastCrash.percentUp24 =
-        (1 / lastCrash.endPrice) * entry.price * 100 - 100;
-    }
-  }
-
-  for (const entry of data) {
-    const lastCrash = newTableData.find(crash => !crash.percentUp60);
-    if (lastCrash && (entry.date - lastCrash.endDate) * msToDays >= 365 * 5) {
-      lastCrash.percentUp60 =
-        (1 / lastCrash.endPrice) * entry.price * 100 - 100;
-    }
-  }
+  addPercentUp(data, newTableData, 2);
+  addPercentUp(data, newTableData, 5);
 
   console.log("done with max drawdown calculation");
 
