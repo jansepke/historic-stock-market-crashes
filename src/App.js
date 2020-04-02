@@ -26,10 +26,7 @@ export default () => {
     setChartData([
       {
         id: "1",
-        data: data.map(({ price, date }) => ({
-          x: date.toISOString().substring(0, 10),
-          y: parseInt(price)
-        }))
+        data: data.map(({ price, date }) => ({ x: date, y: price }))
       }
     ]);
   };
