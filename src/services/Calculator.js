@@ -14,6 +14,8 @@ export const calculateTableData = (data, minDrawdown) => {
       newTableData.push({
         startDate: lastPeak.date,
         endDate: lastTrough.date,
+        startPrice: lastPeak.price,
+        endPrice: lastTrough.price,
         daysDown: daysDown,
         percent: percent,
         daysDone: daysDone

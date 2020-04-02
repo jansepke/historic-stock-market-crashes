@@ -18,7 +18,10 @@ export default () => {
   const addMarker = item => {
     setState(prevState => ({
       ...prevState,
-      markers: [item.startDate, item.endDate]
+      markers: [
+        { date: item.startDate, price: item.startPrice },
+        { date: item.endDate, price: item.endPrice }
+      ]
     }));
   };
 

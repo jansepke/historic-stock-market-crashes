@@ -5,7 +5,7 @@ export default ({ data, markers }) =>
   data.length > 0 && (
     <ResponsiveLine
       data={data}
-      margin={{ bottom: 50, left: 60, right: 20 }}
+      margin={{ bottom: 50, left: 60, right: 25 }}
       xScale={{ type: "time", precision: "day" }}
       yScale={{ type: "linear", min: "auto" }}
       axisBottom={{
@@ -22,9 +22,13 @@ export default ({ data, markers }) =>
       lineWidth={1}
       isInteractive={false}
       enablePoints={false}
-      markers={markers.map(date => ({
+      markers={markers.map((item, idx) => ({
         axis: "x",
-        value: date
+        value: item.date,
+        lineStyle: { strokeDasharray: "10 5" },
+        legend: `${item.price.toFixed()} p`,
+        legendOrientation: "vertical",
+        legendPosition: idx % 2 === 0 ? "top-left" : "top-right"
       }))}
     />
   );
