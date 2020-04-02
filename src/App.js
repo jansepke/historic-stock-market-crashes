@@ -32,17 +32,17 @@ export default () => {
     }));
   };
 
-  const onFormChange = async ({ index, minDrawdown }) => {
+  const onFormChange = async ({ index, minDrawdown, sampleRate }) => {
     const data = await getIndexData(index);
 
     const tableData = calculateTableData(data, minDrawdown);
-    const chartData = calculateChartData(data);
+    const chartData = calculateChartData(data, sampleRate);
 
     setState(prevState => ({ ...prevState, tableData, chartData }));
   };
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="lg">
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Form onChange={onFormChange}></Form>
@@ -57,7 +57,7 @@ export default () => {
         <Grid item xs={12}>
           <Typography>Tip: Hover over a row to mark crash on graph.</Typography>
         </Grid>
-        <Grid item xs={12} style={{ height: 500 }}>
+        <Grid item xs={12} style={{ height: 700 }}>
           <Chart data={state.chartData} markers={state.markers} />
         </Grid>
       </Grid>

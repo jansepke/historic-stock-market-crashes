@@ -8,6 +8,4 @@
 - more indices
 - data update
 - https://reactjs.org/docs/error-boundaries.html
-- do not filter start + end dates
-- https://www.npmjs.com/package/downsample https://d3fc.io/api/sample-api.html
 - chart: zoom in

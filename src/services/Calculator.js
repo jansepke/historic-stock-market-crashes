@@ -1,3 +1,5 @@
+import { LTD } from "downsample";
+
 const msToDays = 1 / 60 / 60 / 24 / 1000;
 
 export const calculateTableData = (data, minDrawdown) => {
@@ -38,13 +40,17 @@ export const calculateTableData = (data, minDrawdown) => {
   return newTableData;
 };
 
-export const calculateChartData = data => {
+export const calculateChartData = (data, sampleRate) => {
+  const newData = data.map(({ price, date }) => ({ x: date, y: price }));
+  const numPointsInDownsampledData = sampleRate;
+  const downsampledData = LTD(newData, numPointsInDownsampledData);
+
+  console.log(`sampled date length: ${downsampledData.length}`);
+
   return [
     {
-      id: "1",
-      data: data
-        .filter((item, idx) => idx % 3 === 0)
-        .map(({ price, date }) => ({ x: date, y: price }))
+      id: "sampled",
+      data: downsampledData
     }
   ];
 };

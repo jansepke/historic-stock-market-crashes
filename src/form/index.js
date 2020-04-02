@@ -11,10 +11,15 @@ import React, { useEffect, useState } from "react";
 
 export default ({ onChange }) => {
   const [minDrawdown, setMinDrawdown] = useState(30);
+  const [sampleRate, setSampleRate] = useState(1000);
   const [index, setIndex] = useState("world");
 
   const handleMinDrawdownChange = (event, newValue) => {
     setMinDrawdown(newValue);
+  };
+
+  const handleSampleRateChange = (event, newValue) => {
+    setSampleRate(newValue);
   };
 
   const handleIndexChange = event => {
@@ -22,8 +27,8 @@ export default ({ onChange }) => {
   };
 
   useEffect(() => {
-    onChange({ minDrawdown, index });
-  }, [minDrawdown, index]);
+    onChange({ minDrawdown, index, sampleRate });
+  }, [minDrawdown, index, sampleRate]);
 
   return (
     <Grid container spacing={3}>
@@ -58,6 +63,28 @@ export default ({ onChange }) => {
               margin="dense"
               readOnly={true}
               style={{ width: 20 }}
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <Typography gutterBottom>Sample rate</Typography>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs>
+            <Slider
+              value={sampleRate}
+              onChange={handleSampleRateChange}
+              step={100}
+              min={100}
+              max={5000}
+            />
+          </Grid>
+          <Grid item>
+            <Input
+              value={sampleRate}
+              margin="dense"
+              readOnly={true}
+              style={{ width: 40 }}
             />
           </Grid>
         </Grid>

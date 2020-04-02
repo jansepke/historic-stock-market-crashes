@@ -5,6 +5,7 @@ export default ({ data, markers }) =>
   data.length > 0 && (
     <ResponsiveLine
       data={data}
+      animate={false}
       margin={{ bottom: 50, left: 60, right: 25 }}
       xScale={{ type: "time", precision: "day" }}
       yScale={{ type: "linear", min: "auto" }}
