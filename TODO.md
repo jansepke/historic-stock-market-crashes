@@ -10,4 +10,4 @@
 - https://reactjs.org/docs/error-boundaries.html
 - chart: zoom in
 - last update date
-- sampling info
+- data sources

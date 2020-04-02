@@ -14,6 +14,7 @@ import Table from "./table";
 
 export default () => {
   const [state, setState] = useState({
+    dataCount: 0,
     tableData: [],
     chartData: [],
     markers: []
@@ -42,7 +43,12 @@ export default () => {
     const tableData = calculateTableData(data, minDrawdown);
     const chartData = calculateChartData(data, sampleRate);
 
-    setState(prevState => ({ ...prevState, tableData, chartData }));
+    setState(prevState => ({
+      ...prevState,
+      tableData,
+      chartData,
+      dataCount: data.length
+    }));
   };
 
   return (
@@ -57,7 +63,7 @@ export default () => {
               <Typography>Historic Crashes</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-              <Grid container spacing={3}>
+              <Grid container spacing={1}>
                 <Grid item xs={12}>
                   <Table
                     tableData={state.tableData}
@@ -66,7 +72,7 @@ export default () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Typography>
+                  <Typography variant="body2" align="right">
                     Tip: Hover over a row to mark crash on graph.
                   </Typography>
                 </Grid>
@@ -74,8 +80,12 @@ export default () => {
             </ExpansionPanelDetails>
           </ExpansionPanel>
         </Grid>
-        <Grid item xs={12} style={{ height: 700 }}>
-          <Chart data={state.chartData} markers={state.markers} />
+        <Grid item xs={12}>
+          <Chart
+            data={state.chartData}
+            markers={state.markers}
+            dataCount={state.dataCount}
+          />
         </Grid>
       </Grid>
     </Container>
