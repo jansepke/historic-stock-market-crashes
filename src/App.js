@@ -1,7 +1,7 @@
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Chart from "./chart";
 import Form from "./form";
 import { calculateChartData, calculateTableData } from "./services/Calculator";
@@ -10,7 +10,8 @@ import Table from "./table";
 
 export default () => {
   const [state, setState] = useState({
-    dataCount: 0,
+    data: [],
+    minDrawdown: 30,
     visibility: {
       table: true,
       chart: true
@@ -37,19 +38,43 @@ export default () => {
     }));
   };
 
-  const onFormChange = async ({ index, minDrawdown, sampleRate }) => {
+  const onIndexChange = async index => {
     const data = await getIndexData(index);
-
-    const tableData = calculateTableData(data, minDrawdown);
-    const chartData = calculateChartData(data, sampleRate);
 
     setState(prevState => ({
       ...prevState,
-      tableData,
-      chartData,
-      dataCount: data.length
+      data
     }));
   };
+
+  const onMinDrawdownChange = minDrawdown => {
+    setState(prevState => ({
+      ...prevState,
+      minDrawdown
+    }));
+  };
+
+  useEffect(() => {
+    const tableData = calculateTableData(state.data, state.minDrawdown);
+
+    setState(prevState => ({
+      ...prevState,
+      tableData
+    }));
+  }, [state.minDrawdown, state.data]);
+
+  useEffect(() => {
+    const chartData = calculateChartData(state.data, 5000);
+
+    setState(prevState => ({
+      ...prevState,
+      chartData
+    }));
+  }, [state.data]);
+
+  useEffect(() => {
+    onIndexChange("world");
+  }, []);
 
   const onVisibilityChange = (name, hide) => {
     setState(prevState => ({
@@ -64,11 +89,13 @@ export default () => {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Form
-            onChange={onFormChange}
+            minDrawdown={state.minDrawdown}
+            onMinDrawdownChange={onMinDrawdownChange}
+            onIndexChange={onIndexChange}
             onVisibilityChange={onVisibilityChange}
           />
         </Grid>
-        {state.visibility.table && state.dataCount > 0 && (
+        {state.visibility.table && state.data.length > 0 && (
           <Grid item xs={12}>
             <Grid container spacing={1}>
               <Grid item xs={12}>
@@ -88,12 +115,12 @@ export default () => {
             </Grid>
           </Grid>
         )}
-        {state.visibility.chart && state.dataCount > 0 && (
+        {state.visibility.chart && state.data.length > 0 && (
           <Grid item xs={12}>
             <Chart
               data={state.chartData}
               markers={state.markers}
-              dataCount={state.dataCount}
+              dataCount={state.data.length}
             />
           </Grid>
         )}

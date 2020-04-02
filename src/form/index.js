@@ -12,32 +12,25 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import Slider from "@material-ui/core/Slider";
 import TrendingDownIcon from "@material-ui/icons/TrendingDown";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-export default ({ onChange, onVisibilityChange }) => {
-  const [minDrawdown, setMinDrawdown] = useState(30);
-  const [sampleRate, setSampleRate] = useState(1000);
-  const [index, setIndex] = useState("world");
-
+export default ({
+  minDrawdown,
+  onMinDrawdownChange,
+  onVisibilityChange,
+  onIndexChange
+}) => {
   const handleMinDrawdownChange = (event, newValue) => {
-    setMinDrawdown(newValue);
-  };
-
-  const handleSampleRateChange = (event, newValue) => {
-    setSampleRate(newValue);
+    onMinDrawdownChange(newValue);
   };
 
   const handleIndexChange = event => {
-    setIndex(event.target.value);
+    onIndexChange(event.target.value);
   };
 
   const handleVisibility = name => event => {
     onVisibilityChange(name, event.target.checked);
   };
-
-  useEffect(() => {
-    onChange({ minDrawdown, index, sampleRate });
-  }, [minDrawdown, index, sampleRate]);
 
   return (
     <Card>
@@ -46,7 +39,7 @@ export default ({ onChange, onVisibilityChange }) => {
           <Grid item xs={12} sm={6}>
             <FormControl>
               <InputLabel>Index</InputLabel>
-              <Select value={index} onChange={handleIndexChange}>
+              <Select defaultValue={"world"} onChange={handleIndexChange}>
                 <MenuItem value={"world"}>MSCI World</MenuItem>
                 <MenuItem value={"acwi"}>MSCI ACWI</MenuItem>
                 <MenuItem value={"acwi-imi"}>MSCI ACWI IMI</MenuItem>
@@ -74,28 +67,6 @@ export default ({ onChange, onVisibilityChange }) => {
                   margin="dense"
                   readOnly={true}
                   style={{ width: 20 }}
-                />
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormLabel>Sample rate</FormLabel>
-            <Grid container spacing={2} alignItems="center">
-              <Grid item xs>
-                <Slider
-                  value={sampleRate}
-                  onChange={handleSampleRateChange}
-                  step={100}
-                  min={100}
-                  max={5000}
-                />
-              </Grid>
-              <Grid item>
-                <Input
-                  value={sampleRate}
-                  margin="dense"
-                  readOnly={true}
-                  style={{ width: 40 }}
                 />
               </Grid>
             </Grid>

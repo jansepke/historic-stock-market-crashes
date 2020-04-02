@@ -37,6 +37,8 @@ export const calculateTableData = (data, minDrawdown) => {
 
   checkDrawdown();
 
+  console.log("done with max drawdown calculation");
+
   return newTableData;
 };
 
@@ -45,7 +47,7 @@ export const calculateChartData = (data, sampleRate) => {
   const numPointsInDownsampledData = sampleRate;
   const downsampledData = LTD(newData, numPointsInDownsampledData);
 
-  console.log(`sampled date length: ${downsampledData.length}`);
+  console.log("done with data sampling");
 
   return [
     {
