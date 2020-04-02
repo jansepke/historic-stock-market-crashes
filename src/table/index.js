@@ -22,7 +22,7 @@ const formatDays = days => {
   return days >= 365 ? `${(days / 365).toFixed(1)}y` : `${days.toFixed()}d`;
 };
 
-export default ({ tableData }) => {
+export default ({ tableData, onRowHoverStart, onRowHoverEnd }) => {
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -49,7 +49,12 @@ export default ({ tableData }) => {
         </TableHead>
         <TableBody>
           {tableData.map(row => (
-            <TableRow key={row.startDate}>
+            <TableRow
+              key={row.startDate}
+              hover={true}
+              onMouseOver={() => onRowHoverStart(row)}
+              onMouseOut={() => onRowHoverEnd(row)}
+            >
               <TableCell align="center">{dtf.format(row.startDate)}</TableCell>
               <TableCell align="center">{dtf.format(row.endDate)}</TableCell>
               <TableCell align="center">{formatDays(row.daysDown)}</TableCell>

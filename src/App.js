@@ -1,5 +1,6 @@
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 import React, { useState } from "react";
 import { calculateTableData } from "./calculator";
 import Chart from "./chart";
@@ -7,7 +8,25 @@ import Form from "./form";
 import Table from "./table";
 
 export default () => {
-  const [state, setState] = useState({ tableData: [], chartData: [] });
+  const [state, setState] = useState({
+    tableData: [],
+    chartData: [],
+    markers: []
+  });
+
+  const addMarker = item => {
+    setState(prevState => ({
+      ...prevState,
+      markers: [item.startDate, item.endDate]
+    }));
+  };
+
+  const removeMarkers = () => {
+    setState(prevState => ({
+      ...prevState,
+      markers: []
+    }));
+  };
 
   const onFormChange = async ({ index, minDrawdown }) => {
     let data = await loadIndexData(index);
@@ -29,7 +48,7 @@ export default () => {
       }
     ];
 
-    setState({ tableData, chartData });
+    setState(prevState => ({ ...prevState, tableData, chartData }));
   };
 
   const loadIndexData = async index => {
@@ -51,10 +70,17 @@ export default () => {
           <Form onChange={onFormChange}></Form>
         </Grid>
         <Grid item xs={12}>
-          <Table tableData={state.tableData}></Table>
+          <Table
+            tableData={state.tableData}
+            onRowHoverStart={addMarker}
+            onRowHoverEnd={removeMarkers}
+          ></Table>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography>Tip: Hover over a row to mark crash on graph.</Typography>
         </Grid>
         <Grid item xs={12} style={{ height: 500 }}>
-          <Chart data={state.chartData} />
+          <Chart data={state.chartData} markers={state.markers} />
         </Grid>
       </Grid>
     </Container>

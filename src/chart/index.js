@@ -1,7 +1,7 @@
 import { ResponsiveLine } from "@nivo/line";
 import React from "react";
 
-export default ({ data }) =>
+export default ({ data, markers }) =>
   data.length > 0 && (
     <ResponsiveLine
       data={data}
@@ -22,5 +22,9 @@ export default ({ data }) =>
       lineWidth={1}
       isInteractive={false}
       enablePoints={false}
+      markers={markers.map(date => ({
+        axis: "x",
+        value: date
+      }))}
     />
   );
