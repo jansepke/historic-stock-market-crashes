@@ -35,3 +35,14 @@ export const calculateTableData = (data, minDrawdown) => {
 
   return newTableData;
 };
+
+export const calculateChartData = data => {
+  return [
+    {
+      id: "1",
+      data: data
+        .filter((item, idx) => idx % 3 === 0)
+        .map(({ price, date }) => ({ x: date, y: price }))
+    }
+  ];
+};
