@@ -1,23 +1,30 @@
 import { ResponsiveLineCanvas } from "@nivo/line";
 import React from "react";
 
-export default ({ data }) => (
-  <ResponsiveLineCanvas
-    data={data}
-    margin={{ top: 50, right: 160, bottom: 50, left: 60 }}
-    xScale={{ type: "linear" }}
-    yScale={{ type: "linear", stacked: true }}
-    curve="monotoneX"
-    axisTop={null}
-    enableGridX={false}
-    colors={{ scheme: "spectral" }}
-    lineWidth={1}
-    isInteractive={false}
-    enablePoints={false}
-    enablePointLabel={false}
-    pointLabel="y"
-    pointLabelYOffset={-12}
-    useMesh={true}
-    legends={[]}
-  />
-);
+export default ({ data }) =>
+  data.length > 0 && (
+    <ResponsiveLineCanvas
+      data={data}
+      margin={{ bottom: 50, left: 60, right: 20 }}
+      xScale={{
+        type: "time",
+        format: "%Y-%m-%d",
+        precision: "day"
+      }}
+      xFormat="time:%Y-%m-%d"
+      axisBottom={{
+        format: "%Y",
+        tickValues: "every 5 years",
+        legend: "year",
+        legendOffset: -12
+      }}
+      axisLeft={{
+        legend: "points",
+        legendOffset: 12
+      }}
+      colors={{ scheme: "spectral" }}
+      lineWidth={1}
+      isInteractive={false}
+      enablePoints={false}
+    />
+  );

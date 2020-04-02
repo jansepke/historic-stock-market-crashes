@@ -13,12 +13,12 @@ export default () => {
   const onFormChange = async ({ index, minDrawdown }) => {
     let data = await loadIndexData(index);
 
+    console.log(`Index contains ${data.length} days of data`);
+
     data = data.map(({ date, price }) => ({
       date: new Date(date),
       price: parseFloat(price)
     }));
-
-    console.log(`Index contains ${data.length} days of data`);
 
     const newTableData = calculateTableData(data, minDrawdown);
 
@@ -27,7 +27,7 @@ export default () => {
       {
         id: "1",
         data: data.map(({ price, date }) => ({
-          x: date.getTime(),
+          x: date.toISOString().substring(0, 10),
           y: parseInt(price)
         }))
       }

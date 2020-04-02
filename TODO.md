@@ -8,3 +8,4 @@
 - loop to functional programming
 - more indices
 - data update
+- https://reactjs.org/docs/error-boundaries.html
