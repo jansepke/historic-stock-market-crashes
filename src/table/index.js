@@ -1,3 +1,4 @@
+import Box from "@material-ui/core/Box";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -44,7 +45,9 @@ export default ({ tableData, onRowHoverStart, onRowHoverEnd }) => {
               <TableCell align="center">{formatDate(row.startDate)}</TableCell>
               <TableCell align="center">{formatDate(row.endDate)}</TableCell>
               <TableCell align="center">{formatDays(row.daysDown)}</TableCell>
-              <TableCell align="center">{-row.percent.toFixed()}%</TableCell>
+              <TableCell align="center">
+                <Box color="error.main">{-row.percent.toFixed()}%</Box>
+              </TableCell>
               <TableCell align="center">{formatDays(row.daysDone)}</TableCell>
             </TableRow>
           ))}

@@ -107,7 +107,9 @@ export default () => {
 
   return (
     <Container maxWidth="lg">
-      <Typography variant="h1">Historic Crashes</Typography>
+      <Typography variant="h2" align="center">
+        Historic Stock Market Crashes
+      </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Form
