@@ -1,5 +1,6 @@
 import { ResponsiveLine } from "@nivo/line";
 import React from "react";
+import ToolTip from "./Tooltip";
 
 export default ({ data, markers }) =>
   data.length > 0 && (
@@ -21,8 +22,9 @@ export default ({ data, markers }) =>
       }}
       colors={{ scheme: "set1" }}
       lineWidth={1}
-      isInteractive={false}
+      tooltip={ToolTip}
       enablePoints={false}
+      useMesh={true}
       markers={markers.map((item, idx) => ({
         axis: "x",
         value: item.date,

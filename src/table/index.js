@@ -6,21 +6,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import React from "react";
-
-const browserLanguage =
-  window.navigator.language || window.navigator.userLanguage;
-const dtf = new Intl.DateTimeFormat(browserLanguage, {
-  year: "numeric",
-  month: "short",
-  day: "2-digit"
-});
-
-const formatDays = days => {
-  if (isNaN(days)) {
-    return "-";
-  }
-  return days >= 365 ? `${(days / 365).toFixed(1)}y` : `${days.toFixed()}d`;
-};
+import { formatDate, formatDays } from "../services/Format";
 
 export default ({ tableData, onRowHoverStart, onRowHoverEnd }) => {
   return (
@@ -55,8 +41,8 @@ export default ({ tableData, onRowHoverStart, onRowHoverEnd }) => {
               onMouseOver={() => onRowHoverStart(row)}
               onMouseOut={() => onRowHoverEnd(row)}
             >
-              <TableCell align="center">{dtf.format(row.startDate)}</TableCell>
-              <TableCell align="center">{dtf.format(row.endDate)}</TableCell>
+              <TableCell align="center">{formatDate(row.startDate)}</TableCell>
+              <TableCell align="center">{formatDate(row.endDate)}</TableCell>
               <TableCell align="center">{formatDays(row.daysDown)}</TableCell>
               <TableCell align="center">{-row.percent.toFixed()}%</TableCell>
               <TableCell align="center">{formatDays(row.daysDone)}</TableCell>
