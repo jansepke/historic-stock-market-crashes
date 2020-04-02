@@ -1,6 +1,10 @@
 import Container from "@material-ui/core/Container";
+import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import React, { useState } from "react";
 import Chart from "./chart";
 import Form from "./form";
@@ -48,14 +52,27 @@ export default () => {
           <Form onChange={onFormChange}></Form>
         </Grid>
         <Grid item xs={12}>
-          <Table
-            tableData={state.tableData}
-            onRowHoverStart={addMarker}
-            onRowHoverEnd={removeMarkers}
-          ></Table>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography>Tip: Hover over a row to mark crash on graph.</Typography>
+          <ExpansionPanel defaultExpanded>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography>Historic Crashes</Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <Grid container spacing={3}>
+                <Grid item xs={12}>
+                  <Table
+                    tableData={state.tableData}
+                    onRowHoverStart={addMarker}
+                    onRowHoverEnd={removeMarkers}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography>
+                    Tip: Hover over a row to mark crash on graph.
+                  </Typography>
+                </Grid>
+              </Grid>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
         </Grid>
         <Grid item xs={12} style={{ height: 700 }}>
           <Chart data={state.chartData} markers={state.markers} />
