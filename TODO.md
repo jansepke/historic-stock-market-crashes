@@ -9,3 +9,4 @@
 - more indices
 - data update
 - https://reactjs.org/docs/error-boundaries.html
+- do not filter start + end dates

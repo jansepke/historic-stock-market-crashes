@@ -1,9 +1,9 @@
-import { ResponsiveLineCanvas } from "@nivo/line";
+import { ResponsiveLine } from "@nivo/line";
 import React from "react";
 
 export default ({ data }) =>
   data.length > 0 && (
-    <ResponsiveLineCanvas
+    <ResponsiveLine
       data={data}
       margin={{ bottom: 50, left: 60, right: 20 }}
       xScale={{ type: "time", precision: "day" }}

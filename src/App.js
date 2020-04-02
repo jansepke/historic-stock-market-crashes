@@ -7,8 +7,7 @@ import Form from "./form";
 import Table from "./table";
 
 export default () => {
-  const [tableData, setTableData] = useState([]);
-  const [chartData, setChartData] = useState([]);
+  const [state, setState] = useState({ tableData: [], chartData: [] });
 
   const onFormChange = async ({ index, minDrawdown }) => {
     let data = await loadIndexData(index);
@@ -20,15 +19,17 @@ export default () => {
       price: parseFloat(price)
     }));
 
-    const newTableData = calculateTableData(data, minDrawdown);
-
-    setTableData(newTableData);
-    setChartData([
+    const tableData = calculateTableData(data, minDrawdown);
+    const chartData = [
       {
         id: "1",
-        data: data.map(({ price, date }) => ({ x: date, y: price }))
+        data: data
+          .filter((item, idx) => idx % 3 === 0)
+          .map(({ price, date }) => ({ x: date, y: price }))
       }
-    ]);
+    ];
+
+    setState({ tableData, chartData });
   };
 
   const loadIndexData = async index => {
@@ -50,10 +51,10 @@ export default () => {
           <Form onChange={onFormChange}></Form>
         </Grid>
         <Grid item xs={12}>
-          <Table tableData={tableData}></Table>
+          <Table tableData={state.tableData}></Table>
         </Grid>
         <Grid item xs={12} style={{ height: 500 }}>
-          <Chart data={chartData} />
+          <Chart data={state.chartData} />
         </Grid>
       </Grid>
     </Container>
