@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import React, { useEffect, useState } from "react";
 import Chart from "./chart";
+import Footer from "./Footer";
 import Form from "./form";
 import { calculateChartData, calculateTableData } from "./services/Calculator";
 import { getIndexData } from "./services/Data";
@@ -159,6 +160,9 @@ export default () => {
             )}
           </>
         )}
+        <Grid item xs={12}>
+          <Footer />
+        </Grid>
       </Grid>
     </Container>
   );
