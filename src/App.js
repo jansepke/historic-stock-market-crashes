@@ -1,4 +1,3 @@
-import CircularProgress from "@material-ui/core/CircularProgress";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -7,22 +6,19 @@ import React, { useEffect, useState } from "react";
 import Chart from "./chart";
 import Footer from "./Footer";
 import Form from "./form";
-import { calculateChartData, calculateTableData } from "./services/Calculator";
+import { calculateChartData } from "./services/Calculator";
 import { getIndexData } from "./services/Data";
 import Table from "./table";
 
-export default ({ index, initialTableData }) => {
+export default ({ index, minDrawdown, tableData }) => {
   const router = useRouter();
 
-  const [loading, setLoading] = useState({ chart: true, table: true });
   const [state, setState] = useState({
     data: [],
-    minDrawdown: 30,
     visibility: {
       table: true,
       chart: true
     },
-    tableData: initialTableData,
     chartData: [],
     markers: []
   });
@@ -45,42 +41,21 @@ export default ({ index, initialTableData }) => {
   };
 
   const onIndexChange = newIndex => {
-    setLoading({ chart: true, table: true });
-
-    router.push(`${router.pathname}?index=${newIndex}`);
+    router.push(
+      `${router.pathname}?index=${newIndex}&minDrawdown=${minDrawdown}`
+    );
   };
 
-  const onMinDrawdownChange = minDrawdown => {
-    setState(prevState => ({
-      ...prevState,
-      minDrawdown
-    }));
+  const onMinDrawdownChange = newMinDrawdown => {
+    router.push(
+      `${router.pathname}?index=${index}&minDrawdown=${newMinDrawdown}`
+    );
   };
 
   useEffect(() => {
     if (state.data.length === 0) {
       return;
     }
-
-    setLoading(prevState => ({ ...prevState, table: true }));
-
-    setTimeout(() => {
-      const tableData = calculateTableData(state.data, state.minDrawdown);
-
-      setState(prevState => ({
-        ...prevState,
-        tableData
-      }));
-      setLoading(prevState => ({ ...prevState, table: false }));
-    });
-  }, [state.minDrawdown, state.data]);
-
-  useEffect(() => {
-    if (state.data.length === 0) {
-      return;
-    }
-
-    setLoading(prevState => ({ ...prevState, chart: true }));
 
     setTimeout(() => {
       const chartData = calculateChartData(state.data, 5000);
@@ -89,7 +64,6 @@ export default ({ index, initialTableData }) => {
         ...prevState,
         chartData
       }));
-      setLoading(prevState => ({ ...prevState, chart: false }));
     });
   }, [state.data]);
 
@@ -123,48 +97,40 @@ export default ({ index, initialTableData }) => {
             lastDataUpdate={
               state.data.length > 0 && state.data[state.data.length - 1].date
             }
-            minDrawdown={state.minDrawdown}
+            minDrawdown={minDrawdown}
             onMinDrawdownChange={onMinDrawdownChange}
             onIndexChange={onIndexChange}
             onVisibilityChange={onVisibilityChange}
           />
         </Grid>
-        {loading.chart || loading.table ? (
-          <Grid item xs={12} align="center">
-            <CircularProgress />
-          </Grid>
-        ) : (
-          <>
-            {state.visibility.table && (
+        {state.visibility.table && (
+          <Grid item xs={12}>
+            <Grid container spacing={1}>
               <Grid item xs={12}>
-                <Grid container spacing={1}>
-                  <Grid item xs={12}>
-                    <Table
-                      tableData={state.tableData}
-                      onRowHoverStart={addMarker}
-                      onRowHoverEnd={removeMarkers}
-                    />
-                  </Grid>
-                  {state.visibility.chart && (
-                    <Grid item xs={12}>
-                      <Typography variant="body2" align="right">
-                        Tip: Hover over a row to mark crash on graph.
-                      </Typography>
-                    </Grid>
-                  )}
-                </Grid>
-              </Grid>
-            )}
-            {state.visibility.chart && (
-              <Grid item xs={12}>
-                <Chart
-                  data={state.chartData}
-                  markers={state.markers}
-                  dataCount={state.data.length}
+                <Table
+                  tableData={tableData}
+                  onRowHoverStart={addMarker}
+                  onRowHoverEnd={removeMarkers}
                 />
               </Grid>
-            )}
-          </>
+              {state.visibility.chart && (
+                <Grid item xs={12}>
+                  <Typography variant="body2" align="right">
+                    Tip: Hover over a row to mark crash on graph.
+                  </Typography>
+                </Grid>
+              )}
+            </Grid>
+          </Grid>
+        )}
+        {state.visibility.chart && (
+          <Grid item xs={12}>
+            <Chart
+              data={state.chartData}
+              markers={state.markers}
+              dataCount={state.data.length}
+            />
+          </Grid>
         )}
         <Grid item xs={12}>
           <Footer />

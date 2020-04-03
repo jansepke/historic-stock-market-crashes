@@ -24,7 +24,9 @@ export default ({
   onIndexChange
 }) => {
   const handleMinDrawdownChange = (event, newValue) => {
-    onMinDrawdownChange(newValue);
+    if (newValue !== minDrawdown) {
+      onMinDrawdownChange(newValue);
+    }
   };
 
   const handleIndexChange = event => {
@@ -64,8 +66,8 @@ export default ({
               </Grid>
               <Grid item xs>
                 <Slider
-                  value={minDrawdown}
-                  onChange={handleMinDrawdownChange}
+                  defaultValue={minDrawdown}
+                  onChangeCommitted={handleMinDrawdownChange}
                   marks={true}
                   step={5}
                   min={10}
