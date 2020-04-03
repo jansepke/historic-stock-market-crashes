@@ -41,10 +41,10 @@ export default ({
           <Grid item xs={4} md={2}>
             <FormControl>
               <InputLabel>Index</InputLabel>
-              <Select defaultValue={"world"} onChange={handleIndexChange}>
-                <MenuItem value={"world"}>MSCI World</MenuItem>
-                <MenuItem value={"acwi"}>MSCI ACWI</MenuItem>
-                <MenuItem value={"acwi-imi"}>MSCI ACWI IMI</MenuItem>
+              <Select defaultValue={"msci-world"} onChange={handleIndexChange}>
+                <MenuItem value={"msci-world"}>MSCI World</MenuItem>
+                <MenuItem value={"msci-acwi"}>MSCI ACWI</MenuItem>
+                <MenuItem value={"msci-acwi-imi"}>MSCI ACWI IMI</MenuItem>
               </Select>
             </FormControl>
           </Grid>

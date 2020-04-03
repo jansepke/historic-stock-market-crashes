@@ -1,12 +1,12 @@
 const loadIndexData = async index => {
-  if (index === "world") {
-    return import(`../../data/world.json`);
+  if (index === "msci-world") {
+    return import(`../../data/msci-world.json`);
   }
-  if (index === "acwi") {
-    return import(`../../data/acwi.json`);
+  if (index === "msci-acwi") {
+    return import(`../../data/msci-acwi.json`);
   }
-  if (index === "acwi-imi") {
-    return import(`../../data/acwi-imi.json`);
+  if (index === "msci-acwi-imi") {
+    return import(`../../data/msci-acwi-imi.json`);
   }
 };
 

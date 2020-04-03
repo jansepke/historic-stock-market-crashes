@@ -96,7 +96,7 @@ export default () => {
   }, [state.data]);
 
   useEffect(() => {
-    onIndexChange("world");
+    onIndexChange("msci-world");
   }, []);
 
   const onVisibilityChange = (name, hide) => {

@@ -14,8 +14,10 @@ const parseFile = async fileName =>
   }).fromFile(fileName);
 
 const processIndex = async index => {
-  const msciData = await parseFile(`msci/${index}.csv`);
-  const investingData = (await parseFile(`investing/${index}.csv`)).reverse();
+  const msciData = await parseFile(`./data-sources/msci/${index}.csv`);
+  const investingData = (
+    await parseFile(`./data-sources/investing/${index}.csv`)
+  ).reverse();
 
   const result = msciData
     .concat(investingData)
@@ -25,7 +27,7 @@ const processIndex = async index => {
 };
 
 (async () => {
-  for (const index of ["world", "acwi", "acwi-imi"]) {
+  for (const index of ["msci-world", "msci-acwi", "msci-acwi-imi"]) {
     await processIndex(index);
   }
 })();
