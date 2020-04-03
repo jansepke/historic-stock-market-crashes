@@ -1,5 +1,4 @@
-const browserLanguage =
-  window.navigator.language || window.navigator.userLanguage;
+const browserLanguage = "en"; // TODO
 const dtf = new Intl.DateTimeFormat(browserLanguage, {
   year: "numeric",
   month: "short",

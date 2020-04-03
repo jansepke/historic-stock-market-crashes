@@ -1,8 +1,9 @@
 {
   "private": true,
   "scripts": {
-    "dev": "parcel src/index.html",
-    "build": "parcel build --public-url ./ src/index.html"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "browserslist": [
     "defaults",
@@ -14,12 +15,12 @@
     "@material-ui/icons": "^4.9.1",
     "@nivo/line": "^0.61.1",
     "downsample": "^1.0.3",
+    "next": "^9.3.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
   "devDependencies": {
     "@types/react": "^16.9.31",
-    "csvtojson": "^2.0.10",
-    "parcel-bundler": "^1.12.4"
+    "csvtojson": "^2.0.10"
   }
 }

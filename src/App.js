@@ -10,8 +10,9 @@ import { calculateChartData, calculateTableData } from "./services/Calculator";
 import { getIndexData } from "./services/Data";
 import Table from "./table";
 
-const params = new URLSearchParams(location.search);
-const initialIndex = params.get("index");
+// const params = new URLSearchParams(location.search);
+// const initialIndex = params.get("index");
+const initialIndex = null;
 
 export default () => {
   const [loading, setLoading] = useState({ chart: true, table: true });
@@ -48,13 +49,9 @@ export default () => {
   const onIndexChange = async (newIndex = state.index) => {
     setLoading({ chart: true, table: true });
 
-    const params = new URLSearchParams(location.search);
-    params.set("index", newIndex);
-    window.history.replaceState(
-      {},
-      "",
-      `${location.pathname}?${params.toString()}`
-    );
+    // const params = new URLSearchParams(location.search);
+    // params.set("index", newIndex);
+    // history.replaceState({}, "", `${location.pathname}?${params.toString()}`);
 
     const data = await getIndexData(newIndex);
 
