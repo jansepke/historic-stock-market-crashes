@@ -10,9 +10,13 @@ import { calculateChartData, calculateTableData } from "./services/Calculator";
 import { getIndexData } from "./services/Data";
 import Table from "./table";
 
+const params = new URLSearchParams(location.search);
+const initialIndex = params.get("index");
+
 export default () => {
   const [loading, setLoading] = useState({ chart: true, table: true });
   const [state, setState] = useState({
+    index: initialIndex || "msci-world",
     data: [],
     minDrawdown: 30,
     visibility: {
@@ -41,10 +45,18 @@ export default () => {
     }));
   };
 
-  const onIndexChange = async index => {
+  const onIndexChange = async (newIndex = state.index) => {
     setLoading({ chart: true, table: true });
 
-    const data = await getIndexData(index);
+    const params = new URLSearchParams(location.search);
+    params.set("index", newIndex);
+    window.history.replaceState(
+      {},
+      "",
+      `${location.pathname}?${params.toString()}`
+    );
+
+    const data = await getIndexData(newIndex);
 
     setState(prevState => ({
       ...prevState,
@@ -96,7 +108,7 @@ export default () => {
   }, [state.data]);
 
   useEffect(() => {
-    onIndexChange("msci-world");
+    onIndexChange();
   }, []);
 
   const onVisibilityChange = (name, hide) => {
@@ -114,6 +126,7 @@ export default () => {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Form
+            index={state.index}
             lastDataUpdate={
               state.data.length > 0 && state.data[state.data.length - 1].date
             }

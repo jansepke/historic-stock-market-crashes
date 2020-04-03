@@ -16,6 +16,7 @@ import React from "react";
 import { formatDate } from "../services/Format";
 
 export default ({
+  index,
   lastDataUpdate,
   minDrawdown,
   onMinDrawdownChange,
@@ -41,7 +42,7 @@ export default ({
           <Grid item xs={4} md={2}>
             <FormControl>
               <InputLabel>Index</InputLabel>
-              <Select defaultValue={"msci-world"} onChange={handleIndexChange}>
+              <Select value={index} onChange={handleIndexChange}>
                 <MenuItem value={"msci-world"}>MSCI World</MenuItem>
                 <MenuItem value={"msci-acwi"}>MSCI ACWI</MenuItem>
                 <MenuItem value={"msci-acwi-imi"}>MSCI ACWI IMI</MenuItem>

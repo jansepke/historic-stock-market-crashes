@@ -7,7 +7,6 @@
 - data update
 - https://reactjs.org/docs/error-boundaries.html
 - chart: zoom in
-- query params
 - rename domain
 - reduce data server side
 - merge indices
