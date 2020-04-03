@@ -1,6 +1,6 @@
 import Head from "next/head";
 import React from "react";
-import App from "../src/App";
+import App from "../App";
 
 export default ({ index }) => (
   <>
