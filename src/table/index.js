@@ -7,6 +7,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Tooltip from "@material-ui/core/Tooltip";
+import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import React from "react";
 import { formatDate, formatDays, formatNumber } from "../services/Format";
 
@@ -33,19 +34,19 @@ export default ({ tableData, onRowHoverStart, onRowHoverEnd }) => {
                 <span>
                   Time until new
                   <br />
-                  highest point
+                  highest point <HelpOutlineIcon fontSize="inherit" />
                 </span>
               </Tooltip>
             </TableCell>
             <TableCell align="center">
               Accumulated return
               <br />
-              after 24m
+              after 2 years
             </TableCell>
             <TableCell align="center">
               Accumulated return
               <br />
-              after 60m
+              after 5 years
             </TableCell>
           </TableRow>
         </TableHead>
@@ -58,12 +59,12 @@ export default ({ tableData, onRowHoverStart, onRowHoverEnd }) => {
               onMouseOut={() => onRowHoverEnd(row)}
             >
               <TableCell align="center">
-                <Tooltip title={formatNumber(row.startPrice, "p")}>
+                <Tooltip title={formatNumber(row.startPrice, " points")}>
                   <span>{formatDate(row.startDate)}</span>
                 </Tooltip>
               </TableCell>
               <TableCell align="center">
-                <Tooltip title={formatNumber(row.endPrice, "p")}>
+                <Tooltip title={formatNumber(row.endPrice, " points")}>
                   <span>{formatDate(row.endDate)}</span>
                 </Tooltip>
               </TableCell>

@@ -10,7 +10,16 @@ readonly DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 ##DOC publish
 task_publish() {
+  # setup with:
+  # git worktree add dist gh-pages
+
+  (
+    cd dist
+    rm * || true
+  )
+
   npm run build
+
   (
     cd dist
 
