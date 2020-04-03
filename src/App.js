@@ -6,15 +6,18 @@ import React, { useEffect, useState } from "react";
 import Chart from "./chart";
 import Footer from "./Footer";
 import Form from "./form";
-import { calculateChartData } from "./services/Calculator";
-import { getIndexData } from "./services/Data";
 import Table from "./table";
 
-export default ({ index, minDrawdown, tableData }) => {
+export default ({
+  index,
+  minDrawdown,
+  tableData,
+  indexDataCount,
+  indexDataUpdateDate
+}) => {
   const router = useRouter();
 
   const [state, setState] = useState({
-    data: [],
     visibility: {
       table: true,
       chart: true
@@ -53,27 +56,17 @@ export default ({ index, minDrawdown, tableData }) => {
   };
 
   useEffect(() => {
-    if (state.data.length === 0) {
-      return;
-    }
+    (async () => {
+      const response = await fetch(`/api/chart-data/${index}`);
+      const chartData = await response.json();
 
-    setTimeout(() => {
-      const chartData = calculateChartData(state.data, 5000);
+      chartData[0].data.forEach(item => {
+        item.x = new Date(item.x);
+      });
 
       setState(prevState => ({
         ...prevState,
         chartData
-      }));
-    });
-  }, [state.data]);
-
-  useEffect(() => {
-    (async () => {
-      const data = await getIndexData(index);
-
-      setState(prevState => ({
-        ...prevState,
-        data
       }));
     })();
   }, [index]);
@@ -94,9 +87,7 @@ export default ({ index, minDrawdown, tableData }) => {
         <Grid item xs={12}>
           <Form
             index={index}
-            lastDataUpdate={
-              state.data.length > 0 && state.data[state.data.length - 1].date
-            }
+            lastDataUpdate={indexDataUpdateDate}
             minDrawdown={minDrawdown}
             onMinDrawdownChange={onMinDrawdownChange}
             onIndexChange={onIndexChange}
@@ -128,7 +119,7 @@ export default ({ index, minDrawdown, tableData }) => {
             <Chart
               data={state.chartData}
               markers={state.markers}
-              dataCount={state.data.length}
+              dataCount={indexDataCount}
             />
           </Grid>
         )}

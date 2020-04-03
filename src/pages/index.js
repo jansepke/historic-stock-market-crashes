@@ -4,13 +4,20 @@ import App from "../App";
 import { calculateTableData } from "../services/Calculator";
 import { getIndexData } from "../services/Data";
 
-export default ({ index, minDrawdown, tableData }) => {
+export default ({
+  index,
+  minDrawdown,
+  tableData,
+  indexDataCount,
+  indexDataUpdateDate
+}) => {
   const parsedTableData = tableData.map(item => ({
     ...item,
     startDate: new Date(item.startDate),
     endDate: new Date(item.endDate),
     doneDate: item.doneDate ? new Date(item.doneDate) : null
   }));
+  const parsedIndexDataUpdateDate = new Date(indexDataUpdateDate);
 
   return (
     <>
@@ -25,6 +32,8 @@ export default ({ index, minDrawdown, tableData }) => {
         index={index}
         minDrawdown={minDrawdown}
         tableData={parsedTableData}
+        indexDataCount={indexDataCount}
+        indexDataUpdateDate={parsedIndexDataUpdateDate}
       />
     </>
   );
@@ -45,6 +54,12 @@ export const getServerSideProps = async ({
   );
 
   return {
-    props: { index, minDrawdown: parsedMinDrawdown, tableData }
+    props: {
+      index,
+      minDrawdown: parsedMinDrawdown,
+      tableData,
+      indexDataCount: indexData.length,
+      indexDataUpdateDate: indexData[indexData.length - 1].date.toString()
+    }
   };
 };
