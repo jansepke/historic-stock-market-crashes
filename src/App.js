@@ -2,6 +2,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Chart from "./chart";
 import Footer from "./Footer";
@@ -10,14 +11,11 @@ import { calculateChartData, calculateTableData } from "./services/Calculator";
 import { getIndexData } from "./services/Data";
 import Table from "./table";
 
-// const params = new URLSearchParams(location.search);
-// const initialIndex = params.get("index");
-const initialIndex = null;
+export default ({ index }) => {
+  const router = useRouter();
 
-export default () => {
   const [loading, setLoading] = useState({ chart: true, table: true });
   const [state, setState] = useState({
-    index: initialIndex || "msci-world",
     data: [],
     minDrawdown: 30,
     visibility: {
@@ -46,19 +44,10 @@ export default () => {
     }));
   };
 
-  const onIndexChange = async (newIndex = state.index) => {
+  const onIndexChange = newIndex => {
     setLoading({ chart: true, table: true });
 
-    // const params = new URLSearchParams(location.search);
-    // params.set("index", newIndex);
-    // history.replaceState({}, "", `${location.pathname}?${params.toString()}`);
-
-    const data = await getIndexData(newIndex);
-
-    setState(prevState => ({
-      ...prevState,
-      data
-    }));
+    router.push(`${router.pathname}?index=${newIndex}`);
   };
 
   const onMinDrawdownChange = minDrawdown => {
@@ -105,8 +94,15 @@ export default () => {
   }, [state.data]);
 
   useEffect(() => {
-    onIndexChange();
-  }, []);
+    (async () => {
+      const data = await getIndexData(index);
+
+      setState(prevState => ({
+        ...prevState,
+        data
+      }));
+    })();
+  }, [index]);
 
   const onVisibilityChange = (name, hide) => {
     setState(prevState => ({
@@ -123,7 +119,7 @@ export default () => {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Form
-            index={state.index}
+            index={index}
             lastDataUpdate={
               state.data.length > 0 && state.data[state.data.length - 1].date
             }

@@ -9,4 +9,3 @@
 - merge indices
 - https://www.searchenginejournal.com/google-rolls-out-new-markup-for-displaying-data-tables-in-search-results/263837/
 - date locale format
-- query params

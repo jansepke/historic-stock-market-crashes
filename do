@@ -8,10 +8,6 @@ readonly DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # Program Functions
 ###############################################################################
 
-##DOC publish
-task_publish() {
-}
-
 ##DOC run
 task_run() {
   npm run dev
