@@ -11,7 +11,7 @@ import { calculateChartData, calculateTableData } from "./services/Calculator";
 import { getIndexData } from "./services/Data";
 import Table from "./table";
 
-export default ({ index }) => {
+export default ({ index, initialTableData }) => {
   const router = useRouter();
 
   const [loading, setLoading] = useState({ chart: true, table: true });
@@ -22,7 +22,7 @@ export default ({ index }) => {
       table: true,
       chart: true
     },
-    tableData: [],
+    tableData: initialTableData,
     chartData: [],
     markers: []
   });

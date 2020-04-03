@@ -73,7 +73,7 @@ export default ({ tableData, onRowHoverStart, onRowHoverEnd }) => {
                 <Box color="error.main">{-row.percent.toFixed()}%</Box>
               </TableCell>
               <TableCell align="center">
-                <Tooltip title={formatDate(row.doneDate)}>
+                <Tooltip title={row.doneDate ? formatDate(row.doneDate) : ""}>
                   <span>{formatDays(row.daysDone)}</span>
                 </Tooltip>
               </TableCell>
