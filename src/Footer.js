@@ -100,7 +100,9 @@ export default () => {
         <Grid item xs={12}>
           <FootNote header="Source Code">
             The Source Code can be found on{" "}
-            <a href="https://github.com/jansepke/max-drawdown">GitHub</a>
+            <a href="https://github.com/jansepke/historic-stock-market-crashes">
+              GitHub
+            </a>
           </FootNote>
         </Grid>
       </Grid>
