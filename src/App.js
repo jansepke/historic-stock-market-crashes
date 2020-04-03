@@ -1,12 +1,22 @@
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import Chart from "./chart";
 import Footer from "./Footer";
 import Form from "./form";
 import Table from "./table";
+
+const Chart = dynamic(() => import("./chart"), {
+  ssr: false,
+  loading: () => (
+    <Grid item xs={12} align="center">
+      <CircularProgress />
+    </Grid>
+  )
+});
 
 export default ({
   index,
