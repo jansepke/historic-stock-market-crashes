@@ -1,12 +1,10 @@
 # TODO
 
 - text
-- help texts
 - loop to functional programming
 - more indices
 - data update
-- https://reactjs.org/docs/error-boundaries.html
 - chart: zoom in
-- SEO
 - reduce data server side
 - merge indices
+- https://www.searchenginejournal.com/google-rolls-out-new-markup-for-displaying-data-tables-in-search-results/263837/
