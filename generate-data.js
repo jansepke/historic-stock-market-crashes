@@ -21,7 +21,7 @@ const processIndex = async index => {
     .concat(investingData)
     .map(({ Date: date, Price: price }) => ({ date, price: price.toFixed(2) }));
 
-  await fs.writeFile(`./docs/data/${index}.json`, JSON.stringify(result));
+  await fs.writeFile(`./data/${index}.json`, JSON.stringify(result, null, 2));
 };
 
 (async () => {
