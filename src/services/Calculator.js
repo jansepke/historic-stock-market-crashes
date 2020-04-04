@@ -1,4 +1,5 @@
 import { LTD } from "downsample";
+import { indices, minDrawdowns } from "./Config";
 
 const msToDays = 1 / 60 / 60 / 24 / 1000;
 
@@ -27,14 +28,14 @@ export const calculateTableData = (data, minDrawdown) => {
       const daysDone = (newPeak.date - lastPeak.date) * msToDays;
 
       newTableData.push({
-        startDate: lastPeak.date,
-        endDate: lastTrough.date,
+        startDate: lastPeak.date.toString(),
+        endDate: lastTrough.date.toString(),
         startPrice: lastPeak.price,
         endPrice: lastTrough.price,
         daysDown: daysDown,
         percent: percent,
         daysDone: daysDone,
-        doneDate: newPeak.date
+        doneDate: newPeak.date?.toString() || null
       });
     }
   };
@@ -73,3 +74,14 @@ export const calculateChartData = (data, sampleRate) => {
     }
   ];
 };
+
+const f = (a, b) => [].concat(...a.map(d => b.map(e => [].concat(d, e))));
+const cartesian = (a, b, ...c) => (b ? cartesian(f(a, b), ...c) : a);
+
+export const calculateAllPaths = () =>
+  cartesian(
+    indices.map(i => i.id),
+    minDrawdowns
+  ).map(params => ({
+    params: { index: params[0], minDrawdown: params[1].toString() }
+  }));

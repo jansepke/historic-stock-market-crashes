@@ -13,6 +13,7 @@ import Slider from "@material-ui/core/Slider";
 import Typography from "@material-ui/core/Typography";
 import TrendingDownIcon from "@material-ui/icons/TrendingDown";
 import React from "react";
+import { indices, minDrawdowns, minDrawdownStep } from "../services/Config";
 import { formatDate } from "../services/Format";
 
 export default ({
@@ -45,9 +46,11 @@ export default ({
             <FormControl>
               <InputLabel>Index</InputLabel>
               <Select value={index} onChange={handleIndexChange}>
-                <MenuItem value={"msci-world"}>MSCI World</MenuItem>
-                <MenuItem value={"msci-acwi"}>MSCI ACWI</MenuItem>
-                <MenuItem value={"msci-acwi-imi"}>MSCI ACWI IMI</MenuItem>
+                {indices.map(i => (
+                  <MenuItem key={i.id} value={i.id}>
+                    {i.label}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Grid>
@@ -69,9 +72,9 @@ export default ({
                   defaultValue={minDrawdown}
                   onChangeCommitted={handleMinDrawdownChange}
                   marks={true}
-                  step={5}
-                  min={10}
-                  max={50}
+                  step={minDrawdownStep}
+                  min={minDrawdowns[0]}
+                  max={minDrawdowns[minDrawdowns.length - 1]}
                 />
               </Grid>
               <Grid item>
