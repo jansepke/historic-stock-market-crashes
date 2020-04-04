@@ -28,34 +28,28 @@ export default ({
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
-  const [chartLoading, setChartLoading] = useState(false);
-  const [state, setState] = useState({
-    visibility: {
-      table: true,
-      chart: true
-    },
-    chartData: [],
-    markers: []
+  const [visibility, setVisibility] = useState({
+    table: true,
+    chart: true
+  });
+  const [markers, setMarkers] = useState([]);
+  const [chart, setChart] = useState({
+    data: [],
+    loading: false
   });
 
   Router.events.on("routeChangeStart", () => setLoading(true));
   Router.events.on("routeChangeComplete", () => setLoading(false));
 
   const addMarker = item => {
-    setState(prevState => ({
-      ...prevState,
-      markers: [
-        { date: item.startDate, price: item.startPrice },
-        { date: item.endDate, price: item.endPrice }
-      ]
-    }));
+    setMarkers([
+      { date: item.startDate, price: item.startPrice },
+      { date: item.endDate, price: item.endPrice }
+    ]);
   };
 
   const removeMarkers = () => {
-    setState(prevState => ({
-      ...prevState,
-      markers: []
-    }));
+    setMarkers([]);
   };
 
   const onIndexChange = newIndex => {
@@ -73,7 +67,7 @@ export default ({
   };
 
   useEffect(() => {
-    setChartLoading(true);
+    setChart({ loading: true, data: [] });
 
     (async () => {
       const response = await fetch(`/api/chart-data/${index}`);
@@ -83,22 +77,12 @@ export default ({
         item.x = new Date(item.x);
       });
 
-      setState(prevState => ({
-        ...prevState,
-        chartData
-      }));
+      setChart({ loading: false, data: chartData });
     })();
   }, [index]);
 
-  useEffect(() => {
-    setChartLoading(false);
-  }, [state.chartData]);
-
   const onVisibilityChange = (name, hide) => {
-    setState(prevState => ({
-      ...prevState,
-      visibility: { ...prevState.visibility, [name]: !hide }
-    }));
+    setVisibility({ ...visibility, [name]: !hide });
   };
 
   return (
@@ -123,7 +107,7 @@ export default ({
           </Grid>
         ) : (
           <>
-            {state.visibility.table && (
+            {visibility.table && (
               <Grid item xs={12}>
                 <Grid container spacing={1}>
                   <Grid item xs={12}>
@@ -133,7 +117,7 @@ export default ({
                       onRowHoverEnd={removeMarkers}
                     />
                   </Grid>
-                  {state.visibility.chart && (
+                  {visibility.chart && (
                     <Grid item xs={12}>
                       <Typography variant="body2" align="right">
                         Tip: Hover over a row to mark crash on graph.
@@ -143,19 +127,21 @@ export default ({
                 </Grid>
               </Grid>
             )}
-            {state.visibility.chart && chartLoading ? (
-              <Grid item xs={12} align="center">
-                <CircularProgress />
-              </Grid>
-            ) : (
-              <Grid item xs={12}>
-                <Chart
-                  data={state.chartData}
-                  markers={state.markers}
-                  dataCount={indexDataCount}
-                />
-              </Grid>
-            )}
+            {visibility.chart ? (
+              chart.loading ? (
+                <Grid item xs={12} align="center">
+                  <CircularProgress />
+                </Grid>
+              ) : (
+                <Grid item xs={12}>
+                  <Chart
+                    data={chart.data}
+                    markers={markers}
+                    dataCount={indexDataCount}
+                  />
+                </Grid>
+              )
+            ) : null}
           </>
         )}
         <Grid item xs={12}>
