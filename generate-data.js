@@ -54,7 +54,7 @@ const processIndex = async index => {
 
   await fs.writeFile(
     `./${dataDir}/chart-${index}.json`,
-    JSON.stringify(chartData, null, 2)
+    JSON.stringify({ data: chartData }, null, 2)
   );
 };
 
