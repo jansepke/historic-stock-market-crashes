@@ -1,5 +1,4 @@
-const browserLanguage = "en"; // TODO
-const dtf = new Intl.DateTimeFormat(browserLanguage, {
+const dtf = new Intl.DateTimeFormat("en", {
   year: "numeric",
   month: "short",
   day: "2-digit"

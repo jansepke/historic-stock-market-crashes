@@ -3,7 +3,7 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/router";
+import { Router, useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Footer from "./Footer";
 import Form from "./form";
@@ -27,6 +27,8 @@ export default ({
 }) => {
   const router = useRouter();
 
+  const [loading, setLoading] = useState(false);
+  const [chartLoading, setChartLoading] = useState(false);
   const [state, setState] = useState({
     visibility: {
       table: true,
@@ -35,6 +37,9 @@ export default ({
     chartData: [],
     markers: []
   });
+
+  Router.events.on("routeChangeStart", () => setLoading(true));
+  Router.events.on("routeChangeComplete", () => setLoading(false));
 
   const addMarker = item => {
     setState(prevState => ({
@@ -68,6 +73,8 @@ export default ({
   };
 
   useEffect(() => {
+    setChartLoading(true);
+
     (async () => {
       const response = await fetch(`/api/chart-data/${index}`);
       const chartData = await response.json();
@@ -82,6 +89,10 @@ export default ({
       }));
     })();
   }, [index]);
+
+  useEffect(() => {
+    setChartLoading(false);
+  }, [state.chartData]);
 
   const onVisibilityChange = (name, hide) => {
     setState(prevState => ({
@@ -106,34 +117,46 @@ export default ({
             onVisibilityChange={onVisibilityChange}
           />
         </Grid>
-        {state.visibility.table && (
-          <Grid item xs={12}>
-            <Grid container spacing={1}>
+        {loading ? (
+          <Grid item xs={12} align="center">
+            <CircularProgress />
+          </Grid>
+        ) : (
+          <>
+            {state.visibility.table && (
               <Grid item xs={12}>
-                <Table
-                  tableData={tableData}
-                  onRowHoverStart={addMarker}
-                  onRowHoverEnd={removeMarkers}
+                <Grid container spacing={1}>
+                  <Grid item xs={12}>
+                    <Table
+                      tableData={tableData}
+                      onRowHoverStart={addMarker}
+                      onRowHoverEnd={removeMarkers}
+                    />
+                  </Grid>
+                  {state.visibility.chart && (
+                    <Grid item xs={12}>
+                      <Typography variant="body2" align="right">
+                        Tip: Hover over a row to mark crash on graph.
+                      </Typography>
+                    </Grid>
+                  )}
+                </Grid>
+              </Grid>
+            )}
+            {state.visibility.chart && chartLoading ? (
+              <Grid item xs={12} align="center">
+                <CircularProgress />
+              </Grid>
+            ) : (
+              <Grid item xs={12}>
+                <Chart
+                  data={state.chartData}
+                  markers={state.markers}
+                  dataCount={indexDataCount}
                 />
               </Grid>
-              {state.visibility.chart && (
-                <Grid item xs={12}>
-                  <Typography variant="body2" align="right">
-                    Tip: Hover over a row to mark crash on graph.
-                  </Typography>
-                </Grid>
-              )}
-            </Grid>
-          </Grid>
-        )}
-        {state.visibility.chart && (
-          <Grid item xs={12}>
-            <Chart
-              data={state.chartData}
-              markers={state.markers}
-              dataCount={indexDataCount}
-            />
-          </Grid>
+            )}
+          </>
         )}
         <Grid item xs={12}>
           <Footer />
