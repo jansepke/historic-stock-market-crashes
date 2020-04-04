@@ -12,18 +12,24 @@
     "not IE 11",
     "not IE_Mob 11"
   ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
   "dependencies": {
     "@material-ui/core": "^4.9.8",
     "@material-ui/icons": "^4.9.1",
     "@nivo/line": "^0.61.1",
-    "downsample": "^1.0.3",
     "next": "^9.3.4",
-    "prettier": "^2.0.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
   "devDependencies": {
     "@types/react": "^16.9.31",
-    "csvtojson": "^2.0.10"
+    "csvtojson": "^2.0.10",
+    "downsample": "^1.0.3",
+    "husky": "^4.2.3",
+    "prettier": "^2.0.2"
   }
 }
