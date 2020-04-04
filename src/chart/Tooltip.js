@@ -4,16 +4,16 @@ import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { formatDate } from "../services/Format";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    padding: theme.spacing(1)
-  }
+    padding: theme.spacing(1),
+  },
 }));
 
 export default ({
   point: {
-    data: { x, y }
-  }
+    data: { x, y },
+  },
 }) => {
   const classes = useStyles();
 

@@ -22,7 +22,7 @@ export default ({
   initialMinDrawdown,
   onMinDrawdownChange,
   onVisibilityChange,
-  onIndexChange
+  onIndexChange,
 }) => {
   const [minDrawdown, setMinDrawdown] = useState(initialMinDrawdown);
 
@@ -32,11 +32,11 @@ export default ({
     }
   };
 
-  const handleIndexChange = event => {
+  const handleIndexChange = (event) => {
     onIndexChange(event.target.value);
   };
 
-  const handleVisibility = name => event => {
+  const handleVisibility = (name) => (event) => {
     onVisibilityChange(name, event.target.checked);
   };
 
@@ -52,7 +52,7 @@ export default ({
             <FormControl>
               <InputLabel>Index</InputLabel>
               <Select value={index} onChange={handleIndexChange}>
-                {indices.map(i => (
+                {indices.map((i) => (
                   <MenuItem key={i.id} value={i.id}>
                     {i.label}
                   </MenuItem>

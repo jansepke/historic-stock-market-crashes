@@ -51,7 +51,7 @@ export default ({ tableData, onRowHoverStart, onRowHoverEnd }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {tableData.map(row => (
+          {tableData.map((row) => (
             <TableRow
               key={row.startDate}
               hover={true}

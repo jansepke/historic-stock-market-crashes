@@ -15,7 +15,7 @@ const Chart = dynamic(() => import("./chart"), {
     <Grid item xs={12} align="center">
       <CircularProgress />
     </Grid>
-  )
+  ),
 });
 
 export default ({
@@ -23,28 +23,28 @@ export default ({
   minDrawdown,
   tableData,
   indexDataCount,
-  indexDataUpdateDate
+  indexDataUpdateDate,
 }) => {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
   const [visibility, setVisibility] = useState({
     table: true,
-    chart: true
+    chart: true,
   });
   const [markers, setMarkers] = useState([]);
   const [chart, setChart] = useState({
     data: [],
-    loading: false
+    loading: false,
   });
 
   Router.events.on("routeChangeStart", () => setLoading(true));
   Router.events.on("routeChangeComplete", () => setLoading(false));
 
-  const addMarker = item => {
+  const addMarker = (item) => {
     setMarkers([
       { date: item.startDate, price: item.startPrice },
-      { date: item.endDate, price: item.endPrice }
+      { date: item.endDate, price: item.endPrice },
     ]);
   };
 
@@ -52,14 +52,14 @@ export default ({
     setMarkers([]);
   };
 
-  const onIndexChange = newIndex => {
+  const onIndexChange = (newIndex) => {
     router.push(
       `/[index]/min-drawdown/[minDrawdown]`,
       `/${newIndex}/min-drawdown/${minDrawdown}`
     );
   };
 
-  const onMinDrawdownChange = newMinDrawdown => {
+  const onMinDrawdownChange = (newMinDrawdown) => {
     router.push(
       `/[index]/min-drawdown/[minDrawdown]`,
       `/${index}/min-drawdown/${newMinDrawdown}`
@@ -73,7 +73,7 @@ export default ({
       const response = await fetch(`/api/chart-data/${index}`);
       const chartData = await response.json();
 
-      chartData[0].data.forEach(item => {
+      chartData[0].data.forEach((item) => {
         item.x = new Date(item.x);
       });
 

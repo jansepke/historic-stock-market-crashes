@@ -1,12 +1,12 @@
 const dtf = new Intl.DateTimeFormat("en", {
   year: "numeric",
   month: "short",
-  day: "2-digit"
+  day: "2-digit",
 });
 
 export const formatDate = dtf.format;
 
-export const formatDays = days => {
+export const formatDays = (days) => {
   if (!days || isNaN(days)) {
     return "-";
   }

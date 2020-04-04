@@ -3,7 +3,7 @@ import React from "react";
 import App from "../../../App";
 import {
   calculateAllPaths,
-  calculateTableData
+  calculateTableData,
 } from "../../../services/Calculator";
 import { getIndexData } from "../../../services/Data";
 
@@ -12,13 +12,13 @@ export default ({
   minDrawdown,
   tableData,
   indexDataCount,
-  indexDataUpdateDate
+  indexDataUpdateDate,
 }) => {
-  const parsedTableData = tableData.map(item => ({
+  const parsedTableData = tableData.map((item) => ({
     ...item,
     startDate: new Date(item.startDate),
     endDate: new Date(item.endDate),
-    doneDate: item.doneDate ? new Date(item.doneDate) : null
+    doneDate: item.doneDate ? new Date(item.doneDate) : null,
   }));
   const parsedIndexDataUpdateDate = new Date(indexDataUpdateDate);
 
@@ -55,12 +55,12 @@ export const getStaticProps = async ({ params: { index, minDrawdown } }) => {
       minDrawdown: parsedMinDrawdown,
       tableData,
       indexDataCount: indexData.length,
-      indexDataUpdateDate
-    }
+      indexDataUpdateDate,
+    },
   };
 };
 
 export const getStaticPaths = async () => ({
   paths: calculateAllPaths(),
-  fallback: false
+  fallback: false,
 });

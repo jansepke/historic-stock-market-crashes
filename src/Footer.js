@@ -7,15 +7,15 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import React from "react";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     display: "inline",
-    boxShadow: "none"
+    boxShadow: "none",
   },
   summary: {
-    display: "inline-flex"
-  }
+    display: "inline-flex",
+  },
 }));
 
 const FootNote = ({ header, children }) => {

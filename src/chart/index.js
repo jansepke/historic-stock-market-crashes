@@ -22,11 +22,11 @@ export default ({ data, markers, dataCount }) =>
               format: "%Y",
               tickValues: "every 5 years",
               legend: "year",
-              legendOffset: -12
+              legendOffset: -12,
             }}
             axisLeft={{
               legend: "points",
-              legendOffset: 12
+              legendOffset: 12,
             }}
             colors={{ scheme: "set1" }}
             lineWidth={1}
@@ -39,7 +39,7 @@ export default ({ data, markers, dataCount }) =>
               lineStyle: { strokeDasharray: "10 5" },
               legend: `${formatDate(item.date)}: ${item.price.toFixed()}p`,
               legendOrientation: "vertical",
-              legendPosition: idx % 2 === 0 ? "top-left" : "top-right"
+              legendPosition: idx % 2 === 0 ? "top-left" : "top-right",
             }))}
           />
         </Grid>

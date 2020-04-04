@@ -4,7 +4,7 @@ const msToDays = 1 / 60 / 60 / 24 / 1000;
 
 const addPercentUp = (data, newTableData, years) => {
   for (const entry of data) {
-    const lastCrash = newTableData.find(crash => !crash[`percentUp${years}`]);
+    const lastCrash = newTableData.find((crash) => !crash[`percentUp${years}`]);
     if (
       lastCrash &&
       (entry.date - lastCrash.endDate) * msToDays >= 365 * years
@@ -34,7 +34,7 @@ export const calculateTableData = (data, minDrawdown) => {
         daysDown: daysDown,
         percent: percent,
         daysDone: daysDone,
-        doneDate: newPeak.date?.toString() || null
+        doneDate: newPeak.date?.toString() || null,
       });
     }
   };
@@ -59,13 +59,13 @@ export const calculateTableData = (data, minDrawdown) => {
   return newTableData;
 };
 
-const f = (a, b) => [].concat(...a.map(d => b.map(e => [].concat(d, e))));
+const f = (a, b) => [].concat(...a.map((d) => b.map((e) => [].concat(d, e))));
 const cartesian = (a, b, ...c) => (b ? cartesian(f(a, b), ...c) : a);
 
 export const calculateAllPaths = () =>
   cartesian(
-    indices.map(i => i.id),
+    indices.map((i) => i.id),
     minDrawdowns
-  ).map(params => ({
-    params: { index: params[0], minDrawdown: params[1].toString() }
+  ).map((params) => ({
+    params: { index: params[0], minDrawdown: params[1].toString() },
   }));

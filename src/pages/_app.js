@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React, { useEffect } from "react";
 
-export default props => {
+export default (props) => {
   const { Component, pageProps } = props;
 
   useEffect(() => {

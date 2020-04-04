@@ -16,20 +16,20 @@ const calculateChartData = (data, sampleRate) => {
   return [
     {
       id: "sampled",
-      data: downsampledData
-    }
+      data: downsampledData,
+    },
   ];
 };
 
-const parseFile = async fileName =>
+const parseFile = async (fileName) =>
   csv({
     colParser: {
-      Price: item => parseFloat(item.replace(",", "")),
-      Date: item => new Date(item)
-    }
+      Price: (item) => parseFloat(item.replace(",", "")),
+      Date: (item) => new Date(item),
+    },
   }).fromFile(fileName);
 
-const processIndex = async index => {
+const processIndex = async (index) => {
   const msciData = await parseFile(`./data-sources/msci/${index}.csv`);
   const investingData = (
     await parseFile(`./data-sources/investing/${index}.csv`)
@@ -47,7 +47,7 @@ const processIndex = async index => {
   const chartData = calculateChartData(
     indexData.map(({ date, price }) => ({
       date: new Date(date),
-      price: parseFloat(price)
+      price: parseFloat(price),
     })),
     5000
   );
