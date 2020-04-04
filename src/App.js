@@ -54,15 +54,11 @@ export default ({
   };
 
   const onIndexChange = newIndex => {
-    router.push(
-      `${router.pathname}?index=${newIndex}&minDrawdown=${minDrawdown}`
-    );
+    router.push(`/${newIndex}/min-drawdown/${minDrawdown}`);
   };
 
   const onMinDrawdownChange = newMinDrawdown => {
-    router.push(
-      `${router.pathname}?index=${index}&minDrawdown=${newMinDrawdown}`
-    );
+    router.push(`/${index}/min-drawdown/${newMinDrawdown}`);
   };
 
   useEffect(() => {
