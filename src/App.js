@@ -54,11 +54,17 @@ export default ({
   };
 
   const onIndexChange = newIndex => {
-    router.push(`/${newIndex}/min-drawdown/${minDrawdown}`);
+    router.push(
+      `/[index]/min-drawdown/[minDrawdown]`,
+      `/${newIndex}/min-drawdown/${minDrawdown}`
+    );
   };
 
   const onMinDrawdownChange = newMinDrawdown => {
-    router.push(`/${index}/min-drawdown/${newMinDrawdown}`);
+    router.push(
+      `/[index]/min-drawdown/[minDrawdown]`,
+      `/${index}/min-drawdown/${newMinDrawdown}`
+    );
   };
 
   useEffect(() => {
