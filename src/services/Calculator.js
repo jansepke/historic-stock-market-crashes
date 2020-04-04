@@ -27,14 +27,14 @@ export const calculateTableData = (data, minDrawdown) => {
       const daysDone = (newPeak.date - lastPeak.date) * msToDays;
 
       newTableData.push({
-        startDate: lastPeak.date.toString(),
-        endDate: lastTrough.date.toString(),
+        startDate: lastPeak.date,
+        endDate: lastTrough.date,
         startPrice: lastPeak.price,
         endPrice: lastTrough.price,
         daysDown: daysDown,
         percent: percent,
         daysDone: daysDone,
-        doneDate: newPeak.date?.toString() || null,
+        doneDate: newPeak.date,
       });
     }
   };
@@ -53,6 +53,12 @@ export const calculateTableData = (data, minDrawdown) => {
 
   addPercentUp(data, newTableData, 2);
   addPercentUp(data, newTableData, 5);
+
+  newTableData.forEach((item) => {
+    item.startDate = item.startDate.toString();
+    item.endDate = item.endDate.toString();
+    item.doneDate = item.doneDate?.toString() || null;
+  });
 
   console.log("done with max drawdown calculation");
 
