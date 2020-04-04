@@ -94,7 +94,7 @@ export default ({
           <Form
             index={index}
             lastDataUpdate={indexDataUpdateDate}
-            minDrawdown={minDrawdown}
+            initialMinDrawdown={minDrawdown}
             onMinDrawdownChange={onMinDrawdownChange}
             onIndexChange={onIndexChange}
             onVisibilityChange={onVisibilityChange}

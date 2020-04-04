@@ -12,20 +12,22 @@ import Select from "@material-ui/core/Select";
 import Slider from "@material-ui/core/Slider";
 import Typography from "@material-ui/core/Typography";
 import TrendingDownIcon from "@material-ui/icons/TrendingDown";
-import React from "react";
+import React, { useState } from "react";
 import { indices, minDrawdowns, minDrawdownStep } from "../services/Config";
 import { formatDate } from "../services/Format";
 
 export default ({
   index,
   lastDataUpdate,
-  minDrawdown,
+  initialMinDrawdown,
   onMinDrawdownChange,
   onVisibilityChange,
   onIndexChange
 }) => {
+  const [minDrawdown, setMinDrawdown] = useState(initialMinDrawdown);
+
   const handleMinDrawdownChange = (event, newValue) => {
-    if (newValue !== minDrawdown) {
+    if (newValue !== initialMinDrawdown) {
       onMinDrawdownChange(newValue);
     }
   };
@@ -36,6 +38,10 @@ export default ({
 
   const handleVisibility = name => event => {
     onVisibilityChange(name, event.target.checked);
+  };
+
+  const handleMinDrawdownMove = (event, newValue) => {
+    setMinDrawdown(newValue);
   };
 
   return (
@@ -69,7 +75,8 @@ export default ({
               </Grid>
               <Grid item xs>
                 <Slider
-                  defaultValue={minDrawdown}
+                  value={minDrawdown}
+                  onChange={handleMinDrawdownMove}
                   onChangeCommitted={handleMinDrawdownChange}
                   marks={true}
                   step={minDrawdownStep}
