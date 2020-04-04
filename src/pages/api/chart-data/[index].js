@@ -1,9 +1,5 @@
-import { calculateChartData } from "../../../services/Calculator";
-import { getIndexData } from "../../../services/Data";
-
 export default async ({ query: { index } }, res) => {
-  const indexData = await getIndexData(index);
-  const chartData = calculateChartData(indexData, 5000);
+  const data = await import(`../../../../index-data/chart-${index}.json`);
 
-  res.status(200).json(chartData);
+  res.status(200).json(data);
 };

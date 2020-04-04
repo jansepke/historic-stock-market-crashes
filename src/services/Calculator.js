@@ -1,4 +1,3 @@
-import { LTD } from "downsample";
 import { indices, minDrawdowns } from "./Config";
 
 const msToDays = 1 / 60 / 60 / 24 / 1000;
@@ -58,21 +57,6 @@ export const calculateTableData = (data, minDrawdown) => {
   console.log("done with max drawdown calculation");
 
   return newTableData;
-};
-
-export const calculateChartData = (data, sampleRate) => {
-  const newData = data.map(({ price, date }) => ({ x: date, y: price }));
-  const numPointsInDownsampledData = sampleRate;
-  const downsampledData = LTD(newData, numPointsInDownsampledData);
-
-  console.log("done with data sampling");
-
-  return [
-    {
-      id: "sampled",
-      data: downsampledData
-    }
-  ];
 };
 
 const f = (a, b) => [].concat(...a.map(d => b.map(e => [].concat(d, e))));
