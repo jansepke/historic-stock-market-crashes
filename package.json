@@ -1,8 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "node generate-data.js && next dev",
+    "build": "node generate-data.js && next build",
     "start": "next start"
   },
   "browserslist": [

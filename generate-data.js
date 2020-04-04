@@ -5,6 +5,8 @@ const fs = require("fs").promises;
 // ACWI http://www.msci.com/eqb/esg/performance/2591.0.all.xls
 // ACWI IMI http://www.msci.com/eqb/esg/performance/73562.0.all.xls
 
+const dataDir = "index-data";
+
 const parseFile = async fileName =>
   csv({
     colParser: {
@@ -24,12 +26,14 @@ const processIndex = async index => {
     .map(({ Date: date, Price: price }) => ({ date, price: price.toFixed(2) }));
 
   await fs.writeFile(
-    `./data/${index}.json`,
+    `./${dataDir}/${index}.json`,
     JSON.stringify({ data: result }, null, 2)
   );
 };
 
 (async () => {
+  await fs.mkdir(dataDir, { recursive: true });
+
   for (const index of ["msci-world", "msci-acwi", "msci-acwi-imi"]) {
     await processIndex(index);
   }
