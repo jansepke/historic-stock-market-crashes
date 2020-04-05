@@ -2,10 +2,6 @@ const csv = require("csvtojson");
 const fs = require("fs").promises;
 const { LTD } = require("downsample");
 
-// World http://www.msci.com/eqb/esg/performance/106.0.all.xls
-// ACWI http://www.msci.com/eqb/esg/performance/2591.0.all.xls
-// ACWI IMI http://www.msci.com/eqb/esg/performance/73562.0.all.xls
-
 const dataDir = "index-data";
 
 const calculateChartData = (data, sampleRate) => {
@@ -24,20 +20,18 @@ const calculateChartData = (data, sampleRate) => {
 const parseFile = async (fileName) =>
   csv({
     colParser: {
-      Price: (item) => parseFloat(item.replace(",", "")),
-      Date: (item) => new Date(item),
+      price: (item) => parseFloat(item),
+      date: (item) => new Date(item),
     },
   }).fromFile(fileName);
 
 const processIndex = async (index) => {
-  const msciData = await parseFile(`./data-sources/msci/${index}.csv`);
-  const investingData = (
-    await parseFile(`./data-sources/investing/${index}.csv`)
-  ).reverse();
+  const msciData = await parseFile(`./data-sources/${index}.csv`);
 
-  const indexData = msciData
-    .concat(investingData)
-    .map(({ Date: date, Price: price }) => ({ date, price: price.toFixed(2) }));
+  const indexData = msciData.map(({ date, price }) => ({
+    date,
+    price: price.toFixed(2),
+  }));
 
   await fs.writeFile(
     `./${dataDir}/${index}.json`,
