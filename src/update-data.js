@@ -20,6 +20,15 @@ const getName = (index) => {
   }
 };
 
+const getRegex = (index) => {
+  if (index === "msci-world" || index === "msci-acwi-imi") {
+    return /(\d\d\/\d\d\/\d\d\d\d,".*?"),/g;
+  }
+  if (index === "msci-acwi") {
+    return /(\d\d\/\d\d\/\d\d\d\d,.*?),/g;
+  }
+};
+
 const convertDate = (date) =>
   `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${(
     "0" + date.getDate()
@@ -64,7 +73,7 @@ const processIndex = async (index) => {
 
   const rawCSV = response.data
     .replace(/".*?",/, "") // remove first item
-    .replace(/(\d\d\/\d\d\/\d\d\d\d,".*?"),/g, "$1\n"); // add line breaks
+    .replace(getRegex(index), "$1\n"); // add line breaks
 
   const json = await csv({
     headers: ["date", "price"],
