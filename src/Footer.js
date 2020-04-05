@@ -47,34 +47,11 @@ export default () => {
         <Grid item xs={12}>
           <FootNote header="Data sources">
             <span>
-              Index data is gathered from:
+              MSCI index data is gathered from:
               <br />
-              MSCI World:{" "}
-              <a href="http://www.msci.com/eqb/esg/performance/106.0.all.xls">
-                MSCI History
+              <a href="https://www.msci.com/end-of-day-data-search">
+                MSCI End of day index data search
               </a>{" "}
-              and{" "}
-              <a href="https://www.investing.com/indices/msci-world-historical-data">
-                investing.com
-              </a>
-              <br />
-              MSCI ACWI:{" "}
-              <a href="http://www.msci.com/eqb/esg/performance/2591.0.all.xls">
-                MSCI History
-              </a>{" "}
-              and{" "}
-              <a href="https://www.investing.com/indices/msci-world-stock-historical-data">
-                investing.com
-              </a>
-              <br />
-              MSCI ACWI IMI:{" "}
-              <a href="http://www.msci.com/eqb/esg/performance/73562.0.all.xls">
-                MSCI History
-              </a>
-              and{" "}
-              <a href="https://www.investing.com/indices/msci-acwi-imi-historical-data">
-                investing.com
-              </a>
             </span>
           </FootNote>
         </Grid>
