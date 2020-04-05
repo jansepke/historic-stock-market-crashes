@@ -96,7 +96,7 @@ const processIndex = async (index) => {
       date: convertDate(date),
       price: price.toFixed(2),
     }))
-    .map((data) => `"${data.date}","${data.price}"`)
+    .map((data) => `${data.date},${data.price}`)
     .join("\n");
 
   await fs.appendFile(`./data-sources/${index}.csv`, "\n" + newCSV);
