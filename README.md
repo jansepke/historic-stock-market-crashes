@@ -28,6 +28,7 @@ Start the project with
 - allow merging data of multiple indices
 - add tabular datasets for search engines (https://developers.google.com/search/docs/data-types/dataset#tabular)
 - move data to S3 bucket
+- select rows not hover
 
 ## License
 

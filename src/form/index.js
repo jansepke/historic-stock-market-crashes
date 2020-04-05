@@ -1,9 +1,6 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import Checkbox from "@material-ui/core/Checkbox";
 import FormControl from "@material-ui/core/FormControl";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormGroup from "@material-ui/core/FormGroup";
 import FormLabel from "@material-ui/core/FormLabel";
 import Grid from "@material-ui/core/Grid";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -21,7 +18,6 @@ export default ({
   lastDataUpdate,
   initialMinDrawdown,
   onMinDrawdownChange,
-  onVisibilityChange,
   onIndexChange,
 }) => {
   const [minDrawdown, setMinDrawdown] = useState(initialMinDrawdown);
@@ -34,10 +30,6 @@ export default ({
 
   const handleIndexChange = (event) => {
     onIndexChange(event.target.value);
-  };
-
-  const handleVisibility = (name) => (event) => {
-    onVisibilityChange(name, event.target.checked);
   };
 
   const handleMinDrawdownMove = (event, newValue) => {
@@ -63,12 +55,12 @@ export default ({
           <Grid item xs={8} md={4}>
             {lastDataUpdate && (
               <Typography variant="body2" color="textSecondary">
-                Last data from: {formatDate(lastDataUpdate)}
+                Last updated on: {formatDate(lastDataUpdate)}
               </Typography>
             )}
           </Grid>
           <Grid item xs={12} md={6}>
-            <FormLabel>Minimum accumulated loss</FormLabel>
+            <FormLabel>Loss of at least {minDrawdown}%</FormLabel>
             <Grid container spacing={2} alignItems="center">
               <Grid item>
                 <TrendingDownIcon />
@@ -84,25 +76,7 @@ export default ({
                   max={minDrawdowns[minDrawdowns.length - 1]}
                 />
               </Grid>
-              <Grid item>
-                <Typography>{minDrawdown}%</Typography>
-              </Grid>
             </Grid>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <FormControl component="fieldset">
-              <FormLabel>Customizations</FormLabel>
-              <FormGroup row>
-                <FormControlLabel
-                  control={<Checkbox onChange={handleVisibility("table")} />}
-                  label="Hide Table"
-                />
-                <FormControlLabel
-                  control={<Checkbox onChange={handleVisibility("chart")} />}
-                  label="Hide Chart"
-                />
-              </FormGroup>
-            </FormControl>
           </Grid>
         </Grid>
       </CardContent>

@@ -28,10 +28,6 @@ export default ({
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
-  const [visibility, setVisibility] = useState({
-    table: true,
-    chart: true,
-  });
   const [markers, setMarkers] = useState([]);
   const [chart, setChart] = useState({
     data: [],
@@ -81,10 +77,6 @@ export default ({
     })();
   }, [index]);
 
-  const onVisibilityChange = (name, hide) => {
-    setVisibility({ ...visibility, [name]: !hide });
-  };
-
   return (
     <Container maxWidth="lg">
       <Typography variant="h2" align="center">
@@ -98,7 +90,6 @@ export default ({
             initialMinDrawdown={minDrawdown}
             onMinDrawdownChange={onMinDrawdownChange}
             onIndexChange={onIndexChange}
-            onVisibilityChange={onVisibilityChange}
           />
         </Grid>
         {loading ? (
@@ -107,41 +98,35 @@ export default ({
           </Grid>
         ) : (
           <>
-            {visibility.table && (
-              <Grid item xs={12}>
-                <Grid container spacing={1}>
-                  <Grid item xs={12}>
-                    <Table
-                      tableData={tableData}
-                      onRowHoverStart={addMarker}
-                      onRowHoverEnd={removeMarkers}
-                    />
-                  </Grid>
-                  {visibility.chart && (
-                    <Grid item xs={12}>
-                      <Typography variant="body2" align="right">
-                        Tip: Hover over a row to mark crash on graph.
-                      </Typography>
-                    </Grid>
-                  )}
-                </Grid>
-              </Grid>
-            )}
-            {visibility.chart ? (
-              chart.loading ? (
-                <Grid item xs={12} align="center">
-                  <CircularProgress />
-                </Grid>
-              ) : (
+            <Grid item xs={12}>
+              <Grid container spacing={1}>
                 <Grid item xs={12}>
-                  <Chart
-                    data={chart.data}
-                    markers={markers}
-                    dataCount={indexDataCount}
+                  <Table
+                    tableData={tableData}
+                    onRowHoverStart={addMarker}
+                    onRowHoverEnd={removeMarkers}
                   />
                 </Grid>
-              )
-            ) : null}
+                <Grid item xs={12}>
+                  <Typography variant="body2" align="right">
+                    Tip: Click on a row to mark crash on graph.
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Grid>
+            {chart.loading ? (
+              <Grid item xs={12} align="center">
+                <CircularProgress />
+              </Grid>
+            ) : (
+              <Grid item xs={12}>
+                <Chart
+                  data={chart.data}
+                  markers={markers}
+                  dataCount={indexDataCount}
+                />
+              </Grid>
+            )}
           </>
         )}
         <Grid item xs={12}>

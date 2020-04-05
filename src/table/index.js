@@ -11,6 +11,16 @@ import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import React from "react";
 import { formatDate, formatDays, formatNumber } from "../services/Format";
 
+const TouchTooltip = ({ withIcon, children, ...props }) => (
+  <Tooltip {...props} enterTouchDelay={50} leaveTouchDelay={5000}>
+    <span>
+      {children}
+      {withIcon ? " " : null}
+      {withIcon ? <HelpOutlineIcon fontSize="inherit" /> : null}
+    </span>
+  </Tooltip>
+);
+
 export default ({ tableData, onRowHoverStart, onRowHoverEnd }) => {
   return (
     <TableContainer component={Paper}>
@@ -18,35 +28,44 @@ export default ({ tableData, onRowHoverStart, onRowHoverEnd }) => {
         <TableHead>
           <TableRow>
             <TableCell align="center">Begin of crash</TableCell>
-            <TableCell align="center">End of crash</TableCell>
+            <TableCell align="center">Date of lowest point</TableCell>
             <TableCell align="center">
               Time until
               <br />
               lowest point
             </TableCell>
             <TableCell align="center">
-              Accumulated loss
+              Loss of value
               <br />
               (maximum drawdown)
             </TableCell>
             <TableCell align="center">
-              <Tooltip title="Time from begin of crash until new highest point">
-                <span>
-                  Time until new
-                  <br />
-                  highest point <HelpOutlineIcon fontSize="inherit" />
-                </span>
-              </Tooltip>
+              <TouchTooltip
+                withIcon
+                title="Time from begin of crash until new highest point"
+              >
+                Time until new
+                <br />
+                highest point
+              </TouchTooltip>
             </TableCell>
             <TableCell align="center">
-              Accumulated return
-              <br />
-              after 2 years
+              <TouchTooltip
+                withIcon
+                title="Return of an investment from the lowest point after 2 years"
+              >
+                ROI after
+                <br />2 years
+              </TouchTooltip>
             </TableCell>
             <TableCell align="center">
-              Accumulated return
-              <br />
-              after 5 years
+              <TouchTooltip
+                withIcon
+                title="Return of an investment from the lowest point after 5 years"
+              >
+                ROI after
+                <br />5 years
+              </TouchTooltip>
             </TableCell>
           </TableRow>
         </TableHead>
@@ -59,23 +78,25 @@ export default ({ tableData, onRowHoverStart, onRowHoverEnd }) => {
               onMouseOut={() => onRowHoverEnd(row)}
             >
               <TableCell align="center">
-                <Tooltip title={formatNumber(row.startPrice, " points")}>
-                  <span>{formatDate(row.startDate)}</span>
-                </Tooltip>
+                <TouchTooltip title={formatNumber(row.startPrice, " points")}>
+                  {formatDate(row.startDate)}
+                </TouchTooltip>
               </TableCell>
               <TableCell align="center">
-                <Tooltip title={formatNumber(row.endPrice, " points")}>
-                  <span>{formatDate(row.endDate)}</span>
-                </Tooltip>
+                <TouchTooltip title={formatNumber(row.endPrice, " points")}>
+                  {formatDate(row.endDate)}
+                </TouchTooltip>
               </TableCell>
               <TableCell align="center">{formatDays(row.daysDown)}</TableCell>
               <TableCell align="center">
                 <Box color="error.main">{-row.percent.toFixed()}%</Box>
               </TableCell>
               <TableCell align="center">
-                <Tooltip title={row.doneDate ? formatDate(row.doneDate) : ""}>
-                  <span>{formatDays(row.daysDone)}</span>
-                </Tooltip>
+                <TouchTooltip
+                  title={row.doneDate ? formatDate(row.doneDate) : ""}
+                >
+                  {formatDays(row.daysDone)}
+                </TouchTooltip>
               </TableCell>
               <TableCell align="center">
                 {formatNumber(row.percentUp2, "%")}
