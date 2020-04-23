@@ -4,6 +4,7 @@
     "dev": "node src/generate-data.js && next dev",
     "build": "node src/generate-data.js && next build",
     "start": "next start",
+    "update-data": "node src/update-data.js",
     "lint": "prettier --check ./src",
     "lint:fix": "prettier --write ./src"
   },
