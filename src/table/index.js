@@ -78,12 +78,12 @@ export default ({ tableData, onRowHoverStart, onRowHoverEnd }) => {
               onMouseOut={() => onRowHoverEnd(row)}
             >
               <TableCell align="center">
-                <TouchTooltip title={formatNumber(row.startPrice, " points")}>
+                <TouchTooltip title={formatNumber(row.startPrice, " USD")}>
                   {formatDate(row.startDate)}
                 </TouchTooltip>
               </TableCell>
               <TableCell align="center">
-                <TouchTooltip title={formatNumber(row.endPrice, " points")}>
+                <TouchTooltip title={formatNumber(row.endPrice, " USD")}>
                   {formatDate(row.endDate)}
                 </TouchTooltip>
               </TableCell>

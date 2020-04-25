@@ -2,7 +2,7 @@ import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
-import { formatDate } from "../services/Format";
+import { formatDate, formatNumber } from "../services/Format";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,7 +20,7 @@ export default ({
   return (
     <Paper className={classes.root}>
       <Typography>
-        {formatDate(x)}: {y.toFixed()}p
+        {formatDate(x)}: {formatNumber(y, " USD")}
       </Typography>
     </Paper>
   );

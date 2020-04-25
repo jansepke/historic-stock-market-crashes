@@ -4,7 +4,7 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { ResponsiveLine } from "@nivo/line";
 import React from "react";
-import { formatDate } from "../services/Format";
+import { formatDate, formatNumber } from "../services/Format";
 import ToolTip from "./Tooltip";
 
 export default ({ data, markers, dataCount }) =>
@@ -25,7 +25,7 @@ export default ({ data, markers, dataCount }) =>
               legendOffset: -12,
             }}
             axisLeft={{
-              legend: "points",
+              legend: "USD",
               legendOffset: 12,
             }}
             colors={{ scheme: "set1" }}
@@ -37,7 +37,10 @@ export default ({ data, markers, dataCount }) =>
               axis: "x",
               value: item.date,
               lineStyle: { strokeDasharray: "10 5" },
-              legend: `${formatDate(item.date)}: ${item.price.toFixed()}p`,
+              legend: `${formatDate(item.date)}: ${formatNumber(
+                item.price,
+                " USD"
+              )}`,
               legendOrientation: "vertical",
               legendPosition: idx % 2 === 0 ? "top-left" : "top-right",
             }))}
