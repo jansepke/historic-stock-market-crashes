@@ -28,7 +28,7 @@ export default ({
         <title>Historic Stock Market Crashes</title>
         <meta
           name="description"
-          content="Analyze historic stock market crashes for different popular indices (MSCI World, ACWI). Filter crashes with adjustable maximum drawdown. Support buy and hold strategy."
+          content="Analyze historic stock market crashes for different popular indices (MSCI World, ACWI). Filter crashes with adjustable maximum drawdown. Supports buy and hold strategy with ETFs."
         />
       </Head>
       <App
