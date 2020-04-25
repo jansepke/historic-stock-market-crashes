@@ -1,7 +1,10 @@
+import { Box } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
+import TouchAppOutlinedIcon from "@material-ui/icons/TouchAppOutlined";
 import dynamic from "next/dynamic";
 import { Router, useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -82,6 +85,12 @@ export default ({
       <Typography variant="h2" align="center">
         Historic Stock Market Crashes
       </Typography>
+      <Box m={2}>
+        <Typography align="justify">
+          Analyze historic stock market crashes for different indices based on
+          the maximum drawdown.
+        </Typography>
+      </Box>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Form
@@ -92,42 +101,41 @@ export default ({
             onIndexChange={onIndexChange}
           />
         </Grid>
-        {loading ? (
+        <Grid item xs={12}>
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <Table
+                tableData={tableData}
+                onRowHoverStart={addMarker}
+                onRowHoverEnd={removeMarkers}
+              />
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <Typography variant="body2">
+                <InfoOutlinedIcon fontSize="inherit" /> Returns are nominal
+                without costs and taxes. Values are in USD.
+              </Typography>
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <Typography variant="body2" align="right">
+                <TouchAppOutlinedIcon fontSize="inherit" /> Click on a row to
+                mark crash on graph.
+              </Typography>
+            </Grid>
+          </Grid>
+        </Grid>
+        {loading || chart.loading ? (
           <Grid item xs={12} align="center">
             <CircularProgress />
           </Grid>
         ) : (
-          <>
-            <Grid item xs={12}>
-              <Grid container spacing={1}>
-                <Grid item xs={12}>
-                  <Table
-                    tableData={tableData}
-                    onRowHoverStart={addMarker}
-                    onRowHoverEnd={removeMarkers}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="body2" align="right">
-                    Tip: Click on a row to mark crash on graph.
-                  </Typography>
-                </Grid>
-              </Grid>
-            </Grid>
-            {chart.loading ? (
-              <Grid item xs={12} align="center">
-                <CircularProgress />
-              </Grid>
-            ) : (
-              <Grid item xs={12}>
-                <Chart
-                  data={chart.data}
-                  markers={markers}
-                  dataCount={indexDataCount}
-                />
-              </Grid>
-            )}
-          </>
+          <Grid item xs={12}>
+            <Chart
+              data={chart.data}
+              markers={markers}
+              dataCount={indexDataCount}
+            />
+          </Grid>
         )}
         <Grid item xs={12}>
           <Footer />
