@@ -1,4 +1,4 @@
-import { indices, inflations, minDrawdowns } from "./Config";
+import { dataResolutions, indices, inflations, minDrawdowns } from "./Config";
 
 const msToDays = 1 / 60 / 60 / 24 / 1000;
 
@@ -72,10 +72,11 @@ export const calculateAllPaths = () =>
   cartesian(
     indices.map((i) => i.id),
     inflations.map((i) => i.id),
+    dataResolutions.map((i) => i.id),
     minDrawdowns
   ).map((params) => ({
     params: {
-      index: `${params[0]}_${params[1]}`,
-      minDrawdown: params[2].toString(),
+      index: `${params[0]}_${params[1]}_${params[2]}`,
+      minDrawdown: params[3].toString(),
     },
   }));

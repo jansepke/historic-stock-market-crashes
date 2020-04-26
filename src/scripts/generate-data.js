@@ -33,13 +33,21 @@ const readFile = async (fileName) => {
 const inflationByDate = (inflationData, date) =>
   inflationData[date.getFullYear()][date.getMonth() + 1];
 
-const processIndex = async (index, inflation) => {
+const processIndex = async (index, inflation, dataResolution) => {
   const msciData = await parseFile(`./data-sources/${index}.csv`);
 
   let indexData = msciData.map(({ date, price }) => ({
     date,
     price: price.toFixed(2),
   }));
+
+  if (dataResolution === "end-of-month") {
+    indexData = indexData.filter(
+      ({ date }) =>
+        date.getDate() ===
+        new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
+    ); // only last day of month
+  }
 
   if (inflation !== "nominal") {
     const inflationData = await readFile(`./data-sources/inflation-us.json`);
@@ -61,7 +69,7 @@ const processIndex = async (index, inflation) => {
   }
 
   await fs.writeFile(
-    `./${dataDir}/${index}-${inflation}.json`,
+    `./${dataDir}/${index}-${inflation}-${dataResolution}.json`,
     JSON.stringify({ data: indexData }, null, 2)
   );
 
@@ -83,7 +91,8 @@ const processIndex = async (index, inflation) => {
   await fs.mkdir(dataDir, { recursive: true });
 
   for (const index of ["msci-world", "msci-acwi", "msci-acwi-imi"]) {
-    await processIndex(index, "nominal");
+    await processIndex(index, "nominal", "end-of-day");
+    await processIndex(index, "nominal", "end-of-month");
     //await processIndex(index, "real-us");
   }
 })();

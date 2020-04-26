@@ -24,6 +24,7 @@ const Chart = dynamic(() => import("./chart"), {
 export default ({
   index,
   inflation,
+  dataResolution,
   minDrawdown,
   tableData,
   indexDataCount,
@@ -55,14 +56,21 @@ export default ({
   const onIndexChange = (newIndex) => {
     router.push(
       `/[index]/min-drawdown/[minDrawdown]`,
-      `/${newIndex}_nominal/min-drawdown/${minDrawdown}`
+      `/${newIndex}_nominal_${dataResolution}/min-drawdown/${minDrawdown}`
+    );
+  };
+
+  const onDataResolutionChange = (newDataResolution) => {
+    router.push(
+      `/[index]/min-drawdown/[minDrawdown]`,
+      `/${index}_nominal_${newDataResolution}/min-drawdown/${minDrawdown}`
     );
   };
 
   const onMinDrawdownChange = (newMinDrawdown) => {
     router.push(
       `/[index]/min-drawdown/[minDrawdown]`,
-      `/${index}_nominal/min-drawdown/${newMinDrawdown}`
+      `/${index}_nominal_${dataResolution}/min-drawdown/${newMinDrawdown}`
     );
   };
 
@@ -98,7 +106,9 @@ export default ({
             index={index}
             lastDataUpdate={indexDataUpdateDate}
             initialMinDrawdown={minDrawdown}
+            dataResolution={dataResolution}
             onMinDrawdownChange={onMinDrawdownChange}
+            onDataResolutionChange={onDataResolutionChange}
             onIndexChange={onIndexChange}
           />
         </Grid>

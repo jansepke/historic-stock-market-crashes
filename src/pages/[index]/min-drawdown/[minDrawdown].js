@@ -10,6 +10,7 @@ import { getIndexData } from "../../../services/Data";
 export default ({
   index,
   inflation,
+  dataResolution,
   minDrawdown,
   tableData,
   indexDataCount,
@@ -34,6 +35,7 @@ export default ({
       </Head>
       <App
         index={index}
+        dataResolution={dataResolution}
         inflation={inflation}
         minDrawdown={minDrawdown}
         tableData={parsedTableData}
@@ -47,10 +49,10 @@ export default ({
 export const getStaticProps = async ({
   params: { index: indexAndInflation, minDrawdown },
 }) => {
-  const [index, inflation] = indexAndInflation.split("_");
+  const [index, inflation, dataResolution] = indexAndInflation.split("_");
   const parsedMinDrawdown = parseInt(minDrawdown);
 
-  const indexData = await getIndexData(index, inflation);
+  const indexData = await getIndexData(index, inflation, dataResolution);
   const tableData = calculateTableData(indexData, parsedMinDrawdown);
   const indexDataUpdateDate = indexData[indexData.length - 1].date.toString();
 
@@ -58,6 +60,7 @@ export const getStaticProps = async ({
     props: {
       index,
       inflation,
+      dataResolution,
       minDrawdown: parsedMinDrawdown,
       tableData,
       indexDataCount: indexData.length,

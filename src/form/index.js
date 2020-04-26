@@ -10,14 +10,21 @@ import Slider from "@material-ui/core/Slider";
 import Typography from "@material-ui/core/Typography";
 import TrendingDownIcon from "@material-ui/icons/TrendingDown";
 import React, { useState } from "react";
-import { indices, minDrawdowns, minDrawdownStep } from "../services/Config";
+import {
+  dataResolutions,
+  indices,
+  minDrawdowns,
+  minDrawdownStep,
+} from "../services/Config";
 import { formatDate } from "../services/Format";
 
 export default ({
   index,
+  dataResolution,
   lastDataUpdate,
   initialMinDrawdown,
   onMinDrawdownChange,
+  onDataResolutionChange,
   onIndexChange,
 }) => {
   const [minDrawdown, setMinDrawdown] = useState(initialMinDrawdown);
@@ -32,6 +39,10 @@ export default ({
     onIndexChange(event.target.value);
   };
 
+  const handleDataResolutionChange = (event) => {
+    onDataResolutionChange(event.target.value);
+  };
+
   const handleMinDrawdownMove = (event, newValue) => {
     setMinDrawdown(newValue);
   };
@@ -41,7 +52,7 @@ export default ({
       <CardContent>
         <Grid container spacing={3}>
           <Grid item xs={4} md={2}>
-            <FormControl>
+            <FormControl fullWidth={true}>
               <InputLabel>Index</InputLabel>
               <Select value={index} onChange={handleIndexChange}>
                 {indices.map((i) => (
@@ -52,14 +63,29 @@ export default ({
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={8} md={3}>
             {lastDataUpdate && (
               <Typography variant="body2" color="textSecondary">
                 Last updated on: {formatDate(lastDataUpdate)}
               </Typography>
             )}
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={3}>
+            <FormControl fullWidth={true}>
+              <InputLabel>Values from end of</InputLabel>
+              <Select
+                value={dataResolution}
+                onChange={handleDataResolutionChange}
+              >
+                {dataResolutions.map((i) => (
+                  <MenuItem key={i.id} value={i.id}>
+                    {i.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} md={4}>
             <FormLabel>Loss of at least {minDrawdown}%</FormLabel>
             <Grid container spacing={2} alignItems="center">
               <Grid item>

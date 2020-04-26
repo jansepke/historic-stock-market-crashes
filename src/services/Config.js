@@ -9,6 +9,11 @@ export const inflations = [
   { id: "real-us", label: "real (US inflation)" },
 ];
 
+export const dataResolutions = [
+  { id: "end-of-day", label: "day" },
+  { id: "end-of-month", label: "month" },
+];
+
 export const minDrawdownStep = 5;
 export const minDrawdowns = [...Array(9).keys()].map(
   (i) => 10 + i * minDrawdownStep

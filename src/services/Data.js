@@ -1,11 +1,11 @@
 import { promises as fs } from "fs";
 import path from "path";
 
-export const getIndexData = async (index, inflation) => {
+export const getIndexData = async (index, inflation, dataResolution) => {
   const indexFile = path.join(
     process.cwd(),
     "index-data",
-    `${index}-${inflation}.json`
+    `${index}-${inflation}-${dataResolution}.json`
   );
   const rawData = await fs.readFile(indexFile);
   const data = JSON.parse(rawData);
