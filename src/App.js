@@ -25,7 +25,7 @@ const Chart = dynamic(() => import("./chart"), {
 export default ({
   index,
   inflation,
-  dataResolution,
+  dataset,
   minDrawdown,
   tableData,
   indexDataCount,
@@ -56,22 +56,22 @@ export default ({
 
   const onIndexChange = (newIndex) => {
     router.push(
-      `/[index]/min-drawdown/[minDrawdown]`,
-      `/${newIndex}_nominal_${dataResolution}/min-drawdown/${minDrawdown}`
+      `/[index]/[inflation]/[dataset]/min-drawdown/[minDrawdown]`,
+      `/${newIndex}/nominal/${dataset}/min-drawdown/${minDrawdown}`
     );
   };
 
-  const onDataResolutionChange = (newDataResolution) => {
+  const onDatasetChange = (newdataset) => {
     router.push(
-      `/[index]/min-drawdown/[minDrawdown]`,
-      `/${index}_nominal_${newDataResolution}/min-drawdown/${minDrawdown}`
+      `/[index]/[inflation]/[dataset]/min-drawdown/[minDrawdown]`,
+      `/${index}/nominal/${newdataset}/min-drawdown/${minDrawdown}`
     );
   };
 
   const onMinDrawdownChange = (newMinDrawdown) => {
     router.push(
-      `/[index]/min-drawdown/[minDrawdown]`,
-      `/${index}_nominal_${dataResolution}/min-drawdown/${newMinDrawdown}`
+      `/[index]/[inflation]/[dataset]/min-drawdown/[minDrawdown]`,
+      `/${index}/nominal/${dataset}/min-drawdown/${newMinDrawdown}`
     );
   };
 
@@ -80,7 +80,7 @@ export default ({
 
     (async () => {
       const response = await fetch(
-        `/api/chart-data/${index}-${inflation}-${dataResolution}`
+        `/api/chart-data/${index}-${inflation}-${dataset}`
       );
       const chartData = await response.json();
 
@@ -90,7 +90,7 @@ export default ({
 
       setChart({ loading: false, data: chartData });
     })();
-  }, [index, dataResolution]);
+  }, [index, dataset]);
 
   return (
     <Container maxWidth="lg">
@@ -109,13 +109,13 @@ export default ({
             index={index}
             lastDataUpdate={indexDataUpdateDate}
             initialMinDrawdown={minDrawdown}
-            dataResolution={dataResolution}
+            dataset={dataset}
             onMinDrawdownChange={onMinDrawdownChange}
-            onDataResolutionChange={onDataResolutionChange}
+            onDatasetChange={onDatasetChange}
             onIndexChange={onIndexChange}
           />
         </Grid>
-        {dataResolution === "end-of-day" && (
+        {dataset === "end-of-day" && (
           <Grid item xs={12}>
             <Alert severity="info">
               When using daily values instead of monthly values the results are

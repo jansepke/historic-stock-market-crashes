@@ -33,7 +33,7 @@ const readFile = async (fileName) => {
 const inflationByDate = (inflationData, date) =>
   inflationData[date.getFullYear()][date.getMonth() + 1];
 
-const processIndex = async (index, inflation, dataResolution) => {
+const processIndex = async (index, inflation, dataset) => {
   const msciData = await parseFile(`./data-sources/${index}.csv`);
 
   let indexData = msciData.map(({ date, price }) => ({
@@ -41,7 +41,7 @@ const processIndex = async (index, inflation, dataResolution) => {
     price: price.toFixed(2),
   }));
 
-  if (dataResolution === "end-of-month") {
+  if (dataset === "end-of-month") {
     indexData = indexData.filter(
       ({ date }) =>
         date.getDate() ===
@@ -69,7 +69,7 @@ const processIndex = async (index, inflation, dataResolution) => {
   }
 
   await fs.writeFile(
-    `./${dataDir}/${index}-${inflation}-${dataResolution}.json`,
+    `./${dataDir}/${index}-${inflation}-${dataset}.json`,
     JSON.stringify({ data: indexData }, null, 2)
   );
 
@@ -82,7 +82,7 @@ const processIndex = async (index, inflation, dataResolution) => {
   );
 
   await fs.writeFile(
-    `./${dataDir}/chart-${index}-${inflation}-${dataResolution}.json`,
+    `./${dataDir}/chart-${index}-${inflation}-${dataset}.json`,
     JSON.stringify({ data: chartData }, null, 2)
   );
 };

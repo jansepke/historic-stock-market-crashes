@@ -1,16 +1,16 @@
 import Head from "next/head";
 import React from "react";
-import App from "../../../App";
+import App from "../../../../../App";
 import {
   calculateAllPaths,
   calculateTableData,
-} from "../../../services/Calculator";
-import { getIndexData } from "../../../services/Data";
+} from "../../../../../services/Calculator";
+import { getIndexData } from "../../../../../services/Data";
 
 export default ({
   index,
   inflation,
-  dataResolution,
+  dataset,
   minDrawdown,
   tableData,
   indexDataCount,
@@ -35,7 +35,7 @@ export default ({
       </Head>
       <App
         index={index}
-        dataResolution={dataResolution}
+        dataset={dataset}
         inflation={inflation}
         minDrawdown={minDrawdown}
         tableData={parsedTableData}
@@ -47,12 +47,11 @@ export default ({
 };
 
 export const getStaticProps = async ({
-  params: { index: indexAndInflation, minDrawdown },
+  params: { index, inflation, dataset, minDrawdown },
 }) => {
-  const [index, inflation, dataResolution] = indexAndInflation.split("_");
   const parsedMinDrawdown = parseInt(minDrawdown);
 
-  const indexData = await getIndexData(index, inflation, dataResolution);
+  const indexData = await getIndexData(index, inflation, dataset);
   const tableData = calculateTableData(indexData, parsedMinDrawdown);
   const indexDataUpdateDate = indexData[indexData.length - 1].date.toString();
 
@@ -60,7 +59,7 @@ export const getStaticProps = async ({
     props: {
       index,
       inflation,
-      dataResolution,
+      dataset,
       minDrawdown: parsedMinDrawdown,
       tableData,
       indexDataCount: indexData.length,

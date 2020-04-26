@@ -9,7 +9,7 @@ export const inflations = [
   { id: "real-us", label: "real (US inflation)" },
 ];
 
-export const dataResolutions = [
+export const datasets = [
   { id: "end-of-day", label: "day" },
   { id: "end-of-month", label: "month" },
 ];

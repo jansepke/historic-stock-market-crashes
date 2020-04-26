@@ -11,7 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import TrendingDownIcon from "@material-ui/icons/TrendingDown";
 import React, { useState } from "react";
 import {
-  dataResolutions,
+  datasets,
   indices,
   minDrawdowns,
   minDrawdownStep,
@@ -20,11 +20,11 @@ import { formatDate } from "../services/Format";
 
 export default ({
   index,
-  dataResolution,
+  dataset,
   lastDataUpdate,
   initialMinDrawdown,
   onMinDrawdownChange,
-  onDataResolutionChange,
+  onDatasetChange,
   onIndexChange,
 }) => {
   const [minDrawdown, setMinDrawdown] = useState(initialMinDrawdown);
@@ -39,8 +39,8 @@ export default ({
     onIndexChange(event.target.value);
   };
 
-  const handleDataResolutionChange = (event) => {
-    onDataResolutionChange(event.target.value);
+  const handleDatasetChange = (event) => {
+    onDatasetChange(event.target.value);
   };
 
   const handleMinDrawdownMove = (event, newValue) => {
@@ -73,11 +73,8 @@ export default ({
           <Grid item xs={12} md={3}>
             <FormControl fullWidth={true}>
               <InputLabel>Values from end of</InputLabel>
-              <Select
-                value={dataResolution}
-                onChange={handleDataResolutionChange}
-              >
-                {dataResolutions.map((i) => (
+              <Select value={dataset} onChange={handleDatasetChange}>
+                {datasets.map((i) => (
                   <MenuItem key={i.id} value={i.id}>
                     {i.label}
                   </MenuItem>
