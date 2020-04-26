@@ -61,7 +61,7 @@ export default ({
   const onMinDrawdownChange = (newMinDrawdown) => {
     router.push(
       `/[index]/min-drawdown/[minDrawdown]`,
-      `/${index}/min-drawdown/${newMinDrawdown}`
+      `/${index}_nominal/min-drawdown/${newMinDrawdown}`
     );
   };
 
