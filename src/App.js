@@ -1,10 +1,11 @@
-import { Box } from "@material-ui/core";
+import Box from "@material-ui/core/Box";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import TouchAppOutlinedIcon from "@material-ui/icons/TouchAppOutlined";
+import Alert from "@material-ui/lab/Alert";
 import dynamic from "next/dynamic";
 import { Router, useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -112,6 +113,14 @@ export default ({
             onIndexChange={onIndexChange}
           />
         </Grid>
+        {dataResolution === "end-of-day" && (
+          <Grid item xs={12}>
+            <Alert severity="info">
+              When using daily values instead of monthly values the results are
+              less comparable to other statistics that often use monthly dates.
+            </Alert>
+          </Grid>
+        )}
         <Grid item xs={12}>
           <Grid container spacing={1}>
             <Grid item xs={12}>
