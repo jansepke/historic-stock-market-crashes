@@ -70,7 +70,7 @@ export default ({
               </Typography>
             )}
           </Grid>
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} sm={5} md={3}>
             <FormControl fullWidth={true}>
               <InputLabel>Values from end of</InputLabel>
               <Select value={dataset} onChange={handleDatasetChange}>
@@ -82,7 +82,7 @@ export default ({
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} sm={7} md={4}>
             <FormLabel>Loss of at least {minDrawdown}%</FormLabel>
             <Grid container spacing={2} alignItems="center">
               <Grid item>

@@ -9,15 +9,14 @@ export default () => {
     const timer = setTimeout(() => {
       router.replace("/");
     }, 1500);
+
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <>
-      <Error
-        statusCode={404}
-        title="This page could not be found. Redirecting..."
-      ></Error>
-    </>
+    <Error
+      statusCode={404}
+      title="This page could not be found. Redirecting..."
+    />
   );
 };

@@ -5,8 +5,8 @@ import page, {
 
 export default page;
 
-export const getStaticProps = async () => {
-  return pageGetStaticProps({
+export const getStaticProps = async () =>
+  pageGetStaticProps({
     params: {
       index: indices[0].id,
       inflation: inflations[0].id,
@@ -14,4 +14,3 @@ export const getStaticProps = async () => {
       minDrawdown: 30,
     },
   });
-};

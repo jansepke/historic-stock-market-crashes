@@ -1,9 +1,7 @@
 import Head from "next/head";
 import React, { useEffect } from "react";
 
-export default (props) => {
-  const { Component, pageProps } = props;
-
+export default ({ Component, pageProps }) => {
   useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector("#jss-server-side");
@@ -13,7 +11,7 @@ export default (props) => {
   }, []);
 
   return (
-    <React.Fragment>
+    <>
       <Head>
         <meta
           name="viewport"
@@ -21,6 +19,6 @@ export default (props) => {
         />
       </Head>
       <Component {...pageProps} />
-    </React.Fragment>
+    </>
   );
 };

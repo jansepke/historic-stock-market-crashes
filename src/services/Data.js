@@ -10,8 +10,6 @@ export const getIndexData = async (index, inflation, dataset) => {
   const rawData = await fs.readFile(indexFile);
   const data = JSON.parse(rawData);
 
-  console.log(`Index contains ${data.data.length} days of data`);
-
   return data.data.map(({ date, price }) => ({
     date: new Date(date),
     price: parseFloat(price),

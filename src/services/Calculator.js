@@ -60,8 +60,6 @@ export const calculateTableData = (data, minDrawdown) => {
     item.doneDate = item.doneDate?.toString() || null;
   });
 
-  console.log("done with max drawdown calculation");
-
   return newTableData;
 };
 
