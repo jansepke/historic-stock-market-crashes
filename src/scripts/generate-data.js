@@ -42,11 +42,22 @@ const processIndex = async (index, inflation, dataset) => {
   }));
 
   if (dataset === "end-of-month") {
-    indexData = indexData.filter(
-      ({ date }) =>
-        date.getDate() ===
-        new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
-    ); // only last day of month
+    indexData = indexData.reduce((acc, item) => {
+      if (acc.length === 0) {
+        return [item];
+      }
+
+      const lastItem = acc.pop();
+      if (lastItem.date.getMonth() === item.date.getMonth()) {
+        if (lastItem.date.getDate() < item.date.getDate()) {
+          return [...acc, item];
+        } else {
+          return [...acc, lastItem];
+        }
+      } else {
+        return [...acc, lastItem, item];
+      }
+    }, []);
   }
 
   if (inflation !== "nominal") {

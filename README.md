@@ -22,6 +22,8 @@ Start the project with
 
 - refactor Calculator.calculateTableData
 - add more indices (e.g. S&P 500)
+- add bonds
+- add mixed portfolios
 - run index update once per day
 - add chart zooming (change start end date)
 - allow merging data of multiple indices
