@@ -20,7 +20,6 @@ Start the project with
 
 ## Todo
 
-- fallback to root instead of 404
 - refactor Calculator.calculateTableData
 - add more indices (e.g. S&P 500)
 - run index update once per day
