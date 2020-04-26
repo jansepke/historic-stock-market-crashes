@@ -42,7 +42,10 @@ export default ({
   );
 };
 
-export const getStaticProps = async ({ params: { index, minDrawdown } }) => {
+export const getStaticProps = async ({
+  params: { index: indexAndInflation, minDrawdown },
+}) => {
+  const [index, inflation] = indexAndInflation.split("_");
   const parsedMinDrawdown = parseInt(minDrawdown);
 
   const indexData = await getIndexData(index);

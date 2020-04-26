@@ -54,7 +54,7 @@ export default ({
   const onIndexChange = (newIndex) => {
     router.push(
       `/[index]/min-drawdown/[minDrawdown]`,
-      `/${newIndex}/min-drawdown/${minDrawdown}`
+      `/${newIndex}_nominal/min-drawdown/${minDrawdown}`
     );
   };
 
