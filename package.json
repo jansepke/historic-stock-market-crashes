@@ -4,7 +4,8 @@
     "dev": "node src/generate-data.js && next dev",
     "build": "node src/generate-data.js && next build",
     "start": "next start",
-    "update-data": "node src/update-data.js",
+    "update-msci": "node src/scripts/update-msci.js",
+    "update-inflation": "node src/scripts/update-inflation.js",
     "lint": "prettier --check ./src",
     "lint:fix": "prettier --write ./src"
   },

@@ -15,7 +15,8 @@ task_run() {
 
 ##DOC update-data
 task_update-data() {
-  npm run update-data
+  npm run update-msci
+  npm run update-inflation
 }
 
 ###############################################################################
