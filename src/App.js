@@ -54,24 +54,12 @@ export default ({
     setMarkers([]);
   };
 
-  const onIndexChange = (newIndex) => {
-    router.push(
-      `/[index]/[inflation]/[dataset]/min-drawdown/[minDrawdown]`,
-      `/${newIndex}/nominal/${dataset}/min-drawdown/${minDrawdown}`
-    );
-  };
+  const changeRoute = (part) => (newValue) => {
+    const values = { index, dataset, minDrawdown, [part]: newValue };
 
-  const onDatasetChange = (newdataset) => {
     router.push(
       `/[index]/[inflation]/[dataset]/min-drawdown/[minDrawdown]`,
-      `/${index}/nominal/${newdataset}/min-drawdown/${minDrawdown}`
-    );
-  };
-
-  const onMinDrawdownChange = (newMinDrawdown) => {
-    router.push(
-      `/[index]/[inflation]/[dataset]/min-drawdown/[minDrawdown]`,
-      `/${index}/nominal/${dataset}/min-drawdown/${newMinDrawdown}`
+      `/${values.index}/nominal/${values.dataset}/min-drawdown/${values.minDrawdown}`
     );
   };
 
@@ -110,9 +98,9 @@ export default ({
             lastDataUpdate={indexDataUpdateDate}
             initialMinDrawdown={minDrawdown}
             dataset={dataset}
-            onMinDrawdownChange={onMinDrawdownChange}
-            onDatasetChange={onDatasetChange}
-            onIndexChange={onIndexChange}
+            onMinDrawdownChange={changeRoute("minDrawdown")}
+            onDatasetChange={changeRoute("dataset")}
+            onIndexChange={changeRoute("index")}
           />
         </Grid>
         {dataset === "end-of-day" && (
