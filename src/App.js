@@ -79,7 +79,9 @@ export default ({
     setChart({ loading: true, data: [] });
 
     (async () => {
-      const response = await fetch(`/api/chart-data/${index}-${inflation}`);
+      const response = await fetch(
+        `/api/chart-data/${index}-${inflation}-${dataResolution}`
+      );
       const chartData = await response.json();
 
       chartData[0].data.forEach((item) => {
@@ -88,7 +90,7 @@ export default ({
 
       setChart({ loading: false, data: chartData });
     })();
-  }, [index]);
+  }, [index, dataResolution]);
 
   return (
     <Container maxWidth="lg">

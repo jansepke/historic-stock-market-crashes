@@ -46,14 +46,16 @@ export default ({ data, markers, dataCount }) =>
             }))}
           />
         </Grid>
-        <Grid item xs={12}>
-          <Box mr={2}>
-            <Typography variant="body2" align="right" color="textSecondary">
-              The chart data is downsampled from {dataCount} to{" "}
-              {data[0].data.length} dates for performance reasons.
-            </Typography>
-          </Box>
-        </Grid>
+        {dataCount > data[0].data.length && (
+          <Grid item xs={12}>
+            <Box mr={2}>
+              <Typography variant="body2" align="right" color="textSecondary">
+                The chart data is downsampled from {dataCount} to{" "}
+                {data[0].data.length} dates for performance reasons.
+              </Typography>
+            </Box>
+          </Grid>
+        )}
       </Grid>
     </Paper>
   );

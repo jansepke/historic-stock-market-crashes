@@ -6,8 +6,8 @@ const dataDir = "index-data";
 
 const calculateChartData = (data, sampleRate) => {
   const newData = data.map(({ price, date }) => ({ x: date, y: price }));
-  const numPointsInDownsampledData = sampleRate;
-  const downsampledData = LTD(newData, numPointsInDownsampledData);
+  const downsampledData =
+    sampleRate < data.length ? LTD(newData, sampleRate) : newData;
 
   return [
     {
@@ -82,7 +82,7 @@ const processIndex = async (index, inflation, dataResolution) => {
   );
 
   await fs.writeFile(
-    `./${dataDir}/chart-${index}-${inflation}.json`,
+    `./${dataDir}/chart-${index}-${inflation}-${dataResolution}.json`,
     JSON.stringify({ data: chartData }, null, 2)
   );
 };
