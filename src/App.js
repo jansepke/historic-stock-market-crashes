@@ -73,7 +73,7 @@ export default ({
       const chartData = await response.json();
 
       chartData[0].data.forEach((item) => {
-        item.x = new Date(item.x);
+        item.x = new Date(item.x); // Dates are serialized in JSON
       });
 
       setChart({ loading: false, data: chartData });
@@ -111,41 +111,49 @@ export default ({
             </Alert>
           </Grid>
         )}
-        <Grid item xs={12}>
-          <Grid container spacing={1}>
-            <Grid item xs={12}>
-              <Table
-                tableData={tableData}
-                onRowHoverStart={addMarker}
-                onRowHoverEnd={removeMarkers}
-              />
-            </Grid>
-            <Grid item md={6} xs={12}>
-              <Typography variant="body2">
-                <InfoOutlinedIcon fontSize="inherit" /> Returns are nominal
-                without costs and taxes. Values are in USD.
-              </Typography>
-            </Grid>
-            <Grid item md={6} xs={12}>
-              <Typography variant="body2" align="right">
-                <TouchAppOutlinedIcon fontSize="inherit" /> Click on a row to
-                mark crash on graph.
-              </Typography>
-            </Grid>
-          </Grid>
-        </Grid>
-        {loading || chart.loading ? (
+        {loading ? (
           <Grid item xs={12} align="center">
             <CircularProgress />
           </Grid>
         ) : (
-          <Grid item xs={12}>
-            <Chart
-              data={chart.data}
-              markers={markers}
-              dataCount={indexDataCount}
-            />
-          </Grid>
+          <>
+            <Grid item xs={12}>
+              <Grid container spacing={1}>
+                <Grid item xs={12}>
+                  <Table
+                    tableData={tableData}
+                    onRowHoverStart={addMarker}
+                    onRowHoverEnd={removeMarkers}
+                  />
+                </Grid>
+                <Grid item md={6} xs={12}>
+                  <Typography variant="body2">
+                    <InfoOutlinedIcon fontSize="inherit" /> Returns are nominal
+                    without costs and taxes. Values are in USD.
+                  </Typography>
+                </Grid>
+                <Grid item md={6} xs={12}>
+                  <Typography variant="body2" align="right">
+                    <TouchAppOutlinedIcon fontSize="inherit" /> Click on a row
+                    to mark crash on graph.
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Grid>
+            {chart.loading ? (
+              <Grid item xs={12} align="center">
+                <CircularProgress />
+              </Grid>
+            ) : (
+              <Grid item xs={12}>
+                <Chart
+                  data={chart.data}
+                  markers={markers}
+                  dataCount={indexDataCount}
+                />
+              </Grid>
+            )}
+          </>
         )}
         <Grid item xs={12}>
           <Footer />
