@@ -23,6 +23,7 @@ const Chart = dynamic(() => import("./chart"), {
 
 export default ({
   index,
+  inflation,
   minDrawdown,
   tableData,
   indexDataCount,
@@ -69,7 +70,7 @@ export default ({
     setChart({ loading: true, data: [] });
 
     (async () => {
-      const response = await fetch(`/api/chart-data/${index}`);
+      const response = await fetch(`/api/chart-data/${index}-${inflation}`);
       const chartData = await response.json();
 
       chartData[0].data.forEach((item) => {

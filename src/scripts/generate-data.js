@@ -25,16 +25,43 @@ const parseFile = async (fileName) =>
     },
   }).fromFile(fileName);
 
-const processIndex = async (index) => {
+const readFile = async (fileName) => {
+  const rawData = await fs.readFile(fileName);
+  return JSON.parse(rawData);
+};
+
+const inflationByDate = (inflationData, date) =>
+  inflationData[date.getFullYear()][date.getMonth() + 1];
+
+const processIndex = async (index, inflation) => {
   const msciData = await parseFile(`./data-sources/${index}.csv`);
 
-  const indexData = msciData.map(({ date, price }) => ({
+  let indexData = msciData.map(({ date, price }) => ({
     date,
     price: price.toFixed(2),
   }));
 
+  if (inflation !== "nominal") {
+    const inflationData = await readFile(`./data-sources/inflation-us.json`);
+    const firstIndexDate = indexData[0].date;
+    const firstInflation = inflationByDate(
+      inflationData,
+      new Date(firstIndexDate)
+    );
+
+    indexData = indexData.map(({ date, price }) => {
+      const inflation = inflationByDate(inflationData, new Date(date));
+      const inflationPrice = (parseFloat(price) / inflation) * firstInflation;
+
+      return {
+        date,
+        price: inflationPrice.toFixed(2),
+      };
+    });
+  }
+
   await fs.writeFile(
-    `./${dataDir}/${index}.json`,
+    `./${dataDir}/${index}-${inflation}.json`,
     JSON.stringify({ data: indexData }, null, 2)
   );
 
@@ -47,7 +74,7 @@ const processIndex = async (index) => {
   );
 
   await fs.writeFile(
-    `./${dataDir}/chart-${index}.json`,
+    `./${dataDir}/chart-${index}-${inflation}.json`,
     JSON.stringify({ data: chartData }, null, 2)
   );
 };
@@ -56,6 +83,7 @@ const processIndex = async (index) => {
   await fs.mkdir(dataDir, { recursive: true });
 
   for (const index of ["msci-world", "msci-acwi", "msci-acwi-imi"]) {
-    await processIndex(index);
+    await processIndex(index, "nominal");
+    //await processIndex(index, "real-us");
   }
 })();
