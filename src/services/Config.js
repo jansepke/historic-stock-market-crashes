@@ -6,7 +6,7 @@ export const indices = [
 
 export const inflations = [
   { id: "nominal", label: "nominal" },
-  // { id: "real-us", label: "real (US inflation)" },
+  { id: "real-us", label: "real (US inflation)" },
 ];
 
 export const datasets = [

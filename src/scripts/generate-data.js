@@ -104,6 +104,6 @@ const processIndex = async (index, inflation, dataset) => {
   for (const index of ["msci-world", "msci-acwi", "msci-acwi-imi"]) {
     await processIndex(index, "nominal", "end-of-day");
     await processIndex(index, "nominal", "end-of-month");
-    //await processIndex(index, "real-us");
+    await processIndex(index, "real-us", "end-of-month");
   }
 })();

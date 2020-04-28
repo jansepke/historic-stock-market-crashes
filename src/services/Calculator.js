@@ -72,11 +72,13 @@ export const calculateAllPaths = () =>
     inflations.map((i) => i.id),
     datasets.map((i) => i.id),
     minDrawdowns
-  ).map((params) => ({
-    params: {
-      index: params[0],
-      inflation: params[1],
-      dataset: params[2],
-      minDrawdown: params[3].toString(),
-    },
-  }));
+  )
+    .filter((params) => params[1] === "end-of-day" && params[2] !== "nominal")
+    .map((params) => ({
+      params: {
+        index: params[0],
+        inflation: params[1],
+        dataset: params[2],
+        minDrawdown: params[3].toString(),
+      },
+    }));
