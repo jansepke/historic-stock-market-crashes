@@ -74,7 +74,7 @@ export const calculateAllPaths = () =>
     minDrawdowns
   )
     .filter(
-      (params) => !(params[1] === "end-of-day" && params[2] !== "nominal")
+      (params) => !(params[2] === "end-of-day" && params[1] !== "nominal")
     )
     .map((params) => ({
       params: {
