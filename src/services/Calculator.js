@@ -73,7 +73,9 @@ export const calculateAllPaths = () =>
     datasets.map((i) => i.id),
     minDrawdowns
   )
-    .filter((params) => params[1] === "end-of-day" && params[2] !== "nominal")
+    .filter(
+      (params) => !(params[1] === "end-of-day" && params[2] !== "nominal")
+    )
     .map((params) => ({
       params: {
         index: params[0],
