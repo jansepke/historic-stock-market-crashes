@@ -25,6 +25,7 @@ Start the project with
 - add bonds
 - add mixed portfolios
 - run index update once per day
+- show index data start date
 - add chart zooming (change start end date)
 - allow merging data of multiple indices
 - add tabular datasets for search engines (https://developers.google.com/search/docs/data-types/dataset#tabular)
