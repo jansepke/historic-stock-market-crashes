@@ -2,6 +2,8 @@ const csv = require("csvtojson");
 const axios = require("axios");
 const fs = require("fs").promises;
 
+// initials data from http://www.msci.com/eqb/esg/performance/106.0.all.xls
+
 const dtf = new Intl.DateTimeFormat("en", {
   year: "numeric",
   month: "short",
