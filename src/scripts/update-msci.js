@@ -1,12 +1,21 @@
 const csv = require("csvtojson");
+const xml = require("fast-xml-parser");
 const axios = require("axios");
 const fs = require("fs").promises;
 
+process.env.TZ = "UTC";
+
 // initials data from http://www.msci.com/eqb/esg/performance/106.0.all.xls
 
-const dtf = new Intl.DateTimeFormat("en", {
+const dateTimeFormatParam = new Intl.DateTimeFormat("en", {
   year: "numeric",
   month: "short",
+  day: "2-digit",
+});
+
+const dateTimeFormatCSV = new Intl.DateTimeFormat("en", {
+  year: "numeric",
+  month: "2-digit",
   day: "2-digit",
 });
 
@@ -38,34 +47,34 @@ const getName = (index) => {
   return indices[index]?.name;
 };
 
-const regexOverThousand = /(\d\d\/\d\d\/\d\d\d\d,".*?"),/g;
-const regexUnderThousand = /(\d\d\/\d\d\/\d\d\d\d,.*?),/g;
+const convertDate = (date) => {
+  const [
+    { value: mo },
+    ,
+    { value: da },
+    ,
+    { value: ye },
+  ] = dateTimeFormatCSV.formatToParts(date);
+  return `${ye}-${mo}-${da}`;
+};
 
-const getRegex = (line) => {
-  if (regexOverThousand.test(line)) {
-    return regexOverThousand;
-  } else if (regexUnderThousand.test(line)) {
-    return regexUnderThousand;
-  } else {
-    return undefined;
+const convertPrice = (value) => {
+  if (typeof value === "string") {
+    return parseFloat(value.replace(",", "")).toFixed(2);
+  } else if (typeof value === "number") {
+    return value.toFixed(2);
   }
+  return undefined;
 };
-
-const createCSV = (data) => {
-  return data
-    .replace(/".*?",/, "") // remove first item
-    .replace(getRegex(data), "$1\n"); // add line breaks
-};
-
-const convertDate = (date) =>
-  `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${(
-    "0" + date.getDate()
-  ).slice(-2)}`;
 
 const toDateParam = (date) => {
-  const [{ value: mo }, , { value: da }, , { value: ye }] = dtf.formatToParts(
-    date
-  );
+  const [
+    { value: mo },
+    ,
+    { value: da },
+    ,
+    { value: ye },
+  ] = dateTimeFormatParam.formatToParts(date);
   return `${da} ${mo}, ${ye}`;
 };
 
@@ -77,26 +86,31 @@ const parseFile = async (fileName) =>
     },
   }).fromFile(fileName);
 
-const processIndex = async (index) => {
+const processIndex = async (index, date) => {
   const msciData = await parseFile(`./data-sources/${index}.csv`);
   const lastEntry = msciData[msciData.length - 1];
-  const startDate = lastEntry.date;
-  let endDate = new Date();
+  let startDate = lastEntry.date;
+
+  if (typeof date !== "undefined") {
+    startDate = date;
+  }
 
   let oneYearAgo = new Date();
   oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
 
   let incomplete = false;
 
+  let endDate = new Date();
   if (startDate < oneYearAgo) {
     endDate = new Date(startDate);
-    endDate.setFullYear(endDate.getFullYear() + 1);
+    endDate.setMonth(startDate.getMonth() + 2);
     incomplete = true;
   }
   console.log(`startDate: ${startDate} endDate: ${endDate}`);
 
-  const response = await axios
-    .get("https://app2.msci.com/webapp/indexperf/charts", {
+  const response = await axios.get(
+    "https://app2.msci.com/webapp/indexperf/charts",
+    {
       params: {
         indices: getName(index),
         startDate: toDateParam(startDate),
@@ -105,47 +119,51 @@ const processIndex = async (index) => {
         currency: 15,
         frequency: "D",
         scope: "R",
-        format: "CSV",
+        format: "XML",
         baseValue: false,
         site: "gimi",
       },
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    }
+  );
 
-  const rawCSV = createCSV(response.data);
+  if (xml.validate(response.data) !== true) {
+    //optional (it'll return an object in case it's not valid)
+    console.log("Could not parse response");
+    return;
+  }
 
-  const json = await csv({
-    headers: ["date", "price"],
-    noheader: true,
-    colParser: {
-      date: (item) => new Date(item),
-      price: (item) => parseFloat(item.replace(",", "")),
-    },
-  }).fromString(rawCSV);
+  const json = xml.parse(response.data).performance.index.asOf;
+  let data = [];
 
-  json.shift();
+  if (Array.isArray(json) === false) {
+    data.push(json);
+  } else {
+    data = json;
+  }
 
-  if (json.length === 0) {
+  if (new Date(data[0].date).toISOString() === startDate.toISOString()) {
+    data.shift();
+  }
+
+  if (data.length === 0) {
     console.log("nothing to update");
     return;
   }
 
-  const newCSV = json
-    .map(({ date, price }) => ({
-      date: convertDate(date),
-      price: price.toFixed(2),
+  const newCSV = data
+    .map(({ date, value }) => ({
+      date: convertDate(new Date(date)),
+      value: convertPrice(value),
     }))
-    .map((data) => `${data.date},${data.price}`)
+    .map((data) => `${data.date},${data.value}`)
     .join("\n");
 
   await fs.appendFile(`./data-sources/${index}.csv`, "\n" + newCSV);
 
-  console.log(`added ${json.length} entries`);
+  console.log(`added ${data.length} entries`);
 
   if (incomplete) {
-    await processIndex(index);
+    await processIndex(index, endDate);
   }
 };
 

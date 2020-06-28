@@ -6,6 +6,7 @@
     "start": "next start",
     "update-msci": "node src/scripts/update-msci.js",
     "update-inflation": "node src/scripts/update-inflation.js",
+    "generate-data": "node src/scripts/generate-data.js",
     "lint": "prettier --check ./src",
     "lint:fix": "prettier --write ./src"
   },
@@ -31,6 +32,7 @@
   "devDependencies": {
     "@types/react": "^16.9.34",
     "axios": "^0.19.2",
+    "fast-xml-parser": "^3.17.4",
     "csvtojson": "^2.0.10",
     "downsample": "^1.0.3",
     "husky": "^4.2.5",
