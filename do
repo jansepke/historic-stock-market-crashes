@@ -17,6 +17,7 @@ task_run() {
 task_update-data() {
   npm run update-msci
   npm run update-inflation
+  npm run generate-data
 }
 
 ###############################################################################
