@@ -10,25 +10,51 @@ const dtf = new Intl.DateTimeFormat("en", {
   day: "2-digit",
 });
 
+const indices = {
+  "msci-world": {
+    name: "106,C,16",
+  },
+  "msci-world-momentum": {
+    name: "103214,1,36",
+  },
+  "msci-world-quality": {
+    name: "100106,U,36",
+  },
+  "msci-world-value": {
+    name: "96561,L,36",
+  },
+  "msci-world-esg-screened": {
+    name: "132866,SR,36",
+  },
+  "msci-acwi": {
+    name: "2591,C,36",
+  },
+  "msci-acwi-imi": {
+    name: "73562,C,41",
+  },
+};
+
 const getName = (index) => {
-  if (index === "msci-world") {
-    return "106,C,16";
-  }
-  if (index === "msci-acwi") {
-    return "2591,C,36";
-  }
-  if (index === "msci-acwi-imi") {
-    return "73562,C,41";
+  return indices[index]?.name;
+};
+
+const regexOverThousand = /(\d\d\/\d\d\/\d\d\d\d,".*?"),/g;
+const regexUnderThousand = /(\d\d\/\d\d\/\d\d\d\d,.*?),/g;
+
+const getRegex = (line) => {
+  if (regexOverThousand.test(line)) {
+    return regexOverThousand;
+  } else if (regexUnderThousand.test(line)) {
+    return regexUnderThousand;
+  } else {
+    return undefined;
   }
 };
 
-const getRegex = (index) => {
-  if (index === "msci-world" || index === "msci-acwi-imi") {
-    return /(\d\d\/\d\d\/\d\d\d\d,".*?"),/g;
-  }
-  if (index === "msci-acwi") {
-    return /(\d\d\/\d\d\/\d\d\d\d,.*?),/g;
-  }
+const createCSV = (data) => {
+  return data
+    .replace(/".*?",/, "") // remove first item
+    .replace(getRegex(data), "$1\n"); // add line breaks
 };
 
 const convertDate = (date) =>
@@ -54,14 +80,27 @@ const parseFile = async (fileName) =>
 const processIndex = async (index) => {
   const msciData = await parseFile(`./data-sources/${index}.csv`);
   const lastEntry = msciData[msciData.length - 1];
+  const startDate = lastEntry.date;
+  let endDate = new Date();
 
-  const response = await axios.get(
-    "https://app2.msci.com/webapp/indexperf/charts",
-    {
+  let oneYearAgo = new Date();
+  oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+
+  let incomplete = false;
+
+  if (startDate < oneYearAgo) {
+    endDate = new Date(startDate);
+    endDate.setFullYear(endDate.getFullYear() + 1);
+    incomplete = true;
+  }
+  console.log(`startDate: ${startDate} endDate: ${endDate}`);
+
+  const response = await axios
+    .get("https://app2.msci.com/webapp/indexperf/charts", {
       params: {
         indices: getName(index),
-        startDate: toDateParam(lastEntry.date),
-        endDate: toDateParam(new Date()),
+        startDate: toDateParam(startDate),
+        endDate: toDateParam(endDate),
         priceLevel: 0,
         currency: 15,
         frequency: "D",
@@ -70,12 +109,12 @@ const processIndex = async (index) => {
         baseValue: false,
         site: "gimi",
       },
-    }
-  );
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 
-  const rawCSV = response.data
-    .replace(/".*?",/, "") // remove first item
-    .replace(getRegex(index), "$1\n"); // add line breaks
+  const rawCSV = createCSV(response.data);
 
   const json = await csv({
     headers: ["date", "price"],
@@ -104,10 +143,14 @@ const processIndex = async (index) => {
   await fs.appendFile(`./data-sources/${index}.csv`, "\n" + newCSV);
 
   console.log(`added ${json.length} entries`);
+
+  if (incomplete) {
+    await processIndex(index);
+  }
 };
 
 (async () => {
-  for (const index of ["msci-world", "msci-acwi", "msci-acwi-imi"]) {
+  for (const index of Object.keys(indices)) {
     console.log(`updating ${index}`);
 
     await processIndex(index);

@@ -99,9 +99,19 @@ const processIndex = async (index, inflation, dataset) => {
 };
 
 (async () => {
+  const indices = [
+    "msci-world",
+    "msci-world-momentum",
+    "msci-world-quality",
+    "msci-world-value",
+    "msci-world-esg-screened",
+    "msci-acwi",
+    "msci-acwi-imi",
+  ];
+
   await fs.mkdir(dataDir, { recursive: true });
 
-  for (const index of ["msci-world", "msci-acwi", "msci-acwi-imi"]) {
+  for (const index of indices) {
     await processIndex(index, "nominal", "end-of-day");
     await processIndex(index, "nominal", "end-of-month");
     await processIndex(index, "real-us", "end-of-month");
