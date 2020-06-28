@@ -30,7 +30,7 @@ const indices = {
     name: "100106,U,36",
   },
   "msci-world-value": {
-    name: "96561,L,36",
+    name: "2993,V,36",
   },
   "msci-world-growth": {
     name: "2992,G,36",
