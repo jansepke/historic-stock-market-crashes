@@ -16,6 +16,7 @@ task_run() {
 ##DOC update-data
 task_update-data() {
   npm run update-msci
+  npm run update-yahoo
   npm run update-inflation
   npm run generate-data
 }

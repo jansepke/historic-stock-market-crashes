@@ -7,6 +7,7 @@ export const indices = [
   { id: "msci-acwi", label: "MSCI ACWI" },
   { id: "msci-acwi-imi", label: "MSCI ACWI IMI" },
   { id: "msci-world-esg-screened", label: "MSCI World ESG Screened" },
+  { id: "spx", label: "S&P 500" },
 ];
 
 export const inflations = [

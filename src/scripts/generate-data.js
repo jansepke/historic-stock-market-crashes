@@ -108,6 +108,7 @@ const processIndex = async (index, inflation, dataset) => {
     "msci-world-esg-screened",
     "msci-acwi",
     "msci-acwi-imi",
+    "spx",
   ];
 
   await fs.mkdir(dataDir, { recursive: true });
