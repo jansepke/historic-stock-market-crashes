@@ -33,6 +33,9 @@ const indices = {
   n225: {
     ticker: "^N225",
   },
+  zb: {
+    ticker: "ZB=F",
+  },
 };
 
 const getTicker = (index) => {
@@ -79,14 +82,19 @@ const processIndex = async (index) => {
 
   // https://query1.finance.yahoo.com/v7/finance/download/^GSPC?period1=1561759178&period2=1593381578&interval=1d&events=history
   const response = await axios
-    .get(`https://query1.finance.yahoo.com/v7/finance/download/${ticker}`, {
-      params: {
-        period1: parseInt((startDate.getTime() / 1000).toFixed(0)),
-        period2: parseInt((endDate.getTime() / 1000).toFixed(0)),
-        interval: "1d",
-        events: "history",
-      },
-    })
+    .get(
+      `https://query1.finance.yahoo.com/v7/finance/download/${encodeURIComponent(
+        ticker
+      )}`,
+      {
+        params: {
+          period1: parseInt((startDate.getTime() / 1000).toFixed(0)),
+          period2: parseInt((endDate.getTime() / 1000).toFixed(0)),
+          interval: "1d",
+          events: "history",
+        },
+      }
+    )
     .catch((error) => {
       console.log(error);
     });

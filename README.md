@@ -21,7 +21,6 @@ Start the project with
 ## Todo
 
 - refactor Calculator.calculateTableData
-- add bonds
 - add mixed portfolios
 - run index update once per day
 - show index data start date
