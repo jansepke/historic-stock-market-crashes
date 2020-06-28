@@ -104,6 +104,7 @@ const processIndex = async (index, inflation, dataset) => {
     "msci-world-momentum",
     "msci-world-quality",
     "msci-world-value",
+    "msci-world-growth",
     "msci-world-esg-screened",
     "msci-acwi",
     "msci-acwi-imi",

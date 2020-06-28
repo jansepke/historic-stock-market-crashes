@@ -32,6 +32,9 @@ const indices = {
   "msci-world-value": {
     name: "96561,L,36",
   },
+  "msci-world-growth": {
+    name: "2992,G,36",
+  },
   "msci-world-esg-screened": {
     name: "132866,SR,36",
   },
