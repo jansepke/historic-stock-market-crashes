@@ -13,6 +13,7 @@ export const indices = [
   { id: "vix", label: "CBOE Volatility Index" },
   { id: "rut", label: "Russell 2000" },
   { id: "tnx", label: "Treasury Yield 10 Years" },
+  { id: "n225", label: "Nikkei 225" },
 ];
 
 export const inflations = [

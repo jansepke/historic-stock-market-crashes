@@ -30,6 +30,9 @@ const indices = {
   tnx: {
     ticker: "^TNX",
   },
+  n225: {
+    ticker: "^N225",
+  },
 };
 
 const getTicker = (index) => {
