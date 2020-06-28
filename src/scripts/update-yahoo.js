@@ -21,6 +21,12 @@ const indices = {
   spx: {
     ticker: "^GSPC",
   },
+  dji: {
+    ticker: "^DJI",
+  },
+  ndx: {
+    ticker: "^NDX",
+  },
 };
 
 const getTicker = (index) => {
@@ -87,18 +93,17 @@ const processIndex = async (index) => {
       Close: (item) => parseFloat(item),
     },
   }).fromString(response.data);
-  console.log(data);
 
-  if (new Date(data[0].Date).toISOString() === startDate.toISOString()) {
-    data.shift();
-  }
+  let filteredData = data.filter(
+    (value) => data[0].Date.toISOString() !== startDate.toISOString()
+  );
 
-  if (data.length === 0) {
+  if (filteredData.length === 0) {
     console.log("nothing to update");
     return;
   }
 
-  const newCSV = data
+  const newCSV = filteredData
     .map(({ Date, Close }) => ({
       Date: convertDate(Date),
       Close: convertPrice(Close),

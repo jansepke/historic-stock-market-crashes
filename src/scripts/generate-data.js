@@ -109,6 +109,8 @@ const processIndex = async (index, inflation, dataset) => {
     "msci-acwi",
     "msci-acwi-imi",
     "spx",
+    "dji",
+    "ndx",
   ];
 
   await fs.mkdir(dataDir, { recursive: true });

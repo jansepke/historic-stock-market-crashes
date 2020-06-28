@@ -130,7 +130,6 @@ const processIndex = async (index, date) => {
   );
 
   if (xml.validate(response.data) !== true) {
-    //optional (it'll return an object in case it's not valid)
     console.log("Could not parse response");
     return;
   }
@@ -144,16 +143,16 @@ const processIndex = async (index, date) => {
     data = json;
   }
 
-  if (new Date(data[0].date).toISOString() === startDate.toISOString()) {
-    data.shift();
-  }
+  let filteredData = data.filter(
+    (value) => new Date(data[0].date).toISOString() !== startDate.toISOString()
+  );
 
-  if (data.length === 0) {
+  if (filteredData.length === 0) {
     console.log("nothing to update");
     return;
   }
 
-  const newCSV = data
+  const newCSV = filteredData
     .map(({ date, value }) => ({
       date: convertDate(new Date(date)),
       value: convertPrice(value),

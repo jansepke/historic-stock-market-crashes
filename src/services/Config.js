@@ -8,6 +8,8 @@ export const indices = [
   { id: "msci-acwi-imi", label: "MSCI ACWI IMI" },
   { id: "msci-world-esg-screened", label: "MSCI World ESG Screened" },
   { id: "spx", label: "S&P 500" },
+  { id: "dji", label: "Dow Jones Industrial Average" },
+  { id: "ndx", label: "NASDAQ 100" },
 ];
 
 export const inflations = [
