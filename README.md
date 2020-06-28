@@ -21,7 +21,6 @@ Start the project with
 ## Todo
 
 - refactor Calculator.calculateTableData
-- add more indices (e.g. S&P 500)
 - add bonds
 - add mixed portfolios
 - run index update once per day

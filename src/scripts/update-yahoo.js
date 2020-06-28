@@ -5,12 +5,6 @@ const fs = require("fs").promises;
 
 process.env.TZ = "UTC";
 
-const dateTimeFormatParam = new Intl.DateTimeFormat("en", {
-  year: "numeric",
-  month: "short",
-  day: "2-digit",
-});
-
 const dateTimeFormatCSV = new Intl.DateTimeFormat("en", {
   year: "numeric",
   month: "2-digit",
@@ -32,6 +26,9 @@ const indices = {
   },
   rut: {
     ticker: "^RUT",
+  },
+  tnx: {
+    ticker: "^TNX",
   },
 };
 
@@ -101,8 +98,9 @@ const processIndex = async (index) => {
   }).fromString(response.data);
 
   let filteredData = data.filter(
-    (value) => data[0].Date.toISOString() !== startDate.toISOString()
+    (value) => value.Date.toISOString() !== startDate.toISOString()
   );
+  filteredData = filteredData.filter((value) => !isNaN(value.Close));
 
   if (filteredData.length === 0) {
     console.log("nothing to update");

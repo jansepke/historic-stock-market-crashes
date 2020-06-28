@@ -144,7 +144,7 @@ const processIndex = async (index, date) => {
   }
 
   let filteredData = data.filter(
-    (value) => new Date(data[0].date).toISOString() !== startDate.toISOString()
+    (value) => new Date(value.date).toISOString() !== startDate.toISOString()
   );
 
   if (filteredData.length === 0) {
