@@ -27,6 +27,12 @@ const indices = {
   ndx: {
     ticker: "^NDX",
   },
+  vix: {
+    ticker: "^VIX",
+  },
+  rut: {
+    ticker: "^RUT",
+  },
 };
 
 const getTicker = (index) => {

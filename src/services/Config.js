@@ -10,6 +10,8 @@ export const indices = [
   { id: "spx", label: "S&P 500" },
   { id: "dji", label: "Dow Jones Industrial Average" },
   { id: "ndx", label: "NASDAQ 100" },
+  { id: "vix", label: "CBOE Volatility Index" },
+  { id: "rut", label: "Russell 2000" },
 ];
 
 export const inflations = [

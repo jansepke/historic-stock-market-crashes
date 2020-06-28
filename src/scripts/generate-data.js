@@ -111,6 +111,8 @@ const processIndex = async (index, inflation, dataset) => {
     "spx",
     "dji",
     "ndx",
+    "vix",
+    "rut",
   ];
 
   await fs.mkdir(dataDir, { recursive: true });
