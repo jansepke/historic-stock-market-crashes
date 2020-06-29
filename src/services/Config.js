@@ -7,14 +7,14 @@ export const indices = [
   { id: "msci-acwi", label: "MSCI ACWI" },
   { id: "msci-acwi-imi", label: "MSCI ACWI IMI" },
   { id: "msci-world-esg-screened", label: "MSCI World ESG Screened" },
-  { id: "spx", label: "S&P 500" },
-  { id: "dji", label: "Dow Jones Industrial Average" },
-  { id: "ndx", label: "NASDAQ 100" },
-  { id: "vix", label: "CBOE Volatility Index" },
-  { id: "rut", label: "Russell 2000" },
-  { id: "tnx", label: "Treasury Yield 10 Years" },
-  { id: "n225", label: "Nikkei 225" },
-  { id: "zb", label: "U.S. Treasury Bond" },
+  { id: "yahoo-spx", label: "S&P 500" },
+  { id: "yahoo-dji", label: "Dow Jones Industrial Average" },
+  { id: "yahoo-ndx", label: "NASDAQ 100" },
+  { id: "yahoo-vix", label: "CBOE Volatility Index" },
+  { id: "yahoo-rut", label: "Russell 2000" },
+  { id: "yahoo-tnx", label: "U.S. Treasury Yield 10 Years" },
+  { id: "yahoo-n225", label: "Nikkei 225" },
+  { id: "yahoo-zb", label: "U.S. Treasury Bond" },
 ];
 
 export const inflations = [

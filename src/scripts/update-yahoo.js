@@ -71,7 +71,7 @@ const convertPrice = (value) => {
 };
 
 const processIndex = async (index) => {
-  const existingData = await parseFile(`./data-sources/${index}.csv`);
+  const existingData = await parseFile(`./data-sources/yahoo-${index}.csv`);
   const lastEntry = existingData[existingData.length - 1];
   const ticker = getTicker(index);
   let startDate = lastEntry.date;
@@ -126,7 +126,7 @@ const processIndex = async (index) => {
     .map((data) => `${data.Date},${data.Close}`)
     .join("\n");
 
-  await fs.appendFile(`./data-sources/${index}.csv`, "\n" + newCSV);
+  await fs.appendFile(`./data-sources/yahoo-${index}.csv`, "\n" + newCSV);
 
   console.log(`added ${data.length} entries`);
 };
