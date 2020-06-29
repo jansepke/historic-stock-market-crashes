@@ -8,7 +8,7 @@ export default page;
 export const getStaticProps = async () =>
   pageGetStaticProps({
     params: {
-      index: indices[0].id,
+      index: indices[0].indices[0].id,
       inflation: inflations[0].id,
       dataset: datasets[0].id,
       minDrawdown: 30,

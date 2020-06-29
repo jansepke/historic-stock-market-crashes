@@ -54,11 +54,15 @@ export default ({
           <Grid item xs={4} md={2}>
             <FormControl fullWidth={true}>
               <InputLabel>Index</InputLabel>
-              <Select value={index} onChange={handleIndexChange}>
-                {indices.map((i) => (
-                  <MenuItem key={i.id} value={i.id}>
-                    {i.label}
-                  </MenuItem>
+              <Select native value={index} onChange={handleIndexChange}>
+                {indices.map((g) => (
+                  <optgroup key={g.groupId} label={g.label}>
+                    {g.indices.map((i) => (
+                      <option key={i.id} value={i.id}>
+                        {i.label}
+                      </option>
+                    ))}
+                  </optgroup>
                 ))}
               </Select>
             </FormControl>

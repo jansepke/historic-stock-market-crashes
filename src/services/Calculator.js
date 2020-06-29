@@ -68,7 +68,7 @@ const cartesian = (a, b, ...c) => (b ? cartesian(f(a, b), ...c) : a);
 
 export const calculateAllPaths = () =>
   cartesian(
-    indices.map((i) => i.id),
+    indices.map((g) => g.indices.map((i) => i.id)),
     inflations.map((i) => i.id),
     datasets.map((i) => i.id),
     minDrawdowns
