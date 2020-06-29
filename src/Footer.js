@@ -46,11 +46,13 @@ export default () => {
       <Grid container>
         <Grid item xs={12}>
           <FootNote header="Data sources">
-            MSCI index data is gathered from:
-            <br />
+            MSCI index data is gathered from:{" "}
             <a href="https://www.msci.com/end-of-day-data-search">
               MSCI End of day index data search
             </a>
+            <br />
+            Various ticker data is gathered from:{" "}
+            <a href="https://finance.yahoo.com/">Yahoo Finance</a>
           </FootNote>
         </Grid>
         <Grid item xs={12}>
