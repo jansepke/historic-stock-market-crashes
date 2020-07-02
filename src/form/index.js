@@ -12,7 +12,7 @@ import TrendingDownIcon from "@material-ui/icons/TrendingDown";
 import React, { useState } from "react";
 import {
   datasets,
-  indices,
+  indiceGroups,
   minDrawdowns,
   minDrawdownStep,
 } from "../services/Config";
@@ -55,7 +55,7 @@ export default ({
             <FormControl fullWidth={true}>
               <InputLabel>Index</InputLabel>
               <Select native value={index} onChange={handleIndexChange}>
-                {indices.map((g) => (
+                {indiceGroups.map((g) => (
                   <optgroup key={g.groupId} label={g.label}>
                     {g.indices.map((i) => (
                       <option key={i.id} value={i.id}>

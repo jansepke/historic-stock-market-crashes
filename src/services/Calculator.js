@@ -1,4 +1,4 @@
-import { datasets, indices, inflations, minDrawdowns } from "./Config";
+import { datasets, indiceGroups, inflations, minDrawdowns } from "./Config";
 
 const msToDays = 1 / 60 / 60 / 24 / 1000;
 
@@ -66,9 +66,19 @@ export const calculateTableData = (data, minDrawdown) => {
 const f = (a, b) => [].concat(...a.map((d) => b.map((e) => [].concat(d, e))));
 const cartesian = (a, b, ...c) => (b ? cartesian(f(a, b), ...c) : a);
 
+const getIndices = () => {
+  let indicesList = [];
+
+  indiceGroups.forEach((group) => {
+    indicesList = indicesList.concat(group.indices);
+  });
+
+  return indicesList;
+};
+
 export const calculateAllPaths = () =>
   cartesian(
-    indices.map((g) => g.indices.map((i) => i.id)),
+    getIndices().map((i) => i.id),
     inflations.map((i) => i.id),
     datasets.map((i) => i.id),
     minDrawdowns

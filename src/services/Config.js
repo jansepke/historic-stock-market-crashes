@@ -1,4 +1,4 @@
-export const indices = [
+export const indiceGroups = [
   {
     groupId: "msci",
     label: "MSCI",
