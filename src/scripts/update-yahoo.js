@@ -39,7 +39,7 @@ const indices = {
 };
 
 const getTicker = (index) => {
-  return indices[index]?.ticker;
+  return indices[index] ? indices[index].ticker : undefined;
 };
 
 const parseFile = async (fileName) =>

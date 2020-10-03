@@ -47,7 +47,7 @@ const indices = {
 };
 
 const getName = (index) => {
-  return indices[index]?.name;
+  return indices[index] ? indices[index].name : undefined;
 };
 
 const convertDate = (date) => {
