@@ -10,7 +10,7 @@ import React from "react";
 import { formatDate, formatDays, formatNumber } from "../services/Format";
 import TouchTooltip from "./TouchTooltip";
 
-export default ({ tableData, onRowHoverStart, onRowHoverEnd }) => (
+const Index = ({ tableData, onRowHoverStart, onRowHoverEnd }) => (
   <TableContainer component={Paper}>
     <Table>
       <TableHead>
@@ -98,3 +98,5 @@ export default ({ tableData, onRowHoverStart, onRowHoverEnd }) => (
     </Table>
   </TableContainer>
 );
+
+export default Index;

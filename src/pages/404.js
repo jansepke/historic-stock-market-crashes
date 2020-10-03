@@ -2,7 +2,7 @@ import Error from "next/error";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 
-export default () => {
+const Error404 = () => {
   const router = useRouter();
 
   useEffect(() => {
@@ -20,3 +20,5 @@ export default () => {
     />
   );
 };
+
+export default Error404;

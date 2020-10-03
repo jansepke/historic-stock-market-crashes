@@ -18,7 +18,7 @@ import {
 } from "../services/Config";
 import { formatDate } from "../services/Format";
 
-export default ({
+const Index = ({
   index,
   dataset,
   lastDataUpdate,
@@ -110,3 +110,5 @@ export default ({
     </Card>
   );
 };
+
+export default Index;

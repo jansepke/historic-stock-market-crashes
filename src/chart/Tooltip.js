@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default ({
+const Tooltip = ({
   point: {
     data: { x, y },
   },
@@ -25,3 +25,5 @@ export default ({
     </Paper>
   );
 };
+
+export default Tooltip;

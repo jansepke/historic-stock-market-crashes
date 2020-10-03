@@ -22,7 +22,7 @@ const Chart = dynamic(() => import("./chart"), {
   ),
 });
 
-export default ({
+const App = ({
   index,
   inflation,
   dataset,
@@ -162,3 +162,5 @@ export default ({
     </Container>
   );
 };
+
+export default App;
