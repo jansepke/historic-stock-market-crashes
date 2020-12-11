@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React, { useEffect } from "react";
 
-export default ({ Component, pageProps }) => {
+const App = ({ Component, pageProps }) => {
   useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector("#jss-server-side");
@@ -22,3 +22,5 @@ export default ({ Component, pageProps }) => {
     </>
   );
 };
+
+export default App;
