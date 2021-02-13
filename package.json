@@ -17,11 +17,6 @@
     "not IE 11",
     "not IE_Mob 11"
   ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint"
-    }
-  },
   "dependencies": {
     "@material-ui/core": "4.11.3",
     "@material-ui/icons": "4.11.2",
