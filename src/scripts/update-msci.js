@@ -51,13 +51,8 @@ const getName = (index) => {
 };
 
 const convertDate = (date) => {
-  const [
-    { value: mo },
-    ,
-    { value: da },
-    ,
-    { value: ye },
-  ] = dateTimeFormatCSV.formatToParts(date);
+  const [{ value: mo }, , { value: da }, , { value: ye }] =
+    dateTimeFormatCSV.formatToParts(date);
   return `${ye}-${mo}-${da}`;
 };
 
@@ -71,13 +66,8 @@ const convertPrice = (value) => {
 };
 
 const toDateParam = (date) => {
-  const [
-    { value: mo },
-    ,
-    { value: da },
-    ,
-    { value: ye },
-  ] = dateTimeFormatParam.formatToParts(date);
+  const [{ value: mo }, , { value: da }, , { value: ye }] =
+    dateTimeFormatParam.formatToParts(date);
   return `${da} ${mo}, ${ye}`;
 };
 

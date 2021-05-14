@@ -51,13 +51,8 @@ const parseFile = async (fileName) =>
   }).fromFile(fileName);
 
 const convertDate = (date) => {
-  const [
-    { value: mo },
-    ,
-    { value: da },
-    ,
-    { value: ye },
-  ] = dateTimeFormatCSV.formatToParts(date);
+  const [{ value: mo }, , { value: da }, , { value: ye }] =
+    dateTimeFormatCSV.formatToParts(date);
   return `${ye}-${mo}-${da}`;
 };
 
