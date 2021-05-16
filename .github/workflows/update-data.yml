@@ -15,6 +15,15 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - run: npm install -g npm@7
-      - run: npm ci
-      - run: ./do update-data
+      - name: install NPM v7
+        run: npm install -g npm@7
+      - name: install dependencies
+        run: npm ci
+      - name: update data
+        run: ./do update-data
+      - name: commit changes
+        run: |
+          git config --global user.name 'Jan Sepke'
+          git config --global user.email '625043+jansepke@users.noreply.github.com'
+          git commit -am "update data"
+          git push
