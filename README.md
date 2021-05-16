@@ -22,7 +22,6 @@ Start the project with
 
 - refactor Calculator.calculateTableData
 - add mixed portfolios
-- run index update once per day
 - show index data start date
 - add chart zooming (change start end date)
 - allow merging data of multiple indices
