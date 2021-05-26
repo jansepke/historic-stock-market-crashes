@@ -23,7 +23,11 @@ jobs:
         run: ./do update-data
       - name: commit changes
         run: |
+          if git diff-index --quiet HEAD --; then
+            exit 0;
+          fi
+
           git config --global user.name 'Jan Sepke'
-          git config --global user.email '625043+jansepke@users.noreply.github.com'
+          git config --global user.email '625043+jansepke@users.anoreply.github.com'
           git commit -am "update data"
           git push
