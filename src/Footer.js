@@ -40,7 +40,7 @@ const FootNote = ({ header, children }) => {
   );
 };
 
-export default () => {
+export default function Footer() {
   return (
     <>
       <Grid container>
@@ -85,4 +85,4 @@ export default () => {
       </Grid>
     </>
   );
-};
+}

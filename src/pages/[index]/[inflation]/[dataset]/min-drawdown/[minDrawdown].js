@@ -7,7 +7,7 @@ import {
 } from "../../../../../services/Calculator";
 import { getIndexData } from "../../../../../services/Data";
 
-export default ({
+export default function Page({
   index,
   inflation,
   dataset,
@@ -15,7 +15,7 @@ export default ({
   tableData,
   indexDataCount,
   indexDataUpdateDate,
-}) => {
+}) {
   const parsedTableData = tableData.map((item) => ({
     ...item,
     startDate: new Date(item.startDate),
@@ -44,7 +44,7 @@ export default ({
       />
     </>
   );
-};
+}
 
 export const getStaticProps = async ({
   params: { index, inflation, dataset, minDrawdown },
