@@ -35,6 +35,6 @@
     "downsample": "1.4.0",
     "fast-xml-parser": "3.19.0",
     "husky": "7.0.2",
-    "prettier": "2.3.2"
+    "prettier": "2.4.0"
   }
 }
