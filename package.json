@@ -33,7 +33,7 @@
     "axios": "0.21.4",
     "csvtojson": "2.0.10",
     "downsample": "1.4.0",
-    "fast-xml-parser": "3.20.0",
+    "fast-xml-parser": "3.20.3",
     "husky": "7.0.2",
     "prettier": "2.4.1"
   }
