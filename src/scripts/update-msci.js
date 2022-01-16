@@ -1,9 +1,10 @@
 const csv = require("csvtojson");
-const xml = require("fast-xml-parser");
+const { XMLParser, XMLValidator } = require("fast-xml-parser");
 const axios = require("axios");
 const fs = require("fs").promises;
 
 process.env.TZ = "UTC";
+const parser = new XMLParser();
 
 // initials data from http://www.msci.com/eqb/esg/performance/106.0.all.xls
 
@@ -119,12 +120,12 @@ const processIndex = async (index, date) => {
     }
   );
 
-  if (xml.validate(response.data) !== true) {
+  if (XMLValidator.validate(response.data) !== true) {
     console.log("Could not parse response");
     return;
   }
 
-  const json = xml.parse(response.data).performance.index.asOf;
+  const json = parser.parse(response.data).performance.index.asOf;
   let data = [];
 
   if (Array.isArray(json) === false) {
