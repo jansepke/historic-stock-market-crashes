@@ -30,8 +30,11 @@ const readFile = async (fileName) => {
   return JSON.parse(rawData);
 };
 
-const inflationByDate = (inflationData, date) =>
-  inflationData[date.getFullYear()][date.getMonth() + 1];
+const inflationByDate = (inflationData, date) => {
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  return inflationData[year] ? inflationData[year][month + 1] : undefined;
+};
 
 const processIndex = async (index, inflation, dataset) => {
   const msciData = await parseFile(`./data-sources/${index}.csv`);
