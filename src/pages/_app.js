@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 import Head from "next/head";
 import React, { useEffect } from "react";
 
@@ -19,6 +20,8 @@ const App = ({ Component, pageProps }) => {
         />
       </Head>
       <Component {...pageProps} />
+
+      <Analytics />
     </>
   );
 };
