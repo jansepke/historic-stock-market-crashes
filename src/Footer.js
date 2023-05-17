@@ -2,29 +2,15 @@ import { Grid } from "@mui/material";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
-import { makeStyles } from "@mui/styles";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import React from "react";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-    display: "inline",
-    boxShadow: "none",
-  },
-  summary: {
-    display: "inline-flex",
-  },
-}));
-
 const FootNote = ({ header, children }) => {
-  const classes = useStyles();
-
   return (
-    <Accordion className={classes.root}>
+    <Accordion sx={{ width: "100%", display: "inline", boxShadow: "none" }}>
       <AccordionSummary
-        className={classes.summary}
+        sx={{ display: "inline-flex" }}
         expandIcon={<ExpandMoreIcon />}
       >
         <Typography variant="body2" color="textSecondary">
