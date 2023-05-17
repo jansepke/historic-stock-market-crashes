@@ -1,13 +1,14 @@
 import * as React from "react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import createEmotionServer from "@emotion/server/create-instance";
+import { roboto } from "../theme";
 import createEmotionCache from "../createEmotionCache";
 
 export default function MyDocument(props) {
   const { emotionStyleTags } = props;
 
   return (
-    <Html lang="en">
+    <Html lang="en" className={roboto.className}>
       <Head>
         <meta name="emotion-insertion-point" content="" />
         {emotionStyleTags}
