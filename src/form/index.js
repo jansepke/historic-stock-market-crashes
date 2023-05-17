@@ -52,9 +52,14 @@ const Index = ({
       <CardContent>
         <Grid container spacing={3}>
           <Grid item xs={4} md={2}>
-            <FormControl fullWidth={true}>
+            <FormControl fullWidth>
               <InputLabel>Index</InputLabel>
-              <Select native value={index} onChange={handleIndexChange}>
+              <Select
+                label="Index"
+                native
+                value={index}
+                onChange={handleIndexChange}
+              >
                 {indiceGroups.map((g) => (
                   <optgroup key={g.groupId} label={g.label}>
                     {g.indices.map((i) => (
@@ -75,9 +80,13 @@ const Index = ({
             )}
           </Grid>
           <Grid item xs={12} sm={5} md={3}>
-            <FormControl fullWidth={true}>
+            <FormControl fullWidth>
               <InputLabel>Values from end of</InputLabel>
-              <Select value={dataset} onChange={handleDatasetChange}>
+              <Select
+                label="Values from end of"
+                value={dataset}
+                onChange={handleDatasetChange}
+              >
                 {datasets.map((i) => (
                   <MenuItem key={i.id} value={i.id}>
                     {i.label}
