@@ -1,5 +1,5 @@
-import Tooltip from "@material-ui/core/Tooltip";
-import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
+import Tooltip from "@mui/material/Tooltip";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import React from "react";
 
 const TouchTooltip = ({ withIcon, children, ...props }) => (

@@ -1,6 +1,9 @@
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Analytics } from "@vercel/analytics/react";
 import Head from "next/head";
 import React, { useEffect } from "react";
+
+const theme = createTheme();
 
 const App = ({ Component, pageProps }) => {
   useEffect(() => {
@@ -19,7 +22,10 @@ const App = ({ Component, pageProps }) => {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       </Head>
-      <Component {...pageProps} />
+
+      <ThemeProvider theme={theme}>
+        <Component {...pageProps} />
+      </ThemeProvider>
 
       <Analytics />
     </>
