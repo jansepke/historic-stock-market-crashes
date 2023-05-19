@@ -33,12 +33,14 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@types/node": "20.2.1",
     "@types/react": "18.2.6",
     "axios": "^1.4.0",
     "csvtojson": "2.0.10",
     "downsample": "1.4.0",
     "fast-xml-parser": "4.2.2",
     "husky": "8.0.3",
-    "prettier": "2.8.8"
+    "prettier": "2.8.8",
+    "typescript": "5.0.4"
   }
 }

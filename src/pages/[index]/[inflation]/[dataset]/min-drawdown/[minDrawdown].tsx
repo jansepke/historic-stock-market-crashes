@@ -4,8 +4,8 @@ import App from "../../../../../App";
 import {
   calculateAllPaths,
   calculateTableData,
-} from "../../../../../services/Calculator";
-import { getIndexData } from "../../../../../services/Data";
+} from "../../../../../services/calculator";
+import { getIndexData } from "../../../../../services/data";
 
 export default function Page({
   index,

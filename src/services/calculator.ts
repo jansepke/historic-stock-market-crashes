@@ -1,4 +1,5 @@
-import { datasets, indiceGroups, inflations, minDrawdowns } from "./Config";
+import { datasets, indiceGroups, inflations, minDrawdowns } from "./config";
+import { IndexData, TableData } from "./domain";
 
 const msToDays = 1 / 60 / 60 / 24 / 1000;
 
@@ -15,16 +16,17 @@ const addPercentUp = (data, newTableData, years) => {
   }
 };
 
-export const calculateTableData = (data, minDrawdown) => {
-  const newTableData = [];
-  let lastPeak = { price: 0 },
-    lastTrough = { price: 0 };
+const nullIndexData = { date: new Date(0), price: 0 };
+export const calculateTableData = (data: IndexData[], minDrawdown) => {
+  const newTableData: TableData[] = [];
+  let lastPeak: IndexData = nullIndexData,
+    lastTrough: IndexData = nullIndexData;
 
-  const checkDrawdown = (newPeak = {}) => {
+  const checkDrawdown = (newPeak = nullIndexData) => {
     const percent = (1 - lastTrough.price / lastPeak.price) * 100;
     if (percent > minDrawdown) {
-      const daysDown = (lastTrough.date - lastPeak.date) * msToDays;
-      const daysDone = (newPeak.date - lastPeak.date) * msToDays;
+      const daysDown = (+lastTrough.date - +lastPeak.date) * msToDays;
+      const daysDone = (+newPeak.date - +lastPeak.date) * msToDays;
 
       newTableData.push({
         startDate: lastPeak.date,
@@ -54,17 +56,20 @@ export const calculateTableData = (data, minDrawdown) => {
   addPercentUp(data, newTableData, 2);
   addPercentUp(data, newTableData, 5);
 
-  newTableData.forEach((item) => {
-    item.startDate = item.startDate.toString();
-    item.endDate = item.endDate.toString();
-    item.doneDate = item.doneDate?.toString() || null;
-  });
-
-  return newTableData;
+  return newTableData.map((item) => ({
+    ...item,
+    startDate: item.startDate.toString(),
+    endDate: item.endDate.toString(),
+    doneDate: item.doneDate?.toString() || null,
+  }));
 };
 
-const f = (a, b) => [].concat(...a.map((d) => b.map((e) => [].concat(d, e))));
-const cartesian = (a, b, ...c) => (b ? cartesian(f(a, b), ...c) : a);
+const cartesianProduct = <T>(...sets: T[][]) =>
+  sets.reduce<T[][]>(
+    (accSets, set) =>
+      accSets.flatMap((accSet) => set.map((value) => [...accSet, value])),
+    [[]]
+  );
 
 const getIndices = () => {
   let indicesList = [];
@@ -77,7 +82,7 @@ const getIndices = () => {
 };
 
 export const calculateAllPaths = () =>
-  cartesian(
+  cartesianProduct(
     getIndices().map((i) => i.id),
     inflations.map((i) => i.id),
     datasets.map((i) => i.id),

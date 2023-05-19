@@ -10,16 +10,20 @@ import dynamic from "next/dynamic";
 import { Router, useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Footer from "./Footer";
-import Form from "./form";
-import Table from "./table";
+import Form from "./form/Form";
+import Table from "./table/Table";
 
-const Chart = dynamic(() => import("./chart"), {
-  ssr: false,
-  loading: () => (
-    <Grid item xs={12} align="center">
+const Loader: React.FC = () => (
+  <Grid container direction="column" alignItems="center">
+    <Grid item xs={12}>
       <CircularProgress />
     </Grid>
-  ),
+  </Grid>
+);
+
+const Chart = dynamic(() => import("./chart/Chart"), {
+  ssr: false,
+  loading: () => <Loader />,
 });
 
 const App = ({
@@ -112,9 +116,7 @@ const App = ({
           </Grid>
         )}
         {loading ? (
-          <Grid item xs={12} align="center">
-            <CircularProgress />
-          </Grid>
+          <Loader />
         ) : (
           <>
             <Grid item xs={12}>
@@ -141,9 +143,7 @@ const App = ({
               </Grid>
             </Grid>
             {chart.loading ? (
-              <Grid item xs={12} align="center">
-                <CircularProgress />
-              </Grid>
+              <Loader />
             ) : (
               <Grid item xs={12}>
                 <Chart

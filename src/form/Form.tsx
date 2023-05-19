@@ -15,8 +15,8 @@ import {
   indiceGroups,
   minDrawdowns,
   minDrawdownStep,
-} from "../services/Config";
-import { formatDate } from "../services/Format";
+} from "../services/config";
+import { formatDate } from "../services/format";
 
 const Index = ({
   index,

@@ -4,7 +4,7 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { ResponsiveLine } from "@nivo/line";
 import React from "react";
-import { formatDate, formatNumber } from "../services/Format";
+import { formatDate, formatNumber } from "../services/format";
 import ToolTip from "./Tooltip";
 
 export default function Chart({ data, markers, dataCount }) {

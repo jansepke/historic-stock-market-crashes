@@ -1,4 +1,4 @@
-import { datasets, indiceGroups, inflations } from "../services/Config";
+import { datasets, indiceGroups, inflations } from "../services/config";
 import page, {
   getStaticProps as pageGetStaticProps,
 } from "./[index]/[inflation]/[dataset]/min-drawdown/[minDrawdown]";

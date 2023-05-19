@@ -7,7 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import React from "react";
-import { formatDate, formatDays, formatNumber } from "../services/Format";
+import { formatDate, formatDays, formatNumber } from "../services/format";
 import TouchTooltip from "./TouchTooltip";
 
 const Index = ({ tableData, onRowHoverStart, onRowHoverEnd }) => (
