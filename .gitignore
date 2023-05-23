@@ -2,3 +2,7 @@ node_modules
 dist
 .next
 index-data
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
