@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
+import MuiTable from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
@@ -9,10 +9,21 @@ import TableRow from "@mui/material/TableRow";
 import React from "react";
 import { formatDate, formatDays, formatNumber } from "../services/format";
 import TouchTooltip from "./TouchTooltip";
+import { Crash } from "../services/domain";
 
-const Index = ({ tableData, onRowHoverStart, onRowHoverEnd }) => (
+interface TableProps {
+  tableData: Crash[];
+  onRowHoverStart: (row: Crash) => void;
+  onRowHoverEnd: (row: Crash) => void;
+}
+
+const Table: React.FC<TableProps> = ({
+  tableData,
+  onRowHoverStart,
+  onRowHoverEnd,
+}) => (
   <TableContainer component={Paper}>
-    <Table>
+    <MuiTable>
       <TableHead>
         <TableRow>
           <TableCell align="center">Begin of crash</TableCell>
@@ -60,7 +71,7 @@ const Index = ({ tableData, onRowHoverStart, onRowHoverEnd }) => (
       <TableBody>
         {tableData.map((row) => (
           <TableRow
-            key={row.startDate}
+            key={row.startDate.toString()}
             hover={true}
             onMouseOver={() => onRowHoverStart(row)}
             onMouseOut={() => onRowHoverEnd(row)}
@@ -95,8 +106,8 @@ const Index = ({ tableData, onRowHoverStart, onRowHoverEnd }) => (
           </TableRow>
         ))}
       </TableBody>
-    </Table>
+    </MuiTable>
   </TableContainer>
 );
 
-export default Index;
+export default Table;

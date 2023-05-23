@@ -6,6 +6,18 @@ import {
   calculateTableData,
 } from "../../../../../services/calculator";
 import { getIndexData } from "../../../../../services/data";
+import { Crash } from "../../../../../services/domain";
+import { GetStaticProps } from "next";
+
+interface PageProps {
+  index: string;
+  inflation: string;
+  dataset: string;
+  minDrawdown: number;
+  tableData: Crash[];
+  indexDataCount: number;
+  indexDataUpdateDate: Date;
+}
 
 export default function Page({
   index,
@@ -15,7 +27,7 @@ export default function Page({
   tableData,
   indexDataCount,
   indexDataUpdateDate,
-}) {
+}: PageProps) {
   const parsedTableData = tableData.map((item) => ({
     ...item,
     startDate: new Date(item.startDate),
@@ -46,10 +58,12 @@ export default function Page({
   );
 }
 
-export const getStaticProps = async ({
-  params: { index, inflation, dataset, minDrawdown },
-}) => {
-  const parsedMinDrawdown = parseInt(minDrawdown);
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const parsedMinDrawdown = parseInt(params!.minDrawdown as string);
+
+  const index = params!.index as string;
+  const inflation = params!.inflation as string;
+  const dataset = params!.dataset as string;
 
   const indexData = await getIndexData(index, inflation, dataset);
   const tableData = calculateTableData(indexData, parsedMinDrawdown);

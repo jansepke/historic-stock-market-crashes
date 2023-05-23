@@ -3,7 +3,7 @@ export interface IndexData {
   price: number;
 }
 
-export interface TableData {
+export interface Crash {
   startDate: Date;
   endDate: Date;
   startPrice: number;
@@ -11,5 +11,12 @@ export interface TableData {
   daysDown: number;
   percent: number;
   daysDone: number;
-  doneDate: Date;
+  doneDate: Date | null;
+  percentUp2: number;
+  percentUp5: number;
+}
+
+export interface IndexRawData {
+  date: string;
+  price: string;
 }

@@ -5,11 +5,11 @@ import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
-import React, { useState } from "react";
+import React, { SyntheticEvent, useState } from "react";
 import {
   datasets,
   indiceGroups,
@@ -18,7 +18,17 @@ import {
 } from "../services/config";
 import { formatDate } from "../services/format";
 
-const Index = ({
+interface FormProps {
+  index: string;
+  dataset: string;
+  lastDataUpdate: Date;
+  initialMinDrawdown: number;
+  onMinDrawdownChange: (value: number) => void;
+  onDatasetChange: (value: string) => void;
+  onIndexChange: (value: string) => void;
+}
+
+const Form: React.FC<FormProps> = ({
   index,
   dataset,
   lastDataUpdate,
@@ -29,21 +39,26 @@ const Index = ({
 }) => {
   const [minDrawdown, setMinDrawdown] = useState(initialMinDrawdown);
 
-  const handleMinDrawdownChange = (event, newValue) => {
+  const handleMinDrawdownChange = (
+    event: Event | SyntheticEvent<Element, Event>,
+    value: number | number[]
+  ) => {
+    const newValue = Array.isArray(value) ? value[0] : value;
     if (newValue !== initialMinDrawdown) {
       onMinDrawdownChange(newValue);
     }
   };
 
-  const handleIndexChange = (event) => {
+  const handleIndexChange = (event: SelectChangeEvent<string>) => {
     onIndexChange(event.target.value);
   };
 
-  const handleDatasetChange = (event) => {
+  const handleDatasetChange = (event: SelectChangeEvent<string>) => {
     onDatasetChange(event.target.value);
   };
 
-  const handleMinDrawdownMove = (event, newValue) => {
+  const handleMinDrawdownMove = (event: Event, value: number | number[]) => {
+    const newValue = Array.isArray(value) ? value[0] : value;
     setMinDrawdown(newValue);
   };
 
@@ -120,4 +135,4 @@ const Index = ({
   );
 };
 
-export default Index;
+export default Form;

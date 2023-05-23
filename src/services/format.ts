@@ -6,14 +6,14 @@ const dtf = new Intl.DateTimeFormat("en", {
 
 export const formatDate = dtf.format;
 
-export const formatDays = (days) => {
+export const formatDays = (days: number) => {
   if (!days || isNaN(days)) {
     return "-";
   }
   return days >= 365 ? `${(days / 365).toFixed(1)}y` : `${days.toFixed()}d`;
 };
 
-export const formatNumber = (number, suffix = "") => {
+export const formatNumber = (number: number, suffix = "") => {
   if (!number || isNaN(number)) {
     return "-";
   }

@@ -12,6 +12,8 @@ import React, { useEffect, useState } from "react";
 import Footer from "./Footer";
 import Form from "./form/Form";
 import Table from "./table/Table";
+import { Crash, IndexData } from "./services/domain";
+import { Serie } from "@nivo/line";
 
 const Loader: React.FC = () => (
   <Grid container direction="column" alignItems="center">
@@ -26,7 +28,17 @@ const Chart = dynamic(() => import("./chart/Chart"), {
   loading: () => <Loader />,
 });
 
-const App = ({
+interface AppProps {
+  index: string;
+  inflation: string;
+  dataset: string;
+  minDrawdown: number;
+  tableData: Crash[];
+  indexDataCount: number;
+  indexDataUpdateDate: Date;
+}
+
+const App: React.FC<AppProps> = ({
   index,
   inflation,
   dataset,
@@ -38,8 +50,8 @@ const App = ({
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
-  const [markers, setMarkers] = useState([]);
-  const [chart, setChart] = useState({
+  const [markers, setMarkers] = useState<IndexData[]>([]);
+  const [chart, setChart] = useState<{ data: Serie[]; loading: boolean }>({
     data: [],
     loading: false,
   });
@@ -47,7 +59,7 @@ const App = ({
   Router.events.on("routeChangeStart", () => setLoading(true));
   Router.events.on("routeChangeComplete", () => setLoading(false));
 
-  const addMarker = (item) => {
+  const addMarker = (item: Crash) => {
     setMarkers([
       { date: item.startDate, price: item.startPrice },
       { date: item.endDate, price: item.endPrice },
@@ -58,7 +70,7 @@ const App = ({
     setMarkers([]);
   };
 
-  const changeRoute = (part) => (newValue) => {
+  const changeRoute = (part: string) => (newValue: string | number) => {
     const values = { index, dataset, minDrawdown, [part]: newValue };
 
     router.push(
@@ -74,10 +86,10 @@ const App = ({
       const response = await fetch(
         `/api/chart-data/${index}-${inflation}-${dataset}`
       );
-      const chartData = await response.json();
+      const chartData = (await response.json()) as Serie[];
 
       chartData[0].data.forEach((item) => {
-        item.x = new Date(item.x); // Dates are serialized in JSON
+        item.x = new Date(item.x as string); // Dates are serialized in JSON
       });
 
       setChart({ loading: false, data: chartData });

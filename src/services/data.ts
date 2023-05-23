@@ -1,11 +1,11 @@
 import { promises as fs } from "fs";
 import path from "path";
-import { IndexData } from "./domain";
+import { IndexData, IndexRawData } from "./domain";
 
 export const getIndexData = async (
-  index,
-  inflation,
-  dataset
+  index: string,
+  inflation: string,
+  dataset: string
 ): Promise<IndexData[]> => {
   const indexFile = path.join(
     process.cwd(),
@@ -15,7 +15,8 @@ export const getIndexData = async (
   const rawData = await fs.readFile(indexFile, "utf-8");
   const data = JSON.parse(rawData);
 
-  return data.data.map(({ date, price }) => ({
+  const rawIndexData = data.data as IndexRawData[];
+  return rawIndexData.map(({ date, price }) => ({
     date: new Date(date),
     price: parseFloat(price),
   }));

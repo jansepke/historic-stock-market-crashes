@@ -11,6 +11,6 @@ export const getStaticProps = async () =>
       index: indiceGroups[0].indices[0].id,
       inflation: inflations[0].id,
       dataset: datasets[0].id,
-      minDrawdown: 30,
+      minDrawdown: "30",
     },
   });
