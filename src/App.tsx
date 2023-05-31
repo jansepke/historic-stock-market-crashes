@@ -83,9 +83,7 @@ const App: React.FC<AppProps> = ({
     setChart({ loading: true, data: [] });
 
     (async () => {
-      const response = await fetch(
-        `/api/chart-data/${index}-${inflation}-${dataset}`
-      );
+      const response = await fetch(`/api/chart-data/${index}-${inflation}-${dataset}`);
       const chartData = (await response.json()) as Serie[];
 
       chartData[0].data.forEach((item) => {
@@ -103,8 +101,7 @@ const App: React.FC<AppProps> = ({
       </Typography>
       <Box m={2}>
         <Typography align="justify">
-          Analyze historic stock market crashes for different indices based on
-          the maximum drawdown.
+          Analyze historic stock market crashes for different indices based on the maximum drawdown.
         </Typography>
       </Box>
       <Grid container spacing={3}>
@@ -122,8 +119,8 @@ const App: React.FC<AppProps> = ({
         {dataset === "end-of-day" && (
           <Grid item xs={12}>
             <Alert severity="info">
-              When using daily values instead of monthly values the results are
-              less comparable to other statistics that often use monthly dates.
+              When using daily values instead of monthly values the results are less comparable to other statistics that
+              often use monthly dates.
             </Alert>
           </Grid>
         )}
@@ -134,22 +131,17 @@ const App: React.FC<AppProps> = ({
             <Grid item xs={12}>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
-                  <Table
-                    tableData={tableData}
-                    onRowHoverStart={addMarker}
-                    onRowHoverEnd={removeMarkers}
-                  />
+                  <Table tableData={tableData} onRowHoverStart={addMarker} onRowHoverEnd={removeMarkers} />
                 </Grid>
                 <Grid item md={6} xs={12}>
                   <Typography variant="body2">
-                    <InfoOutlinedIcon fontSize="inherit" /> Returns are nominal
-                    without costs and taxes. Values are in USD.
+                    <InfoOutlinedIcon fontSize="inherit" /> Returns are nominal without costs and taxes. Values are in
+                    USD.
                   </Typography>
                 </Grid>
                 <Grid item md={6} xs={12}>
                   <Typography variant="body2" align="right">
-                    <TouchAppOutlinedIcon fontSize="inherit" /> Click on a row
-                    to mark crash on graph.
+                    <TouchAppOutlinedIcon fontSize="inherit" /> Click on a row to mark crash on graph.
                   </Typography>
                 </Grid>
               </Grid>
@@ -158,11 +150,7 @@ const App: React.FC<AppProps> = ({
               <Loader />
             ) : (
               <Grid item xs={12}>
-                <Chart
-                  data={chart.data}
-                  markers={markers}
-                  dataCount={indexDataCount}
-                />
+                <Chart data={chart.data} markers={markers} dataCount={indexDataCount} />
               </Grid>
             )}
           </>

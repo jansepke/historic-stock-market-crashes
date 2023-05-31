@@ -17,11 +17,7 @@ interface TableProps {
   onRowHoverEnd: (row: Crash) => void;
 }
 
-const Table: React.FC<TableProps> = ({
-  tableData,
-  onRowHoverStart,
-  onRowHoverEnd,
-}) => (
+const Table: React.FC<TableProps> = ({ tableData, onRowHoverStart, onRowHoverEnd }) => (
   <TableContainer component={Paper}>
     <MuiTable>
       <TableHead>
@@ -39,29 +35,20 @@ const Table: React.FC<TableProps> = ({
             (maximum drawdown)
           </TableCell>
           <TableCell align="center">
-            <TouchTooltip
-              withIcon
-              title="Time from begin of crash until new highest point"
-            >
+            <TouchTooltip withIcon title="Time from begin of crash until new highest point">
               Time until new
               <br />
               highest point
             </TouchTooltip>
           </TableCell>
           <TableCell align="center">
-            <TouchTooltip
-              withIcon
-              title="Return of an investment from the lowest point after 2 years"
-            >
+            <TouchTooltip withIcon title="Return of an investment from the lowest point after 2 years">
               ROI after
               <br />2 years
             </TouchTooltip>
           </TableCell>
           <TableCell align="center">
-            <TouchTooltip
-              withIcon
-              title="Return of an investment from the lowest point after 5 years"
-            >
+            <TouchTooltip withIcon title="Return of an investment from the lowest point after 5 years">
               ROI after
               <br />5 years
             </TouchTooltip>
@@ -77,32 +64,22 @@ const Table: React.FC<TableProps> = ({
             onMouseOut={() => onRowHoverEnd(row)}
           >
             <TableCell align="center">
-              <TouchTooltip title={formatNumber(row.startPrice, " USD")}>
-                {formatDate(row.startDate)}
-              </TouchTooltip>
+              <TouchTooltip title={formatNumber(row.startPrice, " USD")}>{formatDate(row.startDate)}</TouchTooltip>
             </TableCell>
             <TableCell align="center">
-              <TouchTooltip title={formatNumber(row.endPrice, " USD")}>
-                {formatDate(row.endDate)}
-              </TouchTooltip>
+              <TouchTooltip title={formatNumber(row.endPrice, " USD")}>{formatDate(row.endDate)}</TouchTooltip>
             </TableCell>
             <TableCell align="center">{formatDays(row.daysDown)}</TableCell>
             <TableCell align="center">
               <Box color="error.main">{-row.percent.toFixed()}%</Box>
             </TableCell>
             <TableCell align="center">
-              <TouchTooltip
-                title={row.doneDate ? formatDate(row.doneDate) : ""}
-              >
+              <TouchTooltip title={row.doneDate ? formatDate(row.doneDate) : ""}>
                 {formatDays(row.daysDone)}
               </TouchTooltip>
             </TableCell>
-            <TableCell align="center">
-              {formatNumber(row.percentUp2, "%")}
-            </TableCell>
-            <TableCell align="center">
-              {formatNumber(row.percentUp5, "%")}
-            </TableCell>
+            <TableCell align="center">{formatNumber(row.percentUp2, "%")}</TableCell>
+            <TableCell align="center">{formatNumber(row.percentUp5, "%")}</TableCell>
           </TableRow>
         ))}
       </TableBody>

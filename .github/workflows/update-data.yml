@@ -3,18 +3,17 @@ name: update data
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 4 * * SAT'
+    - cron: "0 4 * * SAT"
 
 jobs:
   update-data:
-
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: "14"
       - name: install NPM v7
         run: npm install -g npm@7
       - name: install dependencies

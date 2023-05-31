@@ -2,8 +2,7 @@ const csv = require("csvtojson");
 const axios = require("axios");
 const fs = require("fs").promises;
 
-const sourcePath =
-  "https://download.bls.gov/pub/time.series/cu/cu.data.1.AllItems";
+const sourcePath = "https://download.bls.gov/pub/time.series/cu/cu.data.1.AllItems";
 const seriesId = "CUUR0000SA0"; // Consumer Price Index - Not Seasonally Adjusted - Monthly - U.S. city average - All items
 const outputPath = "./data-sources/inflation-us.json";
 

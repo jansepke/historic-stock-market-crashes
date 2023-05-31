@@ -10,12 +10,7 @@ import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
 import React, { SyntheticEvent, useState } from "react";
-import {
-  datasets,
-  indiceGroups,
-  minDrawdowns,
-  minDrawdownStep,
-} from "../services/config";
+import { datasets, indiceGroups, minDrawdowns, minDrawdownStep } from "../services/config";
 import { formatDate } from "../services/format";
 
 interface FormProps {
@@ -39,10 +34,7 @@ const Form: React.FC<FormProps> = ({
 }) => {
   const [minDrawdown, setMinDrawdown] = useState(initialMinDrawdown);
 
-  const handleMinDrawdownChange = (
-    event: Event | SyntheticEvent<Element, Event>,
-    value: number | number[]
-  ) => {
+  const handleMinDrawdownChange = (event: Event | SyntheticEvent<Element, Event>, value: number | number[]) => {
     const newValue = Array.isArray(value) ? value[0] : value;
     if (newValue !== initialMinDrawdown) {
       onMinDrawdownChange(newValue);
@@ -69,12 +61,7 @@ const Form: React.FC<FormProps> = ({
           <Grid item xs={4} md={2}>
             <FormControl fullWidth>
               <InputLabel>Index</InputLabel>
-              <Select
-                label="Index"
-                native
-                value={index}
-                onChange={handleIndexChange}
-              >
+              <Select label="Index" native value={index} onChange={handleIndexChange}>
                 {indiceGroups.map((g) => (
                   <optgroup key={g.groupId} label={g.label}>
                     {g.indices.map((i) => (
@@ -97,11 +84,7 @@ const Form: React.FC<FormProps> = ({
           <Grid item xs={12} sm={5} md={3}>
             <FormControl fullWidth>
               <InputLabel>Values from end of</InputLabel>
-              <Select
-                label="Values from end of"
-                value={dataset}
-                onChange={handleDatasetChange}
-              >
+              <Select label="Values from end of" value={dataset} onChange={handleDatasetChange}>
                 {datasets.map((i) => (
                   <MenuItem key={i.id} value={i.id}>
                     {i.label}

@@ -50,6 +50,4 @@ export const datasets = [
 ];
 
 export const minDrawdownStep = 5;
-export const minDrawdowns = [...Array(9).keys()].map(
-  (i) => 10 + i * minDrawdownStep
-);
+export const minDrawdowns = [...Array(9).keys()].map((i) => 10 + i * minDrawdownStep);

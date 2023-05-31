@@ -52,8 +52,7 @@ const getName = (index) => {
 };
 
 const convertDate = (date) => {
-  const [{ value: mo }, , { value: da }, , { value: ye }] =
-    dateTimeFormatCSV.formatToParts(date);
+  const [{ value: mo }, , { value: da }, , { value: ye }] = dateTimeFormatCSV.formatToParts(date);
   return `${ye}-${mo}-${da}`;
 };
 
@@ -67,8 +66,7 @@ const convertPrice = (value) => {
 };
 
 const toDateParam = (date) => {
-  const [{ value: mo }, , { value: da }, , { value: ye }] =
-    dateTimeFormatParam.formatToParts(date);
+  const [{ value: mo }, , { value: da }, , { value: ye }] = dateTimeFormatParam.formatToParts(date);
   return `${da} ${mo}, ${ye}`;
 };
 
@@ -102,23 +100,20 @@ const processIndex = async (index, date) => {
   }
   console.log(`startDate: ${startDate} endDate: ${endDate}`);
 
-  const response = await axios.get(
-    "https://app2.msci.com/webapp/indexperf/charts",
-    {
-      params: {
-        indices: getName(index),
-        startDate: toDateParam(startDate),
-        endDate: toDateParam(endDate),
-        priceLevel: 0,
-        currency: 15,
-        frequency: "D",
-        scope: "R",
-        format: "XML",
-        baseValue: false,
-        site: "gimi",
-      },
-    }
-  );
+  const response = await axios.get("https://app2.msci.com/webapp/indexperf/charts", {
+    params: {
+      indices: getName(index),
+      startDate: toDateParam(startDate),
+      endDate: toDateParam(endDate),
+      priceLevel: 0,
+      currency: 15,
+      frequency: "D",
+      scope: "R",
+      format: "XML",
+      baseValue: false,
+      site: "gimi",
+    },
+  });
 
   if (XMLValidator.validate(response.data) !== true) {
     console.log("Could not parse response");
@@ -134,9 +129,7 @@ const processIndex = async (index, date) => {
     data = json;
   }
 
-  let filteredData = data.filter(
-    (value) => new Date(value.date).toISOString() !== startDate.toISOString()
-  );
+  let filteredData = data.filter((value) => new Date(value.date).toISOString() !== startDate.toISOString());
 
   if (filteredData.length === 0) {
     console.log("nothing to update");

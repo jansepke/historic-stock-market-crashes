@@ -7,11 +7,7 @@ interface TouchTooltipProps extends Omit<TooltipProps, "children"> {
   children: React.ReactNode;
 }
 
-const TouchTooltip: React.FC<TouchTooltipProps> = ({
-  withIcon,
-  children,
-  ...props
-}) => (
+const TouchTooltip: React.FC<TouchTooltipProps> = ({ withIcon, children, ...props }) => (
   <Tooltip {...props} enterTouchDelay={50} leaveTouchDelay={5000}>
     <span>
       {children}

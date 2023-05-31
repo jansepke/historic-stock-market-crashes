@@ -44,10 +44,7 @@ const Chart: React.FC<ChartProps> = ({ data, markers, dataCount }) =>
               axis: "x",
               value: item.date,
               lineStyle: { strokeDasharray: "10 5" },
-              legend: `${formatDate(item.date)}: ${formatNumber(
-                item.price,
-                " USD"
-              )}`,
+              legend: `${formatDate(item.date)}: ${formatNumber(item.price, " USD")}`,
               legendOrientation: "vertical",
               legendPosition: idx % 2 === 0 ? "top-left" : "top-right",
             }))}
@@ -57,8 +54,7 @@ const Chart: React.FC<ChartProps> = ({ data, markers, dataCount }) =>
           <Grid item xs={12}>
             <Box mr={2}>
               <Typography variant="body2" align="right" color="textSecondary">
-                The chart data is downsampled from {dataCount} to{" "}
-                {data[0].data.length} dates for performance reasons.
+                The chart data is downsampled from {dataCount} to {data[0].data.length} dates for performance reasons.
               </Typography>
             </Box>
           </Grid>

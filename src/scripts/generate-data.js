@@ -6,8 +6,7 @@ const dataDir = "index-data";
 
 const calculateChartData = (data, sampleRate) => {
   const newData = data.map(({ price, date }) => ({ x: date, y: price }));
-  const downsampledData =
-    sampleRate < data.length ? LTD(newData, sampleRate) : newData;
+  const downsampledData = sampleRate < data.length ? LTD(newData, sampleRate) : newData;
 
   return [
     {
@@ -66,10 +65,7 @@ const processIndex = async (index, inflation, dataset) => {
   if (inflation !== "nominal") {
     const inflationData = await readFile(`./data-sources/inflation-us.json`);
     const firstIndexDate = indexData[0].date;
-    const firstInflation = inflationByDate(
-      inflationData,
-      new Date(firstIndexDate)
-    );
+    const firstInflation = inflationByDate(inflationData, new Date(firstIndexDate));
 
     indexData = indexData.map(({ date, price }) => {
       const inflation = inflationByDate(inflationData, new Date(date));

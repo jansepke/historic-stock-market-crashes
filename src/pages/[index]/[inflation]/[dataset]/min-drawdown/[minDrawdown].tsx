@@ -1,10 +1,7 @@
 import Head from "next/head";
 import React from "react";
 import App from "../../../../../App";
-import {
-  calculateAllPaths,
-  calculateTableData,
-} from "../../../../../services/calculator";
+import { calculateAllPaths, calculateTableData } from "../../../../../services/calculator";
 import { getIndexData } from "../../../../../services/data";
 import { Crash } from "../../../../../services/domain";
 import { GetStaticProps } from "next";

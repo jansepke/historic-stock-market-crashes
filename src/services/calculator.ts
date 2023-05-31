@@ -3,19 +3,11 @@ import { IndexData, Crash } from "./domain";
 
 const msToDays = 1 / 60 / 60 / 24 / 1000;
 
-const addPercentUp = (
-  data: IndexData[],
-  newTableData: Crash[],
-  years: 2 | 5
-) => {
+const addPercentUp = (data: IndexData[], newTableData: Crash[], years: 2 | 5) => {
   for (const entry of data) {
     const lastCrash = newTableData.find((crash) => !crash[`percentUp${years}`]);
-    if (
-      lastCrash &&
-      (+entry.date - +lastCrash.endDate) * msToDays >= 365 * years
-    ) {
-      lastCrash[`percentUp${years}`] =
-        (1 / lastCrash.endPrice) * entry.price * 100 - 100;
+    if (lastCrash && (+entry.date - +lastCrash.endDate) * msToDays >= 365 * years) {
+      lastCrash[`percentUp${years}`] = (1 / lastCrash.endPrice) * entry.price * 100 - 100;
     }
   }
 };
@@ -71,11 +63,7 @@ export const calculateTableData = (data: IndexData[], minDrawdown: number) => {
 };
 
 const cartesianProduct = <T>(...sets: T[][]) =>
-  sets.reduce<T[][]>(
-    (accSets, set) =>
-      accSets.flatMap((accSet) => set.map((value) => [...accSet, value])),
-    [[]]
-  );
+  sets.reduce<T[][]>((accSets, set) => accSets.flatMap((accSet) => set.map((value) => [...accSet, value])), [[]]);
 
 export const calculateAllPaths = () =>
   cartesianProduct(
@@ -84,9 +72,7 @@ export const calculateAllPaths = () =>
     datasets.map((i) => i.id),
     minDrawdowns.map((md) => md.toString())
   )
-    .filter(
-      (params) => !(params[2] === "end-of-day" && params[1] !== "nominal")
-    )
+    .filter((params) => !(params[2] === "end-of-day" && params[1] !== "nominal"))
     .map((params) => ({
       params: {
         index: params[0],

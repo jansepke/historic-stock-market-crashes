@@ -51,8 +51,7 @@ const parseFile = async (fileName) =>
   }).fromFile(fileName);
 
 const convertDate = (date) => {
-  const [{ value: mo }, , { value: da }, , { value: ye }] =
-    dateTimeFormatCSV.formatToParts(date);
+  const [{ value: mo }, , { value: da }, , { value: ye }] = dateTimeFormatCSV.formatToParts(date);
   return `${ye}-${mo}-${da}`;
 };
 
@@ -77,19 +76,14 @@ const processIndex = async (index) => {
 
   // https://query1.finance.yahoo.com/v7/finance/download/^GSPC?period1=1561759178&period2=1593381578&interval=1d&events=history
   const response = await axios
-    .get(
-      `https://query1.finance.yahoo.com/v7/finance/download/${encodeURIComponent(
-        ticker
-      )}`,
-      {
-        params: {
-          period1: parseInt((startDate.getTime() / 1000).toFixed(0)),
-          period2: parseInt((endDate.getTime() / 1000).toFixed(0)),
-          interval: "1d",
-          events: "history",
-        },
-      }
-    )
+    .get(`https://query1.finance.yahoo.com/v7/finance/download/${encodeURIComponent(ticker)}`, {
+      params: {
+        period1: parseInt((startDate.getTime() / 1000).toFixed(0)),
+        period2: parseInt((endDate.getTime() / 1000).toFixed(0)),
+        interval: "1d",
+        events: "history",
+      },
+    })
     .catch((error) => {
       console.log(error);
     });
@@ -103,9 +97,7 @@ const processIndex = async (index) => {
     },
   }).fromString(response.data);
 
-  let filteredData = data.filter(
-    (value) => value.Date.toISOString() !== startDate.toISOString()
-  );
+  let filteredData = data.filter((value) => value.Date.toISOString() !== startDate.toISOString());
   filteredData = filteredData.filter((value) => !isNaN(value.Close));
 
   if (filteredData.length === 0) {
