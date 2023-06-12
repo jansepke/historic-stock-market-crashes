@@ -39,7 +39,7 @@
     "axios": "^1.4.0",
     "csvtojson": "2.0.10",
     "downsample": "1.4.0",
-    "fast-xml-parser": "4.2.2",
+    "fast-xml-parser": "4.2.4",
     "husky": "8.0.3",
     "prettier": "2.8.8",
     "typescript": "5.0.4"
