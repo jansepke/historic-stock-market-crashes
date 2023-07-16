@@ -70,7 +70,7 @@ export const calculateAllPaths = () =>
     indiceGroups.flatMap((group) => group.indices).map((i) => i.id),
     inflations.map((i) => i.id),
     datasets.map((i) => i.id),
-    minDrawdowns.map((md) => md.toString())
+    minDrawdowns.map((md) => md.toString()),
   )
     .filter((params) => !(params[2] === "end-of-day" && params[1] !== "nominal"))
     .map((params) => ({

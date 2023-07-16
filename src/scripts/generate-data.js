@@ -80,7 +80,7 @@ const processIndex = async (index, inflation, dataset) => {
 
   await fs.writeFile(
     `./${dataDir}/${index}-${inflation}-${dataset}.json`,
-    JSON.stringify({ data: indexData }, null, 2)
+    JSON.stringify({ data: indexData }, null, 2),
   );
 
   const chartData = calculateChartData(
@@ -88,12 +88,12 @@ const processIndex = async (index, inflation, dataset) => {
       date: new Date(date),
       price: parseFloat(price),
     })),
-    5000
+    5000,
   );
 
   await fs.writeFile(
     `./${dataDir}/chart-${index}-${inflation}-${dataset}.json`,
-    JSON.stringify({ data: chartData }, null, 2)
+    JSON.stringify({ data: chartData }, null, 2),
   );
 };
 

@@ -75,7 +75,7 @@ const App: React.FC<AppProps> = ({
 
     router.push(
       `/[index]/[inflation]/[dataset]/min-drawdown/[minDrawdown]`,
-      `/${values.index}/nominal/${values.dataset}/min-drawdown/${values.minDrawdown}`
+      `/${values.index}/nominal/${values.dataset}/min-drawdown/${values.minDrawdown}`,
     );
   };
 
