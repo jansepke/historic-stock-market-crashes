@@ -21,7 +21,7 @@ jobs:
         run: ./do update-data
       - name: create PR
         run: |
-          if git diff-index --quiet HEAD --; then
+          if git diff --exit-code; then
             exit 0;
           fi
 
