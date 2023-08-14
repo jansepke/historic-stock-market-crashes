@@ -32,6 +32,7 @@ jobs:
           git commit -am "update data"
           git push -u origin update-data:update-data
           pr_url=(gh pr create --title 'update data' --body 'Created by Github action')
+          echo "$pr_url"
           gh pr merge --auto --rebase "$pr_url"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
