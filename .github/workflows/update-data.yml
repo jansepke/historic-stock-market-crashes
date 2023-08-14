@@ -26,7 +26,11 @@ jobs:
             exit 0;
           fi
 
+          git checkout -b update-data
           git config --global user.name 'Jan Sepke'
           git config --global user.email '625043+jansepke@users.anoreply.github.com'
           git commit -am "update data"
-          git push
+          git push -u origin update-data:update-data
+          gh pr create --title 'update data' --body 'Created by Github action'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
