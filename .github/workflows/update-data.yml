@@ -20,7 +20,7 @@ jobs:
         run: npm ci
       - name: update data
         run: ./do update-data
-      - name: commit changes
+      - name: create PR
         run: |
           if git diff-index --quiet HEAD --; then
             exit 0;
@@ -31,6 +31,7 @@ jobs:
           git config --global user.email '625043+jansepke@users.anoreply.github.com'
           git commit -am "update data"
           git push -u origin update-data:update-data
-          gh pr create --title 'update data' --body 'Created by Github action'
+          pr_url=(gh pr create --title 'update data' --body 'Created by Github action')
+          gh pr merge --auto --rebase "$pr_url"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
