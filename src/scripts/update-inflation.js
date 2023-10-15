@@ -19,7 +19,11 @@ const parseString = async (data) =>
 (async () => {
   console.log("updating us inflations");
 
-  const response = await axios.get(sourcePath);
+  const response = await axios.get(sourcePath, {
+    headers: {
+      "User-Agent": "historic-stock-market-crashes.jansepke.de",
+    },
+  });
 
   const jsonData = await parseString(response.data);
 
