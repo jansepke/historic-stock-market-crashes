@@ -1,12 +1,10 @@
 import { AppCacheProvider } from "@mui/material-nextjs/v14-pagesRouter";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
-import "dayjs/locale/en-gb";
 import { AppProps } from "next/app";
+import Head from "next/head";
 import theme from "../theme";
 import { GoatCounter } from "../util/GoatCounter";
-
-import Head from "next/head";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
