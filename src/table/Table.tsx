@@ -74,9 +74,11 @@ const Table: React.FC<TableProps> = ({ tableData, onRowHoverStart, onRowHoverEnd
               <Box color="error.main">{-row.percent.toFixed()}%</Box>
             </TableCell>
             <TableCell align="center">
-              <TouchTooltip title={row.doneDate ? formatDate(row.doneDate) : ""}>
-                {formatDays(row.daysDone)}
-              </TouchTooltip>
+              {row.doneDate && row.daysDone > 0 ? (
+                <TouchTooltip title={formatDate(row.doneDate)}>{formatDays(row.daysDone)}</TouchTooltip>
+              ) : (
+                "-"
+              )}
             </TableCell>
             <TableCell align="center">{formatNumber(row.percentUp2, "%")}</TableCell>
             <TableCell align="center">{formatNumber(row.percentUp5, "%")}</TableCell>
