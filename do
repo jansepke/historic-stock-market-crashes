@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 IFS=$'\n\t'
 trap 'echo "Aborting due to errexit on line $LINENO. Exit code: $?" >&2' ERR
-readonly DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+readonly DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 ###############################################################################
 # Program Functions
@@ -17,7 +17,7 @@ task_run() {
 task_update-data() {
   npm run update-msci
   npm run update-yahoo
-  npm run update-inflation
+  # npm run update-inflation
   npm run generate-data
 }
 
@@ -27,7 +27,7 @@ task_update-data() {
 
 usage() {
   echo "Commands:"
-  grep -e "^##DOC" < "$(basename "$0")" | sed "s/^##DOC \(.*\)/  \1/"
+  grep -e "^##DOC" <"$(basename "$0")" | sed "s/^##DOC \(.*\)/  \1/"
 
   exit 1
 }
@@ -36,15 +36,15 @@ main() {
   CMD=${1:-}
   shift || true
 
-  pushd "$DIR" > /dev/null
+  pushd "$DIR" >/dev/null
 
-  if type "task_${CMD}" &> /dev/null; then
+  if type "task_${CMD}" &>/dev/null; then
     "task_${CMD}" "$@"
   else
     usage
   fi
 
-  popd > /dev/null
+  popd >/dev/null
 }
 
 main "$@"
