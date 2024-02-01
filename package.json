@@ -10,7 +10,7 @@
     "generate-data": "node src/scripts/generate-data.js",
     "lint": "prettier --check ./src",
     "lint:fix": "prettier --write ./src",
-    "postinstall": "husky install"
+    "prepare": "husky"
   },
   "browserslist": [
     "defaults",
@@ -41,7 +41,7 @@
     "csvtojson": "2.0.10",
     "downsample": "1.4.0",
     "fast-xml-parser": "4.3.3",
-    "husky": "8.0.3",
+    "husky": "^9.0.10",
     "prettier": "^3.2.4",
     "typescript": "^5.3.3"
   }
