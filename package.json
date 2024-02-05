@@ -42,7 +42,7 @@
     "downsample": "1.4.0",
     "fast-xml-parser": "4.3.3",
     "husky": "^9.0.10",
-    "prettier": "^3.2.4",
+    "prettier": "^3.2.5",
     "typescript": "^5.3.3"
   }
 }
