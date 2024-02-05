@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@types/node": "20.11.16",
-    "@types/react": "^18.2.47",
+    "@types/react": "^18.2.52",
     "axios": "^1.6.5",
     "csvtojson": "2.0.10",
     "downsample": "1.4.0",
