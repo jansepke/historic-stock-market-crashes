@@ -35,7 +35,7 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@types/node": "20.12.7",
+    "@types/node": "20.12.8",
     "@types/react": "^18.3.1",
     "axios": "^1.6.8",
     "csvtojson": "2.0.10",
