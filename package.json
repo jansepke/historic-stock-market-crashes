@@ -37,7 +37,7 @@
   "devDependencies": {
     "@types/node": "22.5.0",
     "@types/react": "^18.3.5",
-    "axios": "^1.7.5",
+    "axios": "^1.7.7",
     "csvtojson": "2.0.10",
     "downsample": "1.4.0",
     "fast-xml-parser": "4.4.1",
