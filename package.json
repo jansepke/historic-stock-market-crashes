@@ -30,7 +30,7 @@
     "@mui/material-nextjs": "^5.16.6",
     "@nivo/core": "0.87.0",
     "@nivo/line": "0.87.0",
-    "next": "^14.2.8",
+    "next": "^14.2.11",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
