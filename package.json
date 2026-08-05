@@ -27,10 +27,10 @@
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^6.3.0",
     "@mui/material": "^6.3.0",
-    "@mui/material-nextjs": "^6.3.0",
+    "@mui/material-nextjs": "^9.1.1",
     "@nivo/core": "0.88.0",
     "@nivo/line": "0.88.0",
-    "next": "15.5.22",
+    "next": "16.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
